@@ -7,5 +7,11 @@ html {
 }
 
 body {
-	@apply bg-zinc-900 text-zinc-50;
+	@apply bg-zinc-900 text-zinc-50 h-[200vh];
+}
+
+/* components */
+
+.menu-btn {
+	@apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-xl ring-inset ring-1 ring-zinc-50/[0.02] backdrop-blur-2xl hover:bg-zinc-50/15 transition-[transform,background-color] active:scale-95;
 }
