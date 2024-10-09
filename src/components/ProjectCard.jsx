@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 
 const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 	return (
-		<div
+		<motion.div
+			whileHover={{ y: -5 }}
 			className={
 				"relative p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 transition-colors " +
 				classes
@@ -35,7 +37,7 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 					</div>
 				</div>
 
-				<div className="w-11 h-11 rounded-lg grid place-items-center bg-[#f9364d] text-zinc-50 shrink-0">
+				<div className="w-11 h-11 rounded-lg grid place-items-center bg-zinc-50 text-black shrink-0">
 					<span className="material-symbols-rounded" aria-hidden="true">
 						arrow_outward
 					</span>
@@ -43,7 +45,7 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 			</div>
 
 			<a href={projectLink} target="_blank" className="absolute inset-0"></a>
-		</div>
+		</motion.div>
 	);
 };
 

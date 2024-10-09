@@ -43,8 +43,13 @@ const Hero = () => {
 
 				<motion.div
 					whileTap={{ scale: 0.85 }}
-					className="mt-8 flex justify-center items-center"
+					whileHover={{ scale: 1.1 }}
+					transformTemplate={(props, transform) =>
+						transform.replace(" translateZ(0)", "")
+					}
 					variants={itemVariants}
+					layout="position"
+					className="mt-8 flex justify-center items-center"
 				>
 					<a
 						href="/assets/seth_cv.pdf"

@@ -4,8 +4,9 @@ import { RiJavascriptFill } from "react-icons/ri";
 import { SiCsharp } from "react-icons/si";
 import { FaNodeJs } from "react-icons/fa6";
 import { FaReact } from "react-icons/fa6";
-import { SiDotnet } from "react-icons/si";
+import { SiGnubash } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
+import { SiGodotengine } from "react-icons/si";
 
 const iconVariants = {
 	initial: { y: -10 },
@@ -50,22 +51,6 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<SiCsharp className="text-5xl text-purple-600" />
-				</motion.div>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<SiDotnet className="text-5xl text-blue-600" />
-				</motion.div>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
 					<FaReact className="text-5xl text-cyan-400" />
 				</motion.div>
 				<motion.div
@@ -74,7 +59,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<FaNodeJs className="text-5xl text-green-600" />
+					<SiGnubash className="text-5xl text-orange-500" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -82,7 +67,24 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<BiLogoPostgresql className="text-5xl text-blue-800" />
+					<BiLogoPostgresql className="text-5xl text-blue-700" />
+				</motion.div>
+
+				<motion.div
+					className="p-3"
+					variants={iconVariants}
+					initial="initial"
+					animate="animate"
+				>
+					<SiCsharp className="text-5xl text-purple-600" />
+				</motion.div>
+				<motion.div
+					className="p-3"
+					variants={iconVariants}
+					initial="initial"
+					animate="animate"
+				>
+					<FaNodeJs className="text-5xl text-green-600" />
 				</motion.div>
 			</motion.div>
 		</div>

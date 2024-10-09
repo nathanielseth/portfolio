@@ -5,7 +5,7 @@ const projects = [
 	{
 		imgSrc: "/images/nt.webp",
 		title: "Neti-Cents: Income Tax Calculator",
-		tags: ["HTML/CSS"],
+		tags: ["JavaScript", "HTML/CSS"],
 		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
 	},
 	{
@@ -27,14 +27,14 @@ const containerVariants = {
 	show: {
 		opacity: 1,
 		transition: {
-			staggerChildren: 0.4,
+			staggerChildren: 0.5,
 		},
 	},
 };
 
 const itemVariants = {
 	hidden: { opacity: 0, y: 30 },
-	show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+	show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 const Projects = () => {

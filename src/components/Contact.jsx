@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const containerVariants = {
 	hidden: { opacity: 0 },
@@ -58,7 +59,7 @@ const Contact = () => {
 					href="https://github.com/nathanielseth"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-3xl text-white hover:text-[#f9364d]"
+					className="text-3xl text-zinc-600 hover:text-white"
 				>
 					<FaGithub />
 				</a>
@@ -67,9 +68,18 @@ const Contact = () => {
 					href="https://www.linkedin.com/in/nathanielseth"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-3xl text-white hover:text-[#f9364d]"
+					className="text-3xl text-zinc-600 hover:text-white"
 				>
 					<FaLinkedin />
+				</a>
+
+				<a
+					href="mailto:nathanielseth.dev@gmail.com"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-3xl text-zinc-600 hover:text-white"
+				>
+					<MdEmail />
 				</a>
 			</motion.div>
 		</motion.div>

@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 
 const Navbar = ({ navOpen }) => {
 	const lastActiveLink = useRef();
@@ -61,8 +62,8 @@ const Navbar = ({ navOpen }) => {
 				});
 			},
 			{
-				threshold: 0.5,
-				rootMargin: "0px 0px -30% 0px",
+				threshold: 0.2,
+				rootMargin: "0px 0px -20% 0px",
 			}
 		);
 
@@ -95,14 +96,15 @@ const Navbar = ({ navOpen }) => {
 	return (
 		<nav className={`navbar ${navOpen ? "active" : ""}`}>
 			{navItems.map(({ label, link, className }, key) => (
-				<a
+				<motion.a
+					whileHover={{ y: -1 }}
 					href={link}
 					key={key}
 					className={className}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}
-				</a>
+				</motion.a>
 			))}
 			<div className="active-box" ref={activeBox}></div>
 		</nav>
