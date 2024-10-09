@@ -106,7 +106,15 @@ const Navbar = ({ navOpen }) => {
 					{label}
 				</motion.a>
 			))}
-			<div className="active-box" ref={activeBox}></div>
+
+			{/* Animate active box using Framer Motion */}
+			<motion.div
+				className="active-box"
+				ref={activeBox}
+				layout
+				initial={false}
+				transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+			></motion.div>
 		</nav>
 	);
 };

@@ -19,11 +19,11 @@ body {
 /* components */
 
 .menu-btn {
-	@apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-full ring-inset ring-1 ring-zinc-50/[0.02] backdrop-blur-2xl hover:bg-zinc-50/15 transition-[transform,background-color] active:scale-95;
+	@apply w-10 h-10 grid place-items-center  rounded-full ring-inset ring-1 ring-zinc-50/[0.02] backdrop-blur-2xl hover:bg-zinc-50/15 transition-[transform,background-color] active:scale-95;
 }
 
 .navbar {
-	@apply absolute top-full mt-2 right-0 min-w-40 p-1 bg-zinc-50/5 rounded-lg md:rounded-full ring-inset ring-1 ring-zinc-50/5 scale-90 isolate blur-sm opacity-0 invisible transition-[opacity,transform,filter] md:static md:flex md:items-center md:mt-0 md:opacity-100 md:blur-0 md:visible md:scale-100 backdrop-blur-2xl;
+	@apply absolute top-full mt-2 right-0 min-w-40 p-1  rounded-lg md:rounded-full ring-inset ring-1 ring-zinc-50/5 scale-90 isolate blur-sm opacity-0 invisible transition-[opacity,transform,filter] md:static md:flex md:items-center md:mt-0 md:opacity-100 md:blur-0 md:visible md:scale-100 backdrop-blur-2xl;
 }
 
 .navbar.active {
