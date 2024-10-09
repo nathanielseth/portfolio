@@ -37,7 +37,7 @@ const Navbar = ({ navOpen }) => {
 
 			setTimeout(() => {
 				activeCurrentLink(event, link);
-			}, 300);
+			}, 500);
 		}
 	};
 
@@ -60,7 +60,10 @@ const Navbar = ({ navOpen }) => {
 					}
 				});
 			},
-			{ threshold: 0.1 }
+			{
+				threshold: 0.5, // Increase this to trigger later in the section
+				rootMargin: "0px 0px -30% 0px", // Adjust this to create more offset
+			}
 		);
 
 		navItems.forEach((item) => {
