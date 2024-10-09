@@ -67,7 +67,7 @@ const Contact = () => {
 					href="https://www.linkedin.com/in/nathanielseth"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-3xl text-white hover:text-blue-600"
+					className="text-3xl text-white hover:text-[#f9364d]"
 				>
 					<FaLinkedin />
 				</a>

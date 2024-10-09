@@ -37,7 +37,7 @@ const Navbar = ({ navOpen }) => {
 
 			setTimeout(() => {
 				activeCurrentLink(event, link);
-			}, 500);
+			}, 400);
 		}
 	};
 
@@ -61,8 +61,8 @@ const Navbar = ({ navOpen }) => {
 				});
 			},
 			{
-				threshold: 0.5, // Increase this to trigger later in the section
-				rootMargin: "0px 0px -30% 0px", // Adjust this to create more offset
+				threshold: 0.5,
+				rootMargin: "0px 0px -30% 0px",
 			}
 		);
 
@@ -78,8 +78,22 @@ const Navbar = ({ navOpen }) => {
 		};
 	}, []);
 
+	const handleResize = () => {
+		if (lastActiveLink.current) {
+			initActiveBox(lastActiveLink.current);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+
 	return (
-		<nav className={"navbar " + (navOpen ? "active" : "")}>
+		<nav className={`navbar ${navOpen ? "active" : ""}`}>
 			{navItems.map(({ label, link, className }, key) => (
 				<a
 					href={link}
