@@ -16,23 +16,6 @@ body {
 	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
-html,
-body {
-	height: 100%;
-	overflow: hidden; /* Prevents the fake scrollbar */
-}
-
-main {
-	height: 100vh;
-	overflow-y: scroll; /* Allows scroll on the main element */
-	scroll-snap-type: y mandatory; /* Enables scroll snapping */
-}
-
-section {
-	scroll-snap-align: start; /* Snaps sections to the top of the viewport */
-	height: 100vh; /* Each section fills the full viewport height */
-}
-
 /* components */
 
 .menu-btn {
