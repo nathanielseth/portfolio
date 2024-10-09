@@ -17,7 +17,7 @@ const Hero = () => {
 						download
 						className="inline-flex items-center gap-1 bg-[#f9364d] text-white px-6 h-12 rounded-full"
 					>
-						<span className="font-bold text-base leading-none">
+						<span className="font-semibold text-base leading-none">
 							Download CV
 						</span>
 						<span className="material-symbols-rounded text-lg leading-none align-middle">

@@ -58,3 +58,7 @@ section {
 .navbar .active-box {
 	@apply absolute bg-zinc-50 rounded-lg md:rounded-full -z-10 transition-[top,left] duration-300;
 }
+
+.title-1 {
+	@apply text-[22px] font-normal;
+}
