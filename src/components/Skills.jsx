@@ -6,7 +6,6 @@ import { FaNodeJs } from "react-icons/fa6";
 import { FaReact } from "react-icons/fa6";
 import { SiGnubash } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
-import { SiGodotengine } from "react-icons/si";
 
 const iconVariants = {
 	initial: { y: -10 },
@@ -35,7 +34,7 @@ const Skills = () => {
 				initial={{ opacity: 0, x: -100 }}
 				transition={{ duration: 1 }}
 				viewport={{ once: true }}
-				className="flex flex-wrap items-center justify-center gap-4"
+				className="flex flex-wrap items-center justify-center gap-3"
 			>
 				<motion.div
 					className="p-3"

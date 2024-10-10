@@ -1,120 +1,118 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
 const Navbar = ({ navOpen }) => {
-	const lastActiveLink = useRef();
+	const [activeTab, setActiveTab] = useState("#home");
+	const [threshold, setThreshold] = useState(0.2);
 	const activeBox = useRef();
 
-	const navItems = [
-		{ label: "Home", link: "#home", className: "nav-link active" },
-		{ label: "Skills", link: "#skills", className: "nav-link" },
-		{ label: "Projects", link: "#projects", className: "nav-link" },
-		{ label: "Contact", link: "#contact", className: "nav-link md:hidden" },
-	];
+	const navItems = useMemo(
+		() => [
+			{ label: "Home", link: "#home", className: "nav-link" },
+			{ label: "Skills", link: "#skills", className: "nav-link" },
+			{ label: "Projects", link: "#projects", className: "nav-link" },
+			{ label: "Contact", link: "#contact", className: "nav-link md:hidden" },
+		],
+		[]
+	);
 
-	const initActiveBox = (target) => {
-		activeBox.current.style.top = target.offsetTop + "px";
-		activeBox.current.style.left = target.offsetLeft + "px";
-		activeBox.current.style.width = target.offsetWidth + "px";
-		activeBox.current.style.height = target.offsetHeight + "px";
-	};
+	const initActiveBox = useCallback((target) => {
+		if (target && activeBox.current) {
+			const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = target;
+			activeBox.current.style.cssText = `
+                top: ${offsetTop}px; 
+                left: ${offsetLeft}px; 
+                width: ${offsetWidth}px; 
+                height: ${offsetHeight}px;
+            `;
+		}
+	}, []);
 
-	const activeCurrentLink = (event, targetId) => {
-		lastActiveLink.current?.classList.remove("active");
-		const linkElement = document.querySelector(`a[href='${targetId}']`);
-		linkElement.classList.add("active");
-		lastActiveLink.current = linkElement;
-
-		initActiveBox(linkElement);
-	};
-
-	const handleLinkClick = (event, link) => {
+	const handleLinkClick = useCallback((event, link) => {
 		event.preventDefault();
-
+		setActiveTab(link);
 		const targetSection = document.querySelector(link);
 		if (targetSection) {
 			targetSection.scrollIntoView({ behavior: "smooth" });
-
-			setTimeout(() => {
-				activeCurrentLink(event, link);
-			}, 400);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
-						const activeLink = navItems.find(
+						const newActiveLink = navItems.find(
 							(item) => item.link === `#${entry.target.id}`
 						);
-						if (activeLink) {
-							const linkElement = document.querySelector(
-								`a[href='${activeLink.link}']`
-							);
-							if (linkElement) {
-								activeCurrentLink({ target: linkElement }, activeLink.link);
-							}
+						if (newActiveLink && activeTab !== newActiveLink.link) {
+							setActiveTab(newActiveLink.link);
 						}
 					}
 				});
 			},
 			{
-				threshold: 0.2,
-				rootMargin: "0px 0px -20% 0px",
+				threshold: threshold,
+				rootMargin: "0px 0px -30% 0px",
 			}
 		);
 
-		navItems.forEach((item) => {
-			const section = document.querySelector(item.link);
+		navItems.forEach(({ link }) => {
+			const section = document.querySelector(link);
 			if (section) {
 				observer.observe(section);
 			}
 		});
 
-		return () => {
-			observer.disconnect();
-		};
-	}, []);
+		return () => observer.disconnect();
+	}, [activeTab, navItems, threshold]);
 
-	const handleResize = () => {
-		if (lastActiveLink.current) {
-			initActiveBox(lastActiveLink.current);
+	const handleResize = useCallback(() => {
+		if (window.innerWidth >= 768) {
+			setThreshold(0.5);
+		} else {
+			setThreshold(0.2);
 		}
-	};
+
+		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
+		if (currentActiveLink) {
+			initActiveBox(currentActiveLink);
+		}
+	}, [activeTab, initActiveBox]);
 
 	useEffect(() => {
+		handleResize();
 		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, [handleResize]);
 
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, []);
+	useEffect(() => {
+		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
+		if (currentActiveLink) {
+			initActiveBox(currentActiveLink);
+		}
+	}, [activeTab, initActiveBox]);
 
 	return (
 		<nav className={`navbar ${navOpen ? "active" : ""}`}>
 			{navItems.map(({ label, link, className }, key) => (
-				<motion.a
-					whileHover={{ y: -1 }}
+				<a
 					href={link}
 					key={key}
-					className={className}
+					className={`${className} ${activeTab === link ? "active" : ""}`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}
-				</motion.a>
+				</a>
 			))}
-
-			{/* Animate active box using Framer Motion */}
 			<motion.div
 				className="active-box"
 				ref={activeBox}
-				layout
+				layoutId="active-box"
 				initial={false}
 				transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-			></motion.div>
+			/>
 		</nav>
 	);
 };
