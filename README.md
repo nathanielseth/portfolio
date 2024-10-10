@@ -1,8 +1,18 @@
-# React + Vite
+# nathanielseth.dev
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About
+Welcome to my personal portfolio! This web app showcases my skills as a full-stack web developer and highlights the projects I've worked on.
 
-Currently, two official plugins are available:
+![image](https://github.com/user-attachments/assets/a6242347-292f-4dae-8377-c3966492d5b0)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies
+
+The website is built using the following technologies:
+- **ReactJS**: A powerful JavaScript library for building user interfaces, allowing for efficient rendering and component-based architecture.
+- **Tailwind CSS**: A utility-first CSS framework that enables rapid customization and design of responsive user interfaces.
+
+## Contact
+
+You can reach me through:
+- **Email**: [nathanielseth.dev@gmail.com](mailto:nathanielseth.dev@gmail.com)
+- **LinkedIn**: [linkedin.com/in/nathanielseth](https://linkedin.com/in/nathanielseth)
