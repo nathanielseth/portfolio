@@ -25,62 +25,72 @@ const iconVariants = {
 const Contact = () => {
 	return (
 		<motion.div
-			className="flex flex-col justify-center items-center h-screen"
+			className="flex flex-col justify-between items-center h-screen"
 			variants={containerVariants}
 			initial="hidden"
 			whileInView="show"
 			viewport={{ once: false }}
 		>
-			<motion.p
-				className="font-light text-center text-xl md:text-xl"
+			<div className="flex-grow flex flex-col justify-center items-center">
+				<motion.p
+					className="font-light text-center text-xl md:text-xl"
+					variants={itemVariants}
+					initial="hidden"
+					whileInView="show"
+				>
+					Please feel free to reach out at
+					<br />{" "}
+					<a
+						href="mailto:nathanielseth.dev@gmail.com"
+						className="text-[#f9364d] font-semibold text-2xl"
+					>
+						nathanielseth.dev@gmail.com
+					</a>
+					.
+				</motion.p>
+
+				<motion.div
+					className="flex mt-10 space-x-4"
+					variants={iconVariants}
+					initial="hidden"
+					whileInView="show"
+				>
+					<a
+						href="https://github.com/nathanielseth"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-3xl text-zinc-600 hover:text-white"
+					>
+						<FaGithub />
+					</a>
+
+					<a
+						href="https://www.linkedin.com/in/nathanielseth"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-3xl text-zinc-600 hover:text-white"
+					>
+						<FaLinkedin />
+					</a>
+
+					<a
+						href="mailto:nathanielseth.dev@gmail.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-3xl text-zinc-600 hover:text-white"
+					>
+						<MdEmail />
+					</a>
+				</motion.div>
+			</div>
+
+			<motion.div
 				variants={itemVariants}
 				initial="hidden"
 				whileInView="show"
+				className="text-sm font-medium md:text-base mb-5 text-center text-zinc-600 "
 			>
-				Please feel free to reach out,
-				<br />
-				email me at{" "}
-				<a
-					href="mailto:nathanielseth.dev@gmail.com"
-					className="text-[#f9364d] font-semibold text-2xl"
-				>
-					nathanielseth.dev@gmail.com
-				</a>
-				.
-			</motion.p>
-
-			<motion.div
-				className="flex mt-10 space-x-4"
-				variants={iconVariants}
-				initial="hidden"
-				whileInView="show"
-			>
-				<a
-					href="https://github.com/nathanielseth"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-3xl text-zinc-600 hover:text-white"
-				>
-					<FaGithub />
-				</a>
-
-				<a
-					href="https://www.linkedin.com/in/nathanielseth"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-3xl text-zinc-600 hover:text-white"
-				>
-					<FaLinkedin />
-				</a>
-
-				<a
-					href="mailto:nathanielseth.dev@gmail.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-3xl text-zinc-600 hover:text-white"
-				>
-					<MdEmail />
-				</a>
+				made by nathanielseth.dev
 			</motion.div>
 		</motion.div>
 	);

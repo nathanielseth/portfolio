@@ -32,7 +32,7 @@ const Header = () => {
 				</div>
 
 				<motion.a
-					whileHover={{ y: -1 }}
+					whileHover={{ y: -2 }}
 					href="#contact"
 					className="btn btn-secondary max-md:hidden md:justify-self-end font-semibold"
 				>

@@ -31,7 +31,7 @@ body {
 }
 
 .nav-link {
-	@apply grid items-center h-9 px-4 text-base font-bold tracking-wide text-zinc-50/50 hover:text-zinc-50 transition-colors;
+	@apply grid items-center h-9 px-4 text-base font-bold tracking-wide  hover:text-zinc-50 transition-colors;
 }
 
 .nav-link.active {

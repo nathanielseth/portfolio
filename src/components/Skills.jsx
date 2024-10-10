@@ -12,7 +12,7 @@ const iconVariants = {
 	animate: {
 		y: 0,
 		transition: {
-			duration: 1,
+			duration: 2,
 		},
 	},
 };

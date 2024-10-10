@@ -21,22 +21,33 @@ const Navbar = ({ navOpen }) => {
 		if (target && activeBox.current) {
 			const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = target;
 			activeBox.current.style.cssText = `
-                top: ${offsetTop}px; 
-                left: ${offsetLeft}px; 
-                width: ${offsetWidth}px; 
-                height: ${offsetHeight}px;
-            `;
+        top: ${offsetTop}px; 
+        left: ${offsetLeft}px; 
+        width: ${offsetWidth}px; 
+        height: ${offsetHeight}px;
+      `;
 		}
 	}, []);
 
-	const handleLinkClick = useCallback((event, link) => {
-		event.preventDefault();
-		setActiveTab(link);
-		const targetSection = document.querySelector(link);
-		if (targetSection) {
-			targetSection.scrollIntoView({ behavior: "smooth" });
-		}
-	}, []);
+	const handleLinkClick = useCallback(
+		(event, link) => {
+			event.preventDefault();
+			setActiveTab(link);
+			const targetSection = document.querySelector(link);
+
+			if (targetSection) {
+				targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+				const handleScroll = () => {
+					if (activeTab !== link) {
+						setActiveTab(link);
+					}
+				};
+				window.addEventListener("scroll", handleScroll, { once: true });
+			}
+		},
+		[activeTab]
+	);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -69,11 +80,7 @@ const Navbar = ({ navOpen }) => {
 	}, [activeTab, navItems, threshold]);
 
 	const handleResize = useCallback(() => {
-		if (window.innerWidth >= 768) {
-			setThreshold(0.5);
-		} else {
-			setThreshold(0.2);
-		}
+		setThreshold(window.innerWidth >= 768 ? 0.5 : 0.2);
 
 		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
 		if (currentActiveLink) {
@@ -100,7 +107,9 @@ const Navbar = ({ navOpen }) => {
 				<a
 					href={link}
 					key={key}
-					className={`${className} ${activeTab === link ? "active" : ""}`}
+					className={`${className} relative z-20 transition duration-200 ${
+						activeTab === link ? "text-black active-tab" : "text-zinc-50/50"
+					}`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}

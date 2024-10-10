@@ -41,17 +41,15 @@ const Hero = () => {
 					concept and principles of continuous, lifelong learning.
 				</motion.p>
 
-				<motion.div
-					whileTap={{ scale: 0.85 }}
-					whileHover={{ scale: 1.1 }}
-					transformTemplate={(props, transform) =>
-						transform.replace(" translateZ(0)", "")
-					}
-					variants={itemVariants}
-					layout="position"
-					className="mt-8 flex justify-center items-center"
-				>
-					<a
+				<div className="mt-8 flex justify-center items-center">
+					<motion.a
+						whileTap={{ scale: 0.85 }}
+						whileHover={{ scale: 1.1 }}
+						transformTemplate={(props, transform) =>
+							transform.replace(" translateZ(0)", "")
+						}
+						variants={itemVariants}
+						layout="position"
 						href="/assets/seth_cv.pdf"
 						download
 						className="inline-flex items-center gap-1 bg-[#f9364d] text-white px-6 h-12 rounded-full"
@@ -62,8 +60,8 @@ const Hero = () => {
 						<span className="material-symbols-rounded text-lg leading-none align-middle">
 							download
 						</span>
-					</a>
-				</motion.div>
+					</motion.a>
+				</div>
 			</motion.div>
 		</div>
 	);
