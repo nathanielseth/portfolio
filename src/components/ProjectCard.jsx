@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 	return (
 		<motion.div
-			whileHover={{ y: -5 }}
+			whileHover={{ y: -6 }}
 			className={
 				"relative p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 transition-colors " +
 				classes

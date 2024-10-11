@@ -8,11 +8,11 @@ import { SiGnubash } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
 
 const iconVariants = {
-	initial: { y: -10 },
+	initial: { y: -15 },
 	animate: {
 		y: 0,
 		transition: {
-			duration: 2,
+			duration: 1,
 		},
 	},
 };

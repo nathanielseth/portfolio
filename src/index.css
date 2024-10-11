@@ -38,6 +38,10 @@ body {
 	@apply text-zinc-900 font-bold duration-500;
 }
 
+.active-tab:hover {
+	@apply hover:text-zinc-900;
+}
+
 .navbar .active-box {
 	@apply absolute bg-zinc-50 rounded-lg md:rounded-full -z-10 transition-[top,left] duration-300;
 }

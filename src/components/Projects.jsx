@@ -27,14 +27,14 @@ const containerVariants = {
 	show: {
 		opacity: 1,
 		transition: {
-			staggerChildren: 0.5,
+			staggerChildren: 0.3,
 		},
 	},
 };
 
 const itemVariants = {
 	hidden: { opacity: 0, y: 30 },
-	show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+	show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const Projects = () => {
@@ -58,6 +58,7 @@ const Projects = () => {
 							title={title}
 							tags={tags}
 							projectLink={projectLink}
+							ariaLabel={`View project: ${title}`}
 						/>
 					</motion.div>
 				))}
