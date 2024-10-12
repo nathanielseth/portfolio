@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 import { RiJavascriptFill } from "react-icons/ri";
-import { SiCsharp } from "react-icons/si";
-import { FaNodeJs } from "react-icons/fa6";
-import { FaReact } from "react-icons/fa6";
-import { SiGnubash } from "react-icons/si";
+import { SiDotnet } from "react-icons/si";
+import { SiTailwindcss } from "react-icons/si";
+import { RiReactjsLine } from "react-icons/ri";
+import { BiLogoTypescript } from "react-icons/bi";
 import { BiLogoPostgresql } from "react-icons/bi";
 
 const iconVariants = {
@@ -29,6 +29,7 @@ const Skills = () => {
 			>
 				Skills & Technologies
 			</motion.h2>
+
 			<motion.div
 				whileInView={{ opacity: 1, x: 0 }}
 				initial={{ opacity: 0, x: -100 }}
@@ -42,7 +43,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<RiJavascriptFill className="text-5xl text-yellow-400" />
+					<RiJavascriptFill className="text-5xl text-[#f7e018]" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -50,7 +51,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<FaReact className="text-5xl text-cyan-400" />
+					<BiLogoTypescript className="text-5xl text-[#037acc]" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -58,15 +59,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<SiGnubash className="text-5xl text-orange-500" />
-				</motion.div>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<BiLogoPostgresql className="text-5xl text-blue-700" />
+					<RiReactjsLine className="text-5xl text-[#00dcff]" />
 				</motion.div>
 
 				<motion.div
@@ -75,7 +68,16 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<SiCsharp className="text-5xl text-purple-600" />
+					<BiLogoPostgresql className="text-5xl text-[#316192]" />
+				</motion.div>
+
+				<motion.div
+					className="p-3"
+					variants={iconVariants}
+					initial="initial"
+					animate="animate"
+				>
+					<SiDotnet className="text-5xl text-[#512bd4]" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -83,9 +85,19 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<FaNodeJs className="text-5xl text-green-600" />
+					<SiTailwindcss className="text-5xl text-[#4eb1b4]" />
 				</motion.div>
 			</motion.div>
+			<motion.p
+				whileInView={{ opacity: 1, y: 0 }}
+				initial={{ opacity: 0, y: 30 }}
+				transition={{ duration: 1, delay: 0.8 }}
+				viewport={{ once: true }}
+				className="mt-7 text-sm text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg text-center"
+			>
+				I&apos;m committed to continuous learning and improving my skills to
+				deliver effective user experiences and dynamic applications.
+			</motion.p>
 		</div>
 	);
 };

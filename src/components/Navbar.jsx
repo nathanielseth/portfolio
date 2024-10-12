@@ -2,9 +2,9 @@ import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
-const Navbar = ({ navOpen }) => {
+const Navbar = ({ navOpen, toggleNav }) => {
 	const [activeTab, setActiveTab] = useState("#home");
-	const [threshold, setThreshold] = useState(0.2);
+	const [threshold, setThreshold] = useState(0.1);
 	const activeBox = useRef();
 
 	const navItems = useMemo(
@@ -45,8 +45,10 @@ const Navbar = ({ navOpen }) => {
 				};
 				window.addEventListener("scroll", handleScroll, { once: true });
 			}
+
+			toggleNav(false);
 		},
-		[activeTab]
+		[activeTab, toggleNav]
 	);
 
 	useEffect(() => {
@@ -108,7 +110,7 @@ const Navbar = ({ navOpen }) => {
 					href={link}
 					key={key}
 					className={`${className} relative z-20 transition duration-200 ${
-						activeTab === link ? "text-black active-tab" : "text-zinc-50/50"
+						activeTab === link ? "text-black active-tab" : "text-zinc-400"
 					}`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
@@ -128,6 +130,7 @@ const Navbar = ({ navOpen }) => {
 
 Navbar.propTypes = {
 	navOpen: PropTypes.bool.isRequired,
+	toggleNav: PropTypes.func.isRequired,
 };
 
 export default Navbar;

@@ -3,10 +3,10 @@ import ProjectCard from "./ProjectCard";
 
 const projects = [
 	{
-		imgSrc: "/images/nt.webp",
-		title: "Neti-Cents: Income Tax Calculator",
-		tags: ["JavaScript", "HTML/CSS"],
-		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
+		imgSrc: "/images/pk.webp",
+		title: "ETIBARK",
+		tags: ["Video Game", "Godot", "Procedural Generation"],
+		projectLink: "",
 	},
 	{
 		imgSrc: "/images/vc.webp",
@@ -15,10 +15,10 @@ const projects = [
 		projectLink: "https://github.com/nathanielseth/vibechess",
 	},
 	{
-		imgSrc: "/images/pk.webp",
-		title: "ETIBARK",
-		tags: ["Video Game", "Godot", "Procedural Generation"],
-		projectLink: "",
+		imgSrc: "/images/nt.webp",
+		title: "Neti-Cents: Income Tax Calculator",
+		tags: ["JavaScript", "HTML/CSS"],
+		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
 	},
 ];
 

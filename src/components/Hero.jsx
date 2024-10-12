@@ -7,7 +7,7 @@ const typingVariants = {
 		opacity: 1,
 		transition: {
 			duration: 1,
-			delay: i * 0.17,
+			delay: i * 0.16,
 		},
 	}),
 };
@@ -17,7 +17,7 @@ const containerVariants = {
 	show: {
 		opacity: 1,
 		transition: {
-			staggerChildren: 0.3,
+			staggerChildren: 0.8,
 			delayChildren: 2,
 		},
 	},
@@ -60,7 +60,7 @@ const Hero = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			setShowArrow(true);
-		}, 3000);
+		}, 4500);
 
 		const handleScroll = () => {
 			const threshold = 50;
@@ -167,8 +167,8 @@ const Hero = () => {
 					className="mt-4 text-sm text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
 					variants={itemVariants}
 				>
-					I am a Computer Science student who is wholeheartedly dedicated to the
-					concept and principles of continuous, lifelong learning.
+					I am a Computer Science student with a passion for creating and
+					planning web development projects. Also a proud cat owner!
 				</motion.p>
 
 				<div className="mt-8 flex justify-center items-center">
