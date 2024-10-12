@@ -1,11 +1,13 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 
 const Navbar = ({ navOpen, toggleNav }) => {
 	const [activeTab, setActiveTab] = useState("#home");
-	const [threshold, setThreshold] = useState(0.1);
+	const [threshold, setThreshold] = useState(0.2);
 	const activeBox = useRef();
+	const lenis = useLenis();
 
 	const navItems = useMemo(
 		() => [
@@ -36,7 +38,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 			const targetSection = document.querySelector(link);
 
 			if (targetSection) {
-				targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+				lenis.scrollTo(targetSection.offsetTop, { duration: 0.55 });
 
 				const handleScroll = () => {
 					if (activeTab !== link) {
@@ -48,7 +50,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 
 			toggleNav(false);
 		},
-		[activeTab, toggleNav]
+		[activeTab, toggleNav, lenis]
 	);
 
 	useEffect(() => {

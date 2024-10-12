@@ -6,6 +6,7 @@ import Hero from "./components/Hero";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
 	useEffect(() => {
@@ -32,6 +33,7 @@ const App = () => {
 					<Contact />
 				</section>
 			</main>
+			<ScrollToTop />
 		</ReactLenis>
 	);
 };

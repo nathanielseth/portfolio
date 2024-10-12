@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
+
 import Navbar from "./Navbar";
 
 const Path = (props) => (
@@ -50,6 +52,16 @@ MenuToggle.propTypes = {
 
 const Header = () => {
 	const [navOpen, setNavOpen] = useState(false);
+	const lenis = useLenis();
+
+	const handleContactClick = (event) => {
+		event.preventDefault();
+		const contactSection = document.querySelector("#contact");
+
+		if (contactSection) {
+			lenis.scrollTo(contactSection.offsetTop, { duration: 1.2 });
+		}
+	};
 
 	return (
 		<header className="fixed top-0 left-0 w-full h-20 flex items-center z-40">
@@ -67,13 +79,14 @@ const Header = () => {
 
 				<div className="relative md:justify-self-center">
 					<MenuToggle toggle={() => setNavOpen(!navOpen)} isOpen={navOpen} />
-					<Navbar navOpen={navOpen} toggleNav={setNavOpen} />{" "}
+					<Navbar navOpen={navOpen} toggleNav={setNavOpen} />
 				</div>
 
 				<motion.a
 					whileHover={{ scale: 1.05 }}
 					href="#contact"
 					className="btn btn-secondary max-md:hidden md:justify-self-end font-semibold"
+					onClick={handleContactClick}
 				>
 					Contact me!
 				</motion.a>
