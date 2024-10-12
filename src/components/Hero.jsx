@@ -29,6 +29,14 @@ const itemVariants = {
 };
 
 const arrowVariants = {
+	hidden: {
+		opacity: 0,
+		y: 20,
+		transition: {
+			opacity: { duration: 0.5 },
+			y: { duration: 0.5 },
+		},
+	},
 	visible: {
 		opacity: 1,
 		y: [0, 11, 0],
@@ -41,19 +49,10 @@ const arrowVariants = {
 			opacity: { duration: 1.5 },
 		},
 	},
-	hidden: {
-		opacity: 0,
-		y: 20,
-		transition: {
-			opacity: { duration: 0.5 },
-			y: { duration: 0.5 },
-		},
-	},
 };
 
 const Hero = () => {
 	const [showArrow, setShowArrow] = useState(false);
-
 	const firstLine = "My name is Nathaniel Seth,".split(" ");
 	const secondLine = "I'm a Full-Stack developer.".split(" ");
 
@@ -64,16 +63,10 @@ const Hero = () => {
 
 		const handleScroll = () => {
 			const threshold = 50;
-
-			if (window.scrollY > threshold) {
-				setShowArrow(false);
-			} else {
-				setShowArrow(true);
-			}
+			setShowArrow(window.scrollY <= threshold);
 		};
 
 		window.addEventListener("scroll", handleScroll);
-
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
@@ -81,69 +74,23 @@ const Hero = () => {
 
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen relative text-center">
-			<motion.h1
-				id="hero-heading"
-				className="text-3xl md:text-5xl font-semibold mb-6"
-			>
-				{firstLine.map((word, i) => {
-					if (word === "Nathaniel") {
-						return (
-							<motion.span
-								key={i}
-								custom={i}
-								variants={typingVariants}
-								initial="hidden"
-								animate="visible"
-								className="mr-2 text-[#f9364d]"
-							>
-								{word}
-							</motion.span>
-						);
-					}
-					if (word === "Seth,") {
-						return (
-							<>
-								<motion.span
-									key={i}
-									custom={i}
-									variants={typingVariants}
-									initial="hidden"
-									animate="visible"
-									className="text-[#f9364d]"
-								>
-									Seth
-								</motion.span>
-								<motion.span
-									key={`${i}-comma`}
-									custom={i}
-									variants={typingVariants}
-									initial="hidden"
-									animate="visible"
-									className="text-white"
-								>
-									,
-								</motion.span>
-							</>
-						);
-					}
-					return (
-						<motion.span
-							key={i}
-							custom={i}
-							variants={typingVariants}
-							initial="hidden"
-							animate="visible"
-							className="mr-2"
-						>
-							{word}
-						</motion.span>
-					);
-				})}
-
+			<motion.h1 className="text-3xl md:text-5xl font-semibold mb-6">
+				{firstLine.map((word, i) => (
+					<motion.span
+						key={`firstLine-${i}`}
+						custom={i}
+						variants={typingVariants}
+						initial="hidden"
+						animate="visible"
+						className={word === "Nathaniel" ? "mr-2 text-[#f9364d]" : "mr-2"}
+					>
+						{word}
+					</motion.span>
+				))}
 				<br />
 				{secondLine.map((word, i) => (
 					<motion.span
-						key={i + firstLine.length}
+						key={`secondLine-${i}`}
 						custom={i + firstLine.length}
 						variants={typingVariants}
 						initial="hidden"

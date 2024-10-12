@@ -36,7 +36,7 @@ const ScrollToTop = () => {
 	return (
 		<motion.button
 			onClick={scrollToTop}
-			className="fixed bottom-7 right-6 z-50 w-12 h-12 rounded-full bg-white text-black transition-colors duration-300 flex items-center justify-center"
+			className="fixed bottom-7 right-5 z-50 w-13 h-13 rounded-full bg-white text-black transition-colors duration-300 flex items-center justify-center"
 			initial={{ opacity: 0, y: 20 }}
 			animate={
 				shouldAnimateExit
@@ -55,8 +55,8 @@ const ScrollToTop = () => {
 			whileHover={{ scale: 1.1 }}
 			whileTap={{ scale: 0.95 }}
 		>
-			<span className="font-semibold material-symbols-rounded">
-				arrow_upward
+			<span className="font-medium text-5xl material-symbols-rounded">
+				keyboard_arrow_up
 			</span>
 		</motion.button>
 	);
