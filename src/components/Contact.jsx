@@ -33,7 +33,7 @@ const Contact = () => {
 		>
 			<div className="flex-grow flex flex-col justify-center items-center">
 				<motion.p
-					className="font-light text-center text-xl md:text-xl"
+					className="font-light text-center text-l md:text-xl"
 					variants={itemVariants}
 					initial="hidden"
 					whileInView="show"
@@ -42,7 +42,7 @@ const Contact = () => {
 					<br />{" "}
 					<a
 						href="mailto:nathanielseth.dev@gmail.com"
-						className="text-[#f9364d] font-semibold text-2xl"
+						className="text-[#f9364d] font-medium text-xl md:text-2xl"
 					>
 						nathanielseth.dev@gmail.com
 					</a>
@@ -88,7 +88,7 @@ const Contact = () => {
 				variants={itemVariants}
 				initial="hidden"
 				whileInView="show"
-				className="text-sm font-medium md:text-base mb-5 text-center text-zinc-600 "
+				className="text-sm font-light md:text-base mb-5 text-center text-zinc-600 "
 			>
 				made by nathanielseth.dev
 			</motion.div>

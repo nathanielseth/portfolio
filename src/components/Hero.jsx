@@ -29,14 +29,6 @@ const itemVariants = {
 };
 
 const arrowVariants = {
-	hidden: {
-		opacity: 0,
-		y: 20,
-		transition: {
-			opacity: { duration: 0.5 },
-			y: { duration: 0.5 },
-		},
-	},
 	visible: {
 		opacity: 1,
 		y: [0, 11, 0],
@@ -49,10 +41,19 @@ const arrowVariants = {
 			opacity: { duration: 1.5 },
 		},
 	},
+	hidden: {
+		opacity: 0,
+		y: 20,
+		transition: {
+			opacity: { duration: 0.5 },
+			y: { duration: 0.5 },
+		},
+	},
 };
 
 const Hero = () => {
 	const [showArrow, setShowArrow] = useState(false);
+
 	const firstLine = "My name is Nathaniel Seth,".split(" ");
 	const secondLine = "I'm a Full-Stack developer.".split(" ");
 
@@ -63,10 +64,12 @@ const Hero = () => {
 
 		const handleScroll = () => {
 			const threshold = 50;
+
 			setShowArrow(window.scrollY <= threshold);
 		};
 
 		window.addEventListener("scroll", handleScroll);
+
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
@@ -74,23 +77,71 @@ const Hero = () => {
 
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen relative text-center">
-			<motion.h1 className="text-3xl md:text-5xl font-semibold mb-6">
-				{firstLine.map((word, i) => (
-					<motion.span
-						key={`firstLine-${i}`}
-						custom={i}
-						variants={typingVariants}
-						initial="hidden"
-						animate="visible"
-						className={word === "Nathaniel" ? "mr-2 text-[#f9364d]" : "mr-2"}
-					>
-						{word}
-					</motion.span>
-				))}
+			<motion.h1
+				id="hero-heading"
+				className="text-2xl sm:text-4xl md:text-5xl font-semibold mb-6"
+			>
+				{firstLine.map((word, i) => {
+					const key = `first-line-word-${i}`;
+
+					if (word === "Nathaniel") {
+						return (
+							<motion.span
+								key={key}
+								custom={i}
+								variants={typingVariants}
+								initial="hidden"
+								animate="visible"
+								className="mr-2 text-[#f9364d]"
+							>
+								{word}
+							</motion.span>
+						);
+					}
+					if (word === "Seth,") {
+						return (
+							<span key={key}>
+								<motion.span
+									key={`seth-word`}
+									custom={i}
+									variants={typingVariants}
+									initial="hidden"
+									animate="visible"
+									className="text-[#f9364d]"
+								>
+									Seth
+								</motion.span>
+								<motion.span
+									key={`seth-comma`}
+									custom={i}
+									variants={typingVariants}
+									initial="hidden"
+									animate="visible"
+									className="text-white"
+								>
+									,
+								</motion.span>
+							</span>
+						);
+					}
+					return (
+						<motion.span
+							key={key}
+							custom={i}
+							variants={typingVariants}
+							initial="hidden"
+							animate="visible"
+							className="mr-2"
+						>
+							{word}
+						</motion.span>
+					);
+				})}
+
 				<br />
 				{secondLine.map((word, i) => (
 					<motion.span
-						key={`secondLine-${i}`}
+						key={`second-line-word-${i}`}
 						custom={i + firstLine.length}
 						variants={typingVariants}
 						initial="hidden"
@@ -111,7 +162,7 @@ const Hero = () => {
 				aria-labelledby="hero-heading"
 			>
 				<motion.p
-					className="mt-4 text-sm text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
+					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
 					variants={itemVariants}
 				>
 					I am a Computer Science student with a passion for creating and
