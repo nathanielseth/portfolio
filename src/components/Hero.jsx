@@ -117,7 +117,7 @@ const Hero = () => {
 									variants={typingVariants}
 									initial="hidden"
 									animate="visible"
-									className="text-white"
+									className="text-zinc-50"
 								>
 									,
 								</motion.span>
@@ -180,7 +180,7 @@ const Hero = () => {
 						layout="position"
 						href="/assets/seth_cv.pdf"
 						download
-						className="inline-flex items-center gap-1 bg-[#f9364d] text-white px-6 h-12 rounded-full"
+						className="inline-flex items-center gap-1 bg-[#f9364d] text-zinc-50 px-6 h-12 rounded-full"
 						aria-label="Download resume"
 					>
 						<span className="font-semibold text-base leading-none">

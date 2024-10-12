@@ -9,7 +9,7 @@ const Path = (props) => (
 	<motion.path
 		fill="transparent"
 		strokeWidth="3"
-		stroke="white"
+		stroke="#fafafa"
 		strokeLinecap="round"
 		{...props}
 	/>
@@ -89,7 +89,7 @@ const Header = () => {
 				<motion.a
 					whileHover={{ scale: 1.05 }}
 					href="#contact"
-					className="btn btn-secondary max-md:hidden md:justify-self-end font-semibold"
+					className="btn btn-secondary max-md:hidden md:justify-self-end font-semibold text-zinc-50"
 					onClick={handleContactClick}
 				>
 					Contact me!

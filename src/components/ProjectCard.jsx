@@ -7,7 +7,8 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 			whileHover={{ y: -6 }}
 			className={
 				"relative p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 transition-colors " +
-				classes
+				classes +
+				" max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto"
 			}
 		>
 			<figure className="img-box aspect-square rounded-lg mb-4">
@@ -37,7 +38,7 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 					</div>
 				</div>
 
-				<div className="w-11 h-11 rounded-lg grid place-items-center bg-zinc-50 text-black shrink-0">
+				<div className="w-11 h-11 rounded-lg grid place-items-center bg-zinc-50 text-zinc-950 shrink-0">
 					<span className="material-symbols-rounded" aria-hidden="true">
 						arrow_outward
 					</span>

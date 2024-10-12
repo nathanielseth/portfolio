@@ -112,7 +112,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 					href={link}
 					key={key}
 					className={`${className} relative z-20 transition duration-200 ${
-						activeTab === link ? "text-black active-tab" : "text-zinc-400"
+						activeTab === link ? "text-zinc-950 active-tab" : "text-zinc-400"
 					}`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>

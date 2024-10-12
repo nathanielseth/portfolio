@@ -43,7 +43,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<RiJavascriptFill className="text-6xl text-[#f7e018]" />
+					<RiJavascriptFill className="text-5xl md:text-6xl text-[#f7e018]" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -51,7 +51,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<BiLogoTypescript className="text-6xl text-[#037acc]" />
+					<BiLogoTypescript className="text-5xl md:text-6xl text-[#037acc]" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -59,16 +59,7 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<RiReactjsLine className="text-6xl text-[#00dcff]" />
-				</motion.div>
-
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<BiLogoPostgresql className="text-6xl text-[#316192]" />
+					<RiReactjsLine className="text-5xl md:text-6xl text-[#00dcff]" />
 				</motion.div>
 
 				<motion.div
@@ -77,7 +68,16 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<SiDotnet className="text-6xl text-[#512bd4]" />
+					<BiLogoPostgresql className="text-5xl md:text-6xl text-[#316192]" />
+				</motion.div>
+
+				<motion.div
+					className="p-3"
+					variants={iconVariants}
+					initial="initial"
+					animate="animate"
+				>
+					<SiDotnet className="text-5xl md:text-6xl text-[#512bd4]" />
 				</motion.div>
 				<motion.div
 					className="p-3"
@@ -85,9 +85,10 @@ const Skills = () => {
 					initial="initial"
 					animate="animate"
 				>
-					<SiTailwindcss className="text-6xl text-[#4eb1b4]" />
+					<SiTailwindcss className="text-5xl md:text-6xl text-[#4eb1b4]" />
 				</motion.div>
 			</motion.div>
+
 			<motion.p
 				whileInView={{ opacity: 1, y: 0 }}
 				initial={{ opacity: 0, y: 30 }}

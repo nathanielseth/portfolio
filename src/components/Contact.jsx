@@ -59,7 +59,7 @@ const Contact = () => {
 						href="https://github.com/nathanielseth"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-3xl text-zinc-600 hover:text-white"
+						className="text-3xl text-zinc-600 hover:text-zinc-50"
 					>
 						<FaGithub />
 					</a>
@@ -68,7 +68,7 @@ const Contact = () => {
 						href="https://www.linkedin.com/in/nathanielseth"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-3xl text-zinc-600 hover:text-white"
+						className="text-3xl text-zinc-600 hover:text-zinc-50"
 					>
 						<FaLinkedin />
 					</a>
@@ -77,7 +77,7 @@ const Contact = () => {
 						href="mailto:nathanielseth.dev@gmail.com"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-3xl text-zinc-600 hover:text-white"
+						className="text-3xl text-zinc-600 hover:text-zinc-50"
 					>
 						<MdEmail />
 					</a>

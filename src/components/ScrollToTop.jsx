@@ -11,8 +11,17 @@ const ScrollToTop = () => {
 	useEffect(() => {
 		const handleScroll = () => {
 			const currentScrollY = window.pageYOffset;
+			const windowHeight = window.innerHeight;
+			const documentHeight = document.documentElement.scrollHeight;
 
-			if (currentScrollY < 280) {
+			const isAtBottom = windowHeight + currentScrollY >= documentHeight - 1;
+
+			if (isAtBottom) {
+				setTimeout(() => {
+					setIsVisible(true);
+					setShouldAnimateExit(false);
+				}, 200);
+			} else if (currentScrollY < 280) {
 				setIsVisible(false);
 				setShouldAnimateExit(false);
 			} else if (currentScrollY < lastScrollY && currentScrollY > 300) {
@@ -36,7 +45,7 @@ const ScrollToTop = () => {
 	return (
 		<motion.button
 			onClick={scrollToTop}
-			className="fixed bottom-7 right-5 z-50 w-13 h-13 rounded-full bg-white text-black transition-colors duration-300 flex items-center justify-center"
+			className="fixed bottom-7 right-5 z-50 w-13 h-13 rounded-full bg-zinc-50 text-zinc-950 transition-colors duration-300 flex items-center justify-center"
 			initial={{ opacity: 0, y: 20 }}
 			animate={
 				shouldAnimateExit
