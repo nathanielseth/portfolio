@@ -72,7 +72,7 @@ const Header = () => {
 				<h1>
 					<a href="/portfolio/" className="logo menu-btn">
 						<img
-							src="public/images/logo.svg"
+							src="/portfolio/images/logo.svg"
 							width={35}
 							height={35}
 							alt="Nathaniel-Seth"

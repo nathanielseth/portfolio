@@ -1,26 +1,6 @@
 import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
-
-const projects = [
-	{
-		imgSrc: "public/images/pk.webp",
-		title: "ETIBARK",
-		tags: ["Video Game", "Godot", "Procedural Generation"],
-		projectLink: "",
-	},
-	{
-		imgSrc: "public/images/vc.webp",
-		title: "VibeChess: Online Multiplayer Chess",
-		tags: ["React", "WebSockets", "Express"],
-		projectLink: "https://github.com/nathanielseth/vibechess",
-	},
-	{
-		imgSrc: "public/images/nt.webp",
-		title: "Neti-Cents: Income Tax Calculator",
-		tags: ["JavaScript", "HTML/CSS"],
-		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
-	},
-];
+import projects from "../projectsData";
 
 const containerVariants = {
 	hidden: { opacity: 0 },

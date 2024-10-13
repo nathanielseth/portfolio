@@ -179,7 +179,7 @@ const Hero = () => {
 						}
 						variants={itemVariants}
 						layout="position"
-						href="public/assets/seth_cv.pdf"
+						href="/portfolio/assets/seth_cv.pdf"
 						download
 						className="inline-flex items-center gap-1 bg-[#f9364d] text-zinc-50 px-6 h-12 rounded-full"
 						aria-label="Download resume"

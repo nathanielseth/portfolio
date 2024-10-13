@@ -1,11 +1,8 @@
 import { motion } from "framer-motion";
-
-import { RiJavascriptFill } from "react-icons/ri";
-import { SiDotnet } from "react-icons/si";
-import { SiTailwindcss } from "react-icons/si";
-import { RiReactjsLine } from "react-icons/ri";
-import { BiLogoTypescript } from "react-icons/bi";
-import { BiLogoPostgresql } from "react-icons/bi";
+import { RiJavascriptFill, RiReactjsLine } from "react-icons/ri";
+import { BiLogoTypescript, BiLogoPostgresql } from "react-icons/bi";
+import { SiDotnet, SiTailwindcss } from "react-icons/si";
+import skills from "../skillsData";
 
 const iconVariants = {
 	initial: { y: -15 },
@@ -15,6 +12,15 @@ const iconVariants = {
 			duration: 1,
 		},
 	},
+};
+
+const iconComponents = {
+	RiJavascriptFill,
+	BiLogoTypescript,
+	RiReactjsLine,
+	BiLogoPostgresql,
+	SiDotnet,
+	SiTailwindcss,
 };
 
 const Skills = () => {
@@ -37,56 +43,18 @@ const Skills = () => {
 				viewport={{ once: true }}
 				className="flex flex-wrap items-center justify-center gap-3"
 			>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<RiJavascriptFill className="text-5xl md:text-6xl text-[#f7e018]" />
-				</motion.div>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<BiLogoTypescript className="text-5xl md:text-6xl text-[#037acc]" />
-				</motion.div>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<RiReactjsLine className="text-5xl md:text-6xl text-[#00dcff]" />
-				</motion.div>
+				{skills.map(({ icon, color }, key) => {
+					const IconComponent = iconComponents[icon];
 
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<BiLogoPostgresql className="text-5xl md:text-6xl text-[#316192]" />
-				</motion.div>
-
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<SiDotnet className="text-5xl md:text-6xl text-[#512bd4]" />
-				</motion.div>
-				<motion.div
-					className="p-3"
-					variants={iconVariants}
-					initial="initial"
-					animate="animate"
-				>
-					<SiTailwindcss className="text-5xl md:text-6xl text-[#4eb1b4]" />
-				</motion.div>
+					return (
+						<motion.div key={key} className="p-3" variants={iconVariants}>
+							<IconComponent
+								className="text-5xl md:text-6xl"
+								style={{ color }}
+							/>
+						</motion.div>
+					);
+				})}
 			</motion.div>
 
 			<motion.p
