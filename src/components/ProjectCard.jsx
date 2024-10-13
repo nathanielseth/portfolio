@@ -1,10 +1,38 @@
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
-const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
+const ProjectCard = ({
+	imgSrc,
+	title,
+	tags,
+	projectLink,
+	classes,
+	onAnimationComplete,
+}) => {
+	const variants = {
+		hidden: { opacity: 0, y: 20 },
+		visible: { opacity: 1, y: 0 },
+	};
+
 	return (
 		<motion.div
-			whileHover={{ y: -6 }}
+			whileHover={{
+				y: -8,
+				transition: {
+					type: "spring",
+					stiffness: 600,
+					mass: 0.5,
+				},
+			}}
+			initial="hidden"
+			whileInView="visible"
+			viewport={{ once: true }}
+			variants={variants}
+			transition={{
+				duration: 0.25,
+				ease: "easeIn",
+			}}
+			onAnimationComplete={onAnimationComplete}
 			className={
 				"relative p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 transition-colors " +
 				classes +
@@ -38,7 +66,7 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink, classes }) => {
 					</div>
 				</div>
 
-				<div className="w-11 h-11 rounded-lg grid place-items-center bg-zinc-50 text-zinc-950 shrink-0">
+				<div className="w-11 h-11 rounded-lg grid place-items-center bg-[#f9364d] text-zinc-50 shrink-0">
 					<span className="material-symbols-rounded" aria-hidden="true">
 						arrow_outward
 					</span>
@@ -56,6 +84,7 @@ ProjectCard.propTypes = {
 	tags: PropTypes.array.isRequired,
 	projectLink: PropTypes.string,
 	classes: PropTypes.string,
+	onAnimationComplete: PropTypes.func.isRequired,
 };
 
 export default ProjectCard;

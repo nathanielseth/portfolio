@@ -92,7 +92,7 @@ const Hero = () => {
 								variants={typingVariants}
 								initial="hidden"
 								animate="visible"
-								className="mr-1 md:mr-2 text-[#f9364d]"
+								className="mr-1 md:mr-2 text-zinc-50"
 							>
 								{word}
 							</motion.span>
@@ -165,9 +165,9 @@ const Hero = () => {
 					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
 					variants={itemVariants}
 				>
-					As a Computer Science student based in Philippines, I love crafting
-					and planning web development projects. I&apos;m also a proud cat
-					owner!
+					I&apos;m a Computer Science student based in the Philippines,
+					specializing in React for web development. I&apos;m also a proud cat
+					owner.
 				</motion.p>
 
 				<div className="mt-8 flex justify-center items-center">
