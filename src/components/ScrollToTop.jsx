@@ -64,7 +64,7 @@ const ScrollToTop = () => {
 			whileHover={{ scale: 1.1 }}
 			whileTap={{ scale: 0.95 }}
 		>
-			<span className="font-medium text-5xl material-symbols-rounded">
+			<span className="font-normal text-5xl material-symbols-rounded">
 				keyboard_arrow_up
 			</span>
 		</motion.button>

@@ -5,7 +5,7 @@ import { useLenis } from "lenis/react";
 
 const Navbar = ({ navOpen, toggleNav }) => {
 	const [activeTab, setActiveTab] = useState("#home");
-	const [threshold, setThreshold] = useState(0.2);
+	const [threshold, setThreshold] = useState(0.1);
 	const activeBox = useRef();
 	const lenis = useLenis();
 
@@ -38,7 +38,15 @@ const Navbar = ({ navOpen, toggleNav }) => {
 			const targetSection = document.querySelector(link);
 
 			if (targetSection) {
-				lenis.scrollTo(targetSection.offsetTop, { duration: 0.55 });
+				const isMobile = window.innerWidth < 768;
+				const yOffset = isMobile && link === "#projects" ? -26 : 0;
+
+				const yPosition =
+					targetSection.getBoundingClientRect().top +
+					window.pageYOffset +
+					yOffset;
+
+				lenis.scrollTo(yPosition, { duration: 0.55 });
 
 				const handleScroll = () => {
 					if (activeTab !== link) {

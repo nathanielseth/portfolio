@@ -79,7 +79,7 @@ const Hero = () => {
 		<main className="flex flex-col items-center justify-center min-h-screen relative text-center">
 			<motion.h1
 				id="hero-heading"
-				className="text-2xl sm:text-4xl md:text-5xl font-semibold mb-6"
+				className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-3"
 			>
 				{firstLine.map((word, i) => {
 					const key = `first-line-word-${i}`;
@@ -92,7 +92,7 @@ const Hero = () => {
 								variants={typingVariants}
 								initial="hidden"
 								animate="visible"
-								className="mr-2 text-[#f9364d]"
+								className="mr-1 md:mr-2 text-[#f9364d]"
 							>
 								{word}
 							</motion.span>
@@ -131,7 +131,7 @@ const Hero = () => {
 							variants={typingVariants}
 							initial="hidden"
 							animate="visible"
-							className="mr-2"
+							className="mr-1 md:mr-2"
 						>
 							{word}
 						</motion.span>
@@ -146,7 +146,7 @@ const Hero = () => {
 						variants={typingVariants}
 						initial="hidden"
 						animate="visible"
-						className="mr-2"
+						className="mr-1 md:mr-2"
 					>
 						{word}
 					</motion.span>
@@ -165,8 +165,9 @@ const Hero = () => {
 					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
 					variants={itemVariants}
 				>
-					I am a Computer Science student with a passion for creating and
-					planning web development projects. Also a proud cat owner!
+					As a Computer Science student based in Philippines, I love crafting
+					and planning web development projects. I&apos;m also a proud cat
+					owner!
 				</motion.p>
 
 				<div className="mt-8 flex justify-center items-center">
@@ -178,7 +179,7 @@ const Hero = () => {
 						}
 						variants={itemVariants}
 						layout="position"
-						href="/assets/seth_cv.pdf"
+						href="public/assets/seth_cv.pdf"
 						download
 						className="inline-flex items-center gap-1 bg-[#f9364d] text-zinc-50 px-6 h-12 rounded-full"
 						aria-label="Download resume"
@@ -194,7 +195,7 @@ const Hero = () => {
 			</motion.div>
 
 			<motion.div
-				className="absolute bottom-16"
+				className="absolute bottom-20"
 				variants={arrowVariants}
 				initial="hidden"
 				animate={showArrow ? "visible" : "hidden"}

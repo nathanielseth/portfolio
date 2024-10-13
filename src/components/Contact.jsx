@@ -33,7 +33,7 @@ const Contact = () => {
 		>
 			<div className="flex-grow flex flex-col justify-center items-center">
 				<motion.p
-					className="font-light text-center text-l md:text-xl"
+					className="font-normal text-center text-l md:text-xl"
 					variants={itemVariants}
 					initial="hidden"
 					whileInView="show"
