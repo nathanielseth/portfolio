@@ -21,6 +21,7 @@ const projects = [
 		],
 		projectLink: "",
 		codeLink: "",
+		category: "GAME",
 	},
 	{
 		imgSrc: "/portfolio/images/vc.webp",
@@ -43,6 +44,7 @@ const projects = [
 		],
 		projectLink: "",
 		codeLink: "https://github.com/nathanielseth/vibechess",
+		category: "WEB",
 	},
 	{
 		imgSrc: "/portfolio/images/nt.webp",
@@ -65,6 +67,7 @@ const projects = [
 		],
 		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
 		codeLink: "https://github.com/nathanielseth/income-tax-ph-calculator",
+		category: "WEB",
 	},
 ];
 

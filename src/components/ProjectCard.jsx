@@ -91,26 +91,28 @@ const ProjectCard = ({
 
 				<div className="absolute bottom-4 right-4 flex space-x-2 z-10">
 					{projectLink && (
-						<a
+						<motion.a
 							href={projectLink}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="flex items-center justify-center w-11 h-11 rounded-lg bg-[#7f2ffa] text-zinc-50 transition-colors"
 							aria-label={`View live project: ${title}`}
+							whileHover={{ scale: 1.1 }}
 						>
 							<IoGlobeOutline className="w-8 h-8" aria-hidden="true" />
-						</a>
+						</motion.a>
 					)}
 					{codeLink && (
-						<a
+						<motion.a
 							href={codeLink}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="flex items-center justify-center w-11 h-11 rounded-lg bg-zinc-50 text-zinc-950 transition-colors"
 							aria-label={`View code for project: ${title}`}
+							whileHover={{ scale: 1.05 }}
 						>
 							<IoLogoGithub className="w-8 h-8" aria-hidden="true" />{" "}
-						</a>
+						</motion.a>
 					)}
 				</div>
 			</div>

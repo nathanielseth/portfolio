@@ -58,19 +58,17 @@ const Hero = () => {
 	const secondLine = "I'm a Full-Stack developer.".split(" ");
 
 	useEffect(() => {
-		setTimeout(() => {
+		const timer = setTimeout(() => {
 			setShowArrow(true);
 		}, 4500);
 
 		const handleScroll = () => {
-			const threshold = 50;
-
-			setShowArrow(window.scrollY <= threshold);
+			setShowArrow(window.scrollY <= 50);
 		};
 
 		window.addEventListener("scroll", handleScroll);
-
 		return () => {
+			clearTimeout(timer);
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
@@ -79,66 +77,23 @@ const Hero = () => {
 		<main className="flex flex-col items-center justify-center min-h-screen relative text-center">
 			<motion.h1
 				id="hero-heading"
-				className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-3"
+				className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-3 text-zinc-50"
 			>
-				{firstLine.map((word, i) => {
-					const key = `first-line-word-${i}`;
-
-					if (word === "Nathaniel") {
-						return (
-							<motion.span
-								key={key}
-								custom={i}
-								variants={typingVariants}
-								initial="hidden"
-								animate="visible"
-								className="mr-1 md:mr-2 text-zinc-50"
-							>
-								{word}
-							</motion.span>
-						);
-					}
-					if (word === "Seth,") {
-						return (
-							<span key={key}>
-								<motion.span
-									key={`seth-word`}
-									custom={i}
-									variants={typingVariants}
-									initial="hidden"
-									animate="visible"
-									className="text-[#8c44fb]"
-								>
-									Seth
-								</motion.span>
-								<motion.span
-									key={`seth-comma`}
-									custom={i}
-									variants={typingVariants}
-									initial="hidden"
-									animate="visible"
-									className="text-zinc-50"
-								>
-									,
-								</motion.span>
-							</span>
-						);
-					}
-					return (
-						<motion.span
-							key={key}
-							custom={i}
-							variants={typingVariants}
-							initial="hidden"
-							animate="visible"
-							className="mr-1 md:mr-2"
-						>
-							{word}
-						</motion.span>
-					);
-				})}
+				{firstLine.map((word, i) => (
+					<motion.span
+						key={`first-line-word-${i}`}
+						custom={i}
+						variants={typingVariants}
+						initial="hidden"
+						animate="visible"
+						className="mr-1 md:mr-2"
+					>
+						{word}
+					</motion.span>
+				))}
 
 				<br />
+
 				{secondLine.map((word, i) => (
 					<motion.span
 						key={`second-line-word-${i}`}
