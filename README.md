@@ -1,9 +1,9 @@
 # nathanielseth.dev
 
 ## About
-Welcome to my personal portfolio! This web app showcases my skills as a full-stack web developer and highlights the projects I've worked on.
+Welcome to my personal portfolio! This web app showcases my skills as a programmer and highlights the projects I've created.
 
-![image](https://github.com/user-attachments/assets/a6242347-292f-4dae-8377-c3966492d5b0)
+![demo](https://github.com/user-attachments/assets/e827958d-3db8-43e2-a0ed-62ce033ed254)
 
 ## Technologies
 
