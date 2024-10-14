@@ -42,7 +42,7 @@ const Contact = () => {
 					<br />{" "}
 					<a
 						href="mailto:nathanielseth.dev@gmail.com"
-						className="text-[#f9364d] font-medium text-xl md:text-2xl"
+						className="text-[#7f2ffa] font-bold text-xl md:text-2xl"
 					>
 						nathanielseth.dev@gmail.com
 					</a>

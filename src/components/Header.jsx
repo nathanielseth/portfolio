@@ -76,7 +76,6 @@ const Header = () => {
 							width={35}
 							height={35}
 							alt="Nathaniel-Seth"
-							loading="lazy"
 						/>
 					</a>
 				</h1>

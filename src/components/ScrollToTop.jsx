@@ -45,7 +45,7 @@ const ScrollToTop = () => {
 	return (
 		<motion.button
 			onClick={scrollToTop}
-			className="fixed bottom-7 right-5 z-50 w-13 h-13 rounded-full bg-zinc-50 text-zinc-950 transition-colors duration-300 flex items-center justify-center"
+			className="fixed bottom-7 right-5 z-50 w-13 h-13 rounded-full bg-[#7f2ffa] text-zinc-50 transition-colors duration-300 flex items-center justify-center"
 			initial={{ opacity: 0, y: 30 }}
 			animate={
 				shouldAnimateExit

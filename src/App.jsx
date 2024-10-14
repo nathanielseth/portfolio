@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ReactLenis } from "lenis/react";
 
 import Header from "./components/Header";
@@ -9,13 +8,6 @@ import Contact from "./components/Contact";
 import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
-	useEffect(() => {
-		const homeSection = document.getElementById("home");
-		if (homeSection) {
-			homeSection.scrollIntoView({ behavior: "smooth" });
-		}
-	}, []);
-
 	return (
 		<ReactLenis root>
 			<Header />

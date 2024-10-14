@@ -1,4 +1,5 @@
-import { RiJavascriptFill, RiReactjsLine } from "react-icons/ri";
+import { RiJavascriptFill } from "react-icons/ri";
+import { FaReact } from "react-icons/fa";
 import { BiLogoTypescript, BiLogoPostgresql } from "react-icons/bi";
 import {
 	SiDotnet,
@@ -9,10 +10,10 @@ import {
 } from "react-icons/si";
 
 export const skills = [
-	{ name: "JavaScript", icon: RiJavascriptFill, color: "#e6ce02" },
+	{ name: "JavaScript", icon: RiJavascriptFill, color: "#dfce3c" },
 	{ name: "TypeScript", icon: BiLogoTypescript, color: "#037acc" },
-	{ name: "React", icon: RiReactjsLine, color: "#58c4dc" },
-	{ name: "C#", icon: SiCsharp, color: "#f15029" },
+	{ name: "React", icon: FaReact, color: "#017fa5" },
+	{ name: "C#", icon: SiCsharp, color: "#9a4993" },
 	{ name: ".NET", icon: SiDotnet, color: "#512bd4" },
 	{ name: "PostgreSQL", icon: BiLogoPostgresql, color: "#316192" },
 	{ name: "TailwindCSS", icon: SiTailwindcss, color: "#4eb1b4" },

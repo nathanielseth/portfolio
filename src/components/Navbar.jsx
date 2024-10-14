@@ -39,7 +39,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 
 			if (targetSection) {
 				const isMobile = window.innerWidth < 768;
-				const yOffset = isMobile && link === "#projects" ? -26 : 0;
+				const yOffset = isMobile && link === "#projects" ? -80 : 0;
 
 				const yPosition =
 					targetSection.getBoundingClientRect().top +
