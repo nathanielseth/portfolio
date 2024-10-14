@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { useState } from "react";
 
 const containerVariants = {
 	hidden: { opacity: 0 },
@@ -23,6 +24,32 @@ const iconVariants = {
 };
 
 const Contact = () => {
+	const [tooltip, setTooltip] = useState("Click to copy");
+	const [showTooltip, setShowTooltip] = useState(false);
+
+	const copyToClipboard = async () => {
+		try {
+			if (navigator.clipboard) {
+				await navigator.clipboard.writeText("nathanielseth.dev@gmail.com");
+			} else {
+				const textArea = document.createElement("textarea");
+				textArea.value = "nathanielseth.dev@gmail.com";
+				document.body.appendChild(textArea);
+				textArea.select();
+				document.execCommand("copy");
+				document.body.removeChild(textArea);
+			}
+			setTooltip("Copied to clipboard!");
+			setShowTooltip(true);
+			setTimeout(() => {
+				setTooltip("Click to copy");
+				setShowTooltip(false);
+			}, 4000);
+		} catch (err) {
+			console.error("Failed to copy: ", err);
+		}
+	};
+
 	return (
 		<motion.div
 			className="flex flex-col justify-between items-center h-screen"
@@ -39,18 +66,31 @@ const Contact = () => {
 					whileInView="show"
 				>
 					Please feel free to reach out at
-					<br />{" "}
-					<a
-						href="mailto:nathanielseth.dev@gmail.com"
-						className="text-[#7f2ffa] font-bold text-xl md:text-2xl"
-					>
-						nathanielseth.dev@gmail.com
-					</a>
-					.
+					<br />
+					<div className="relative group">
+						<button
+							onClick={copyToClipboard}
+							className="absolute inset-0 cursor-pointer bg-transparent border-none"
+							aria-label="Copy email to clipboard"
+						></button>
+						<span className="text-[#7f2ffa] font-bold text-xl md:text-2xl">
+							nathanielseth.dev@gmail.com
+						</span>
+						<div
+							className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 ${
+								showTooltip || "group-hover:block hidden"
+							}`}
+						>
+							<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
+								<span className="whitespace-nowrap">{tooltip}</span>
+							</div>
+							<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
+						</div>
+					</div>
 				</motion.p>
 
 				<motion.div
-					className="flex mt-10 space-x-4"
+					className="flex mt-12 space-x-5"
 					variants={iconVariants}
 					initial="hidden"
 					whileInView="show"
@@ -88,7 +128,7 @@ const Contact = () => {
 				variants={itemVariants}
 				initial="hidden"
 				whileInView="show"
-				className="text-sm font-light md:text-base mb-5 text-center text-zinc-500 "
+				className="text-sm font-light md:text-base mb-5 text-center text-zinc-500"
 			>
 				made by nathanielseth.dev
 			</motion.div>
