@@ -1,9 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProjectCard from "./ProjectCard";
 import projects from "../utils/projectsData.jsx";
 
+const preloadImages = (imageUrls) => {
+	imageUrls.forEach((url) => {
+		const img = new Image();
+		img.src = url;
+	});
+};
+
 const Projects = () => {
 	const [visibleCards, setVisibleCards] = useState(0);
+	const imagesLoaded = useRef(false);
+
+	useEffect(() => {
+		if (!imagesLoaded.current) {
+			const imageUrls = projects.map((project) => project.imgSrc);
+			preloadImages(imageUrls);
+			imagesLoaded.current = true;
+		}
+	}, []);
 
 	const handleAnimationComplete = () => {
 		setVisibleCards((prev) => prev + 1);

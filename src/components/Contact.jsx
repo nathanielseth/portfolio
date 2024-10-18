@@ -59,7 +59,7 @@ const Contact = () => {
 			viewport={{ once: false }}
 		>
 			<div className="flex-grow flex flex-col justify-center items-center">
-				<motion.p
+				<motion.div
 					className="font-normal text-center text-l md:text-xl"
 					variants={itemVariants}
 					initial="hidden"
@@ -67,27 +67,25 @@ const Contact = () => {
 				>
 					Please feel free to reach out at
 					<br />
-					<div className="relative group">
-						<button
-							onClick={copyToClipboard}
-							className="absolute inset-0 cursor-pointer bg-transparent border-none"
-							aria-label="Copy email to clipboard"
-						></button>
+					<span
+						className="relative group inline-block cursor-pointer"
+						onClick={copyToClipboard}
+					>
 						<span className="text-[#7f2ffa] font-bold text-xl md:text-2xl">
 							nathanielseth.dev@gmail.com
 						</span>
 						<div
 							className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 ${
-								showTooltip || "group-hover:block hidden"
-							}`}
+								showTooltip ? "block" : "hidden"
+							} group-hover:block`}
 						>
 							<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
 								<span className="whitespace-nowrap">{tooltip}</span>
 							</div>
 							<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
 						</div>
-					</div>
-				</motion.p>
+					</span>
+				</motion.div>
 
 				<motion.div
 					className="flex mt-12 space-x-5"

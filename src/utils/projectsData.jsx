@@ -1,7 +1,7 @@
 import { SiGodotengine, SiSocketdotio, SiExpress } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
-import { FaReact, FaHtml5, FaNodeJs } from "react-icons/fa";
-import { TfiCss3 } from "react-icons/tfi";
+import { FaReact, FaNodeJs } from "react-icons/fa";
+import { RiTailwindCssFill } from "react-icons/ri";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -17,7 +17,7 @@ const projects = [
 			createTag(
 				<SiGodotengine className={iconClassName} />,
 				"bg-[#458dc0] text-zinc-50",
-				"Godot Engine"
+				"Godot"
 			),
 		],
 		projectLink: "",
@@ -57,7 +57,7 @@ const projects = [
 	},
 	{
 		imgSrc: "/portfolio/images/nt.webp",
-		title: "Neti-Cents",
+		title: "NetiCents",
 		description:
 			"A simple, user-friendly tool for calculating income tax in the Philippines.",
 		tags: [
@@ -67,18 +67,18 @@ const projects = [
 				"JavaScript"
 			),
 			createTag(
-				<FaHtml5 className="inline-block w-6 h-6" />,
-				"bg-[#ef652a] text-zinc-50",
-				"HTML5"
+				<FaReact className={iconClassName} />,
+				"bg-[#017fa5] text-zinc-50",
+				"React"
 			),
 			createTag(
-				<TfiCss3 className={iconClassName} />,
-				"bg-[#1c88c7] text-zinc-50",
-				"CSS3"
+				<RiTailwindCssFill className={iconClassName} />,
+				"bg-[#4eb1b4] text-zinc-50",
+				"Tailwind"
 			),
 		],
-		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
-		codeLink: "https://github.com/nathanielseth/income-tax-ph-calculator",
+		projectLink: "https://nathanielseth.github.io/neticents/",
+		codeLink: "https://github.com/nathanielseth/neticents",
 		category: "WEB",
 	},
 ];

@@ -38,7 +38,7 @@ const ProjectCard = ({
 			viewport={{ once: true }}
 			variants={variants}
 			transition={{
-				duration: 0.25,
+				duration: 0.35,
 				ease: "easeIn",
 			}}
 			onAnimationComplete={onAnimationComplete}
@@ -63,7 +63,6 @@ const ProjectCard = ({
 					<img
 						src={imgSrc}
 						alt={title}
-						loading="lazy"
 						className="w-full h-full object-cover rounded-lg"
 					/>
 				)}
