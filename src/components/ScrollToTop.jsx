@@ -20,7 +20,7 @@ const ScrollToTop = () => {
 				setTimeout(() => {
 					setIsVisible(true);
 					setShouldAnimateExit(false);
-				}, 200);
+				}, 230);
 			} else if (currentScrollY < 280) {
 				setIsVisible(false);
 				setShouldAnimateExit(false);
