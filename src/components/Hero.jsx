@@ -38,14 +38,14 @@ const arrowVariants = {
 				repeat: Infinity,
 				ease: "easeInOut",
 			},
-			opacity: { duration: 1.5 },
+			opacity: { duration: 0.5 },
 		},
 	},
 	hidden: {
 		opacity: 0,
 		y: 20,
 		transition: {
-			opacity: { duration: 0.5 },
+			opacity: { duration: 0.4 },
 			y: { duration: 0.5 },
 		},
 	},
@@ -60,7 +60,7 @@ const Hero = () => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setShowArrow(true);
-		}, 4500);
+		}, 4000);
 
 		const handleScroll = () => {
 			setShowArrow(window.scrollY <= 50);

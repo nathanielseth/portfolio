@@ -57,6 +57,15 @@ const Header = () => {
 	const [navOpen, setNavOpen] = useState(false);
 	const lenis = useLenis();
 
+	const handleLogoClick = (event) => {
+		event.preventDefault();
+		const homeSection = document.querySelector("#home");
+
+		if (homeSection) {
+			lenis.scrollTo(homeSection.offsetTop, { duration: 1.2 });
+		}
+	};
+
 	const handleContactClick = (event) => {
 		event.preventDefault();
 		const contactSection = document.querySelector("#contact");
@@ -70,13 +79,14 @@ const Header = () => {
 		<header className="fixed top-0 left-0 w-full h-20 flex items-center z-40">
 			<div className="max-w-screen-lg w-full mx-auto px-5 flex justify-between items-center md:px-14 md:grid md:grid-cols-[1fr,3fr,1fr]">
 				<h1>
-					<a href="/portfolio/" className="logo menu-btn">
-						<img
+					<a href="/" className="logo menu-btn" onClick={handleLogoClick}>
+						<motion.img
 							src="/portfolio/images/logo.svg"
 							width={35}
 							height={35}
 							alt="Nathaniel-Seth"
 							loading="eager"
+							whileTap={{ scale: 0.9 }}
 						/>
 					</a>
 				</h1>
@@ -88,6 +98,7 @@ const Header = () => {
 
 				<motion.a
 					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.9 }}
 					href="#contact"
 					className="btn btn-secondary max-md:hidden md:justify-self-end font-semibold text-zinc-50"
 					onClick={handleContactClick}

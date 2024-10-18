@@ -15,6 +15,11 @@ const projects = [
 			"A fun multi-platform roguelike currently in progress using Godot and GDScript.",
 		tags: [
 			createTag(
+				<FaReact className={iconClassName} />,
+				"bg-[#017fa5] text-zinc-50",
+				"React"
+			),
+			createTag(
 				<SiGodotengine className={iconClassName} />,
 				"bg-[#458dc0] text-zinc-50",
 				"Godot"

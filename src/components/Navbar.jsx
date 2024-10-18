@@ -46,7 +46,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 					window.pageYOffset +
 					yOffset;
 
-				lenis.scrollTo(yPosition, { duration: 0.55 });
+				lenis.scrollTo(yPosition, { duration: 0.75 });
 
 				const handleScroll = () => {
 					if (activeTab !== link) {
