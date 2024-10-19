@@ -1,10 +1,16 @@
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { IoGlobeOutline, IoLogoGithub } from "react-icons/io5";
+import { useState } from "react";
 
-const defaultTagColor = "bg-zinc-50/5 text-zinc-400";
+const defaultTagColor = "bg-zinc-700 text-zinc-50";
 
-const getTagColor = (tag) => tag.color || defaultTagColor;
+const getTagColor = (tag) => defaultTagColor;
+
+const tooltipVariants = {
+	visible: { opacity: 1, y: 0 },
+	hidden: { opacity: 0, y: -5, transition: { duration: 0.1 } },
+};
 
 const ProjectCard = ({
 	imgSrc,
@@ -16,6 +22,18 @@ const ProjectCard = ({
 	classes,
 	onAnimationComplete,
 }) => {
+	const [hoveredTagIndex, setHoveredTagIndex] = useState(null);
+	const [hoveredLive, setHoveredLive] = useState(false);
+	const [hoveredCode, setHoveredCode] = useState(false);
+
+	const handleMouseEnter = (index) => {
+		setHoveredTagIndex(index);
+	};
+
+	const handleMouseLeave = () => {
+		setHoveredTagIndex(null);
+	};
+
 	const variants = {
 		hidden: { opacity: 0, y: 20 },
 		visible: { opacity: 1, y: 0 },
@@ -75,21 +93,31 @@ const ProjectCard = ({
 					<div className="flex flex-wrap items-center gap-1">
 						{tags &&
 							tags.length > 0 &&
-							tags.map((tag, key) => (
-								<div key={key} className="relative group">
+							tags.map((tag, index) => (
+								<div
+									key={index}
+									className="relative group"
+									onMouseEnter={() => handleMouseEnter(index)}
+									onMouseLeave={handleMouseLeave}
+								>
 									<span
-										className={`h-8 w-8 mr-1 text-xs md:text-sm flex items-center gap-1 px-2 rounded-lg ${getTagColor(
+										className={`h-8 w-8 mr-1 text-xs md:text-sm flex items-center gap-1 px-1.5 rounded-lg ${getTagColor(
 											tag
 										)}`}
 									>
 										{tag.label}
 									</span>
-									<div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 hidden group-hover:block">
-										<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg whitespace-nowrap">
+									<motion.div
+										className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2"
+										animate={hoveredTagIndex === index ? "visible" : "hidden"}
+										initial={{ y: 0, x: "-50%" }}
+										variants={tooltipVariants}
+									>
+										<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
 											{tag.tagName}
 										</div>
 										<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
-									</div>
+									</motion.div>
 								</div>
 							))}
 					</div>
@@ -105,15 +133,22 @@ const ProjectCard = ({
 								className="flex items-center justify-center w-11 h-11 rounded-lg bg-[#7f2ffa] text-zinc-50 transition-colors"
 								aria-label={`View live project: ${title}`}
 								whileHover={{ scale: 1.1 }}
+								onMouseEnter={() => setHoveredLive(true)}
+								onMouseLeave={() => setHoveredLive(false)}
 							>
 								<IoGlobeOutline className="w-8 h-8" aria-hidden="true" />
 							</motion.a>
-							<div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 hidden group-hover:block">
+							<motion.div
+								className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3"
+								animate={hoveredLive ? "visible" : "hidden"}
+								initial={{ y: 0, x: "-50%" }}
+								variants={tooltipVariants}
+							>
 								<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
 									<span className="whitespace-nowrap">Live Demo</span>
 								</div>
 								<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
-							</div>
+							</motion.div>
 						</div>
 					)}
 					{codeLink && (
@@ -125,15 +160,22 @@ const ProjectCard = ({
 								className="flex items-center justify-center w-11 h-11 rounded-lg bg-zinc-50 text-zinc-950 transition-colors"
 								aria-label={`View code for project: ${title}`}
 								whileHover={{ scale: 1.05 }}
+								onMouseEnter={() => setHoveredCode(true)}
+								onMouseLeave={() => setHoveredCode(false)}
 							>
 								<IoLogoGithub className="w-8 h-8" aria-hidden="true" />
 							</motion.a>
-							<div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 hidden group-hover:block">
+							<motion.div
+								className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3"
+								animate={hoveredCode ? "visible" : "hidden"}
+								initial={{ y: 0, x: "-50%" }}
+								variants={tooltipVariants}
+							>
 								<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
 									<span className="whitespace-nowrap">View Code</span>
 								</div>
 								<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
-							</div>
+							</motion.div>
 						</div>
 					)}
 				</div>

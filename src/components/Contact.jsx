@@ -25,7 +25,7 @@ const iconVariants = {
 
 const tooltipVariants = {
 	visible: { opacity: 1, y: 2 },
-	hidden: { opacity: 0, y: -5, transition: { duration: 0.2 } },
+	hidden: { opacity: 0, y: -5, transition: { duration: 0.1 } },
 };
 
 const Contact = () => {
@@ -55,7 +55,7 @@ const Contact = () => {
 					setTooltip("Click to copy");
 					setCopied(false);
 				}, 200);
-			}, 1650);
+			}, 1900);
 		} catch (err) {
 			console.error("Failed to copy: ", err);
 		}
