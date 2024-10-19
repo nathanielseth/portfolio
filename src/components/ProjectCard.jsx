@@ -9,7 +9,7 @@ const getTagColor = (tag) => defaultTagColor;
 
 const tooltipVariants = {
 	visible: { opacity: 1, y: 0 },
-	hidden: { opacity: 0, y: -5, transition: { duration: 0.1 } },
+	hidden: { opacity: 0, y: -5, transition: { duration: 0.3 } },
 };
 
 const ProjectCard = ({
@@ -25,41 +25,50 @@ const ProjectCard = ({
 	const [hoveredTagIndex, setHoveredTagIndex] = useState(null);
 	const [hoveredLive, setHoveredLive] = useState(false);
 	const [hoveredCode, setHoveredCode] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
 
 	const handleMouseEnter = (index) => {
 		setHoveredTagIndex(index);
+		setIsHovered(true);
 	};
 
 	const handleMouseLeave = () => {
 		setHoveredTagIndex(null);
+		setIsHovered(false);
 	};
 
 	const variants = {
 		hidden: { opacity: 0, y: 30 },
-		visible: { opacity: 1, y: 0 },
+		visible: {
+			opacity: 1,
+			y: 0,
+			transition: {
+				duration: 0.3,
+				ease: "easeIn",
+				delay: isHovered ? 0 : index * 0.3,
+			},
+		},
 	};
 
 	const imageLink = projectLink || codeLink;
 
 	return (
 		<motion.div
+			initial="hidden"
+			whileInView="visible"
+			viewport={{ once: true }}
+			variants={variants}
 			whileHover={{
 				y: -8,
 				transition: {
 					type: "spring",
 					stiffness: 600,
 					mass: 0.5,
+					duration: 0.1,
 				},
 			}}
-			initial="hidden"
-			whileInView="visible"
-			viewport={{ once: true }}
-			variants={variants}
-			transition={{
-				duration: 0.4,
-				ease: "easeIn",
-				delay: index * 0.3,
-			}}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
 			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 hover:ring-2 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
 		>
 			<figure className="img-box aspect-square rounded-lg mb-3 flex-grow">
