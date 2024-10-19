@@ -19,8 +19,8 @@ const ProjectCard = ({
 	tags,
 	projectLink,
 	codeLink,
+	index,
 	classes,
-	onAnimationComplete,
 }) => {
 	const [hoveredTagIndex, setHoveredTagIndex] = useState(null);
 	const [hoveredLive, setHoveredLive] = useState(false);
@@ -35,7 +35,7 @@ const ProjectCard = ({
 	};
 
 	const variants = {
-		hidden: { opacity: 0, y: 20 },
+		hidden: { opacity: 0, y: 30 },
 		visible: { opacity: 1, y: 0 },
 	};
 
@@ -56,11 +56,11 @@ const ProjectCard = ({
 			viewport={{ once: true }}
 			variants={variants}
 			transition={{
-				duration: 0.35,
+				duration: 0.4,
 				ease: "easeIn",
+				delay: index * 0.3,
 			}}
-			onAnimationComplete={onAnimationComplete}
-			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
+			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 hover:ring-2 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
 		>
 			<figure className="img-box aspect-square rounded-lg mb-3 flex-grow">
 				{imageLink ? (
@@ -190,9 +190,9 @@ ProjectCard.propTypes = {
 	description: PropTypes.string.isRequired,
 	tags: PropTypes.array.isRequired,
 	projectLink: PropTypes.string,
-	codeLink: PropTypes.string.isRequired,
+	codeLink: PropTypes.string,
 	classes: PropTypes.string,
-	onAnimationComplete: PropTypes.func.isRequired,
+	index: PropTypes.number.isRequired,
 };
 
 export default ProjectCard;

@@ -62,7 +62,7 @@ const ScrollToTop = () => {
 			}}
 			transition={{ type: "spring", stiffness: 300, damping: 20 }}
 			whileHover={{ scale: 1.1 }}
-			whileTap={{ scale: 0.95 }}
+			whileTap={{ scale: 0.95, y: -9 }}
 		>
 			<span className="font-normal text-5xl material-symbols-rounded">
 				keyboard_arrow_up
