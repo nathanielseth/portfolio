@@ -8,7 +8,7 @@ const Projects = () => {
 				Personal Projects
 			</h2>
 
-			<div className="grid gap-x-4 gap-y-5 grid-cols-[repeat(auto-fill,_minmax(330px,_1fr))] justify-items-center">
+			<div className="grid gap-x-3 gap-y-5 grid-cols-[repeat(auto-fill,_minmax(330px,_1fr))] justify-items-center">
 				{projects.map(
 					(
 						{ imgSrc, title, description, tags, projectLink, codeLink },

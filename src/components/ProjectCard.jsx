@@ -59,7 +59,7 @@ const ProjectCard = ({
 			viewport={{ once: true }}
 			variants={variants}
 			whileHover={{
-				y: -8,
+				y: -7,
 				transition: {
 					type: "spring",
 					stiffness: 600,
@@ -69,7 +69,7 @@ const ProjectCard = ({
 			}}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
-			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 hover:ring-2 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
+			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-900 hover:ring-1 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
 		>
 			<figure className="img-box aspect-square rounded-lg mb-3 flex-grow">
 				{imageLink ? (

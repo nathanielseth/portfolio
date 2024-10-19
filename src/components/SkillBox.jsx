@@ -15,7 +15,7 @@ const SkillBox = ({ Icon, label, description, color, classes = "" }) => {
 			variants={variants}
 			transition={{ duration: 0.5, ease: "easeInOut" }}
 			className={
-				"flex items-center gap-3 md:gap-4 ring-2 ring-inset bg-zinc-900 ring-zinc-950 rounded-2xl p-2 md:p-3 " +
+				"flex items-center gap-3 md:gap-4 ring-1 ring-inset bg-zinc-900 ring-zinc-950 rounded-2xl p-2 md:p-3 " +
 				"hover:bg-zinc-800 hover:ring-zinc-700 transition-colors max-w-xs " +
 				classes
 			}
@@ -28,8 +28,8 @@ const SkillBox = ({ Icon, label, description, color, classes = "" }) => {
 			</div>
 
 			<div>
-				<h3 className="text-sm md:text-base">{label}</h3>
-				<p className="hidden md:block text-xs text-zinc-400">{description}</p>
+				<h3 className="text-sm md:text-lg">{label}</h3>
+				<p className="hidden md:block text-sm text-zinc-400">{description}</p>
 			</div>
 		</motion.div>
 	);

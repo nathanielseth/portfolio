@@ -58,7 +58,7 @@ export const skills = [
 		name: "Git",
 		icon: FaGitAlt,
 		color: "#DD6E42",
-		description: "Relational database",
+		description: "Version control",
 	},
 	{
 		name: "PostgreSQL",
