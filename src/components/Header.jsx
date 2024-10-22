@@ -80,13 +80,12 @@ const Header = () => {
 			<div className="max-w-screen-lg w-full mx-auto px-5 flex justify-between items-center md:px-14 md:grid md:grid-cols-[1fr,3fr,1fr]">
 				<h1>
 					<a href="/" className="logo menu-btn" onClick={handleLogoClick}>
-						<motion.img
+						<img
 							src="/portfolio/images/logo.svg"
 							width={35}
 							height={35}
 							alt="Nathaniel-Seth"
 							loading="eager"
-							whileTap={{ scale: 0.9 }}
 						/>
 					</a>
 				</h1>

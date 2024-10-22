@@ -12,16 +12,16 @@ const App = () => {
 		<ReactLenis root>
 			<Header />
 			<main className="scrollbar-thin">
-				<section id="home" className="h-screen">
+				<section id="home" className="min-h-screen">
 					<Hero />
 				</section>
-				<section id="skills" className="h-screen">
+				<section id="skills" className="min-h-screen">
 					<Skills />
 				</section>
-				<section id="projects" className="md:h-screen h-auto">
+				<section id="projects" className="h-auto">
 					<Projects />
 				</section>
-				<section id="contact" className="h-screen">
+				<section id="contact" className="min-h-screen">
 					<Contact />
 				</section>
 			</main>

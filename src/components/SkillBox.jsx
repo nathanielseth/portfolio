@@ -15,8 +15,9 @@ const SkillBox = ({ Icon, label, description, color, classes = "" }) => {
 			variants={variants}
 			transition={{ duration: 0.5, ease: "easeInOut" }}
 			className={
-				"flex items-center gap-3 md:gap-4 ring-1 ring-inset bg-zinc-900 ring-zinc-950 rounded-2xl p-2 md:p-3 " +
-				"hover:bg-zinc-800 hover:ring-zinc-700 transition-colors max-w-xs " +
+				"flex items-center gap-3 md:gap-4 ring-1 ring-inset bg-zinc-900 ring-zinc-950 rounded-xl p-3 md:p-3 " +
+				"hover:bg-zinc-800 hover:ring-zinc-700 transition-colors " +
+				"w-full sm:max-w-xs md:max-w-sm lg:min-w-80 " +
 				classes
 			}
 		>

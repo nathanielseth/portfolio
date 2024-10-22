@@ -1,12 +1,12 @@
 import { FaReact, FaGitAlt } from "react-icons/fa";
 import { BiLogoTypescript, BiLogoPostgresql } from "react-icons/bi";
 import {
-	SiDotnet,
+	SiSocketdotio,
 	SiTailwindcss,
 	SiNextdotjs,
 	SiNodedotjs,
+	SiExpress,
 } from "react-icons/si";
-import { TbBrandCSharp } from "react-icons/tb";
 
 export const skills = [
 	// Frontend
@@ -32,7 +32,7 @@ export const skills = [
 		name: "Next.js",
 		icon: SiNextdotjs,
 		color: "#111111",
-		description: "React-based framework",
+		description: "React framework",
 	},
 
 	{
@@ -42,16 +42,16 @@ export const skills = [
 		description: "JavaScript runtime",
 	},
 	{
-		name: "C#",
-		icon: TbBrandCSharp,
-		color: "#9a4993",
-		description: "Object-oriented language",
+		name: "Express.js",
+		icon: SiExpress,
+		color: "#323232",
+		description: "Node.js web framework",
 	},
 	{
-		name: "ASP.NET",
-		icon: SiDotnet,
-		color: "#512bd4",
-		description: "Server-side web framework",
+		name: "Socket.IO",
+		icon: SiSocketdotio,
+		color: "#010101",
+		description: "Realtime application library",
 	},
 
 	{

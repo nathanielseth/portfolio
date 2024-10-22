@@ -2,6 +2,7 @@ import { SiGodotengine, SiSocketdotio, SiExpress } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import { RiTailwindCssFill } from "react-icons/ri";
+import { RiHtml5Fill } from "react-icons/ri";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -15,14 +16,15 @@ const projects = [
 			"A fun multi-platform roguelike currently in progress using Godot and GDScript.",
 		tags: [
 			createTag(
-				<FaReact className={iconClassName} />,
-				"bg-[#017fa5] text-zinc-50",
-				"React"
-			),
-			createTag(
 				<SiGodotengine className={iconClassName} />,
 				"bg-[#458dc0] text-zinc-50",
 				"Godot"
+			),
+
+			createTag(
+				<RiHtml5Fill className={iconClassName} />,
+				"bg-[#017fa5] text-zinc-50",
+				"HTML5"
 			),
 		],
 		projectLink: "",
@@ -79,7 +81,7 @@ const projects = [
 			createTag(
 				<RiTailwindCssFill className={iconClassName} />,
 				"bg-[#4eb1b4] text-zinc-50",
-				"Tailwind"
+				"TailwindCSS"
 			),
 		],
 		projectLink: "https://nathanielseth.github.io/neticents/",

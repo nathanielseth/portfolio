@@ -8,7 +8,7 @@ const Skills = () => {
 				Skills & Technologies
 			</h2>
 
-			<div className="grid gap-2 grid-cols-2 md:grid-cols-3 max-w-5xl ">
+			<div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 max-w-7xl ">
 				{skills.map((skill, index) => (
 					<SkillBox
 						key={index}
