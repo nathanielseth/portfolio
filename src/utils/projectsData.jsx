@@ -1,8 +1,7 @@
 import { SiGodotengine, SiSocketdotio, SiExpress } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { FaReact, FaNodeJs } from "react-icons/fa";
-import { RiTailwindCssFill } from "react-icons/ri";
-import { RiHtml5Fill } from "react-icons/ri";
+import { RiTailwindCssFill, RiHtml5Fill, RiCss3Fill } from "react-icons/ri";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -20,7 +19,6 @@ const projects = [
 				"bg-[#458dc0] text-zinc-50",
 				"Godot"
 			),
-
 			createTag(
 				<RiHtml5Fill className={iconClassName} />,
 				"bg-[#017fa5] text-zinc-50",
@@ -74,18 +72,18 @@ const projects = [
 				"JavaScript"
 			),
 			createTag(
-				<FaReact className={iconClassName} />,
-				"bg-[#017fa5] text-zinc-50",
-				"React"
+				<RiHtml5Fill className={iconClassName} />,
+				"bg-[#e34f26] text-zinc-50",
+				"HTML"
 			),
 			createTag(
-				<RiTailwindCssFill className={iconClassName} />,
-				"bg-[#4eb1b4] text-zinc-50",
-				"TailwindCSS"
+				<RiCss3Fill className={iconClassName} />,
+				"bg-[#264de4] text-zinc-50",
+				"CSS"
 			),
 		],
-		projectLink: "https://nathanielseth.github.io/neticents/",
-		codeLink: "https://github.com/nathanielseth/neticents",
+		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
+		codeLink: "https://github.com/nathanielseth/income-tax-ph-calculator/",
 		category: "WEB",
 	},
 ];
