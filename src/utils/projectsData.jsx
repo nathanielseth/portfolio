@@ -82,8 +82,8 @@ const projects = [
 				"CSS"
 			),
 		],
-		projectLink: "https://nathanielseth.github.io/income-tax-ph-calculator/",
-		codeLink: "https://github.com/nathanielseth/income-tax-ph-calculator/",
+		projectLink: "https://nathanielseth.github.io/neticents/",
+		codeLink: "https://github.com/nathanielseth/neticents",
 		category: "WEB",
 	},
 ];
