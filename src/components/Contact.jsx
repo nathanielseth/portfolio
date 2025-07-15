@@ -145,7 +145,7 @@ const Contact = () => {
 				whileInView="show"
 				className="text-sm font-light md:text-base mb-5 text-center text-zinc-500"
 			>
-				© developed & designed by nathanielseth.dev
+				© nathanielseth.dev
 			</motion.div>
 		</motion.div>
 	);

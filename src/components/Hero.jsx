@@ -18,14 +18,14 @@ const containerVariants = {
 		opacity: 1,
 		transition: {
 			staggerChildren: 0.4,
-			delayChildren: 1.8,
+			delayChildren: 0.7,
 		},
 	},
 };
 
 const itemVariants = {
 	hidden: { opacity: 0, y: 30 },
-	show: { opacity: 1, y: 0, transition: { duration: 1 } },
+	show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const arrowVariants = {
@@ -54,8 +54,7 @@ const arrowVariants = {
 const Hero = () => {
 	const [showArrow, setShowArrow] = useState(false);
 
-	const firstLine = "My name is Nathaniel Seth,".split(" ");
-	const secondLine = "I'm a Full-Stack developer.".split(" ");
+	const heading = "Hi, I'm Nathaniel Seth".split(" ");
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -79,28 +78,14 @@ const Hero = () => {
 				id="hero-heading"
 				className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-3 text-zinc-50"
 			>
-				{firstLine.map((word, i) => (
+				{heading.map((word, i) => (
 					<motion.span
-						key={`first-line-word-${i}`}
+						key={`word-${i}`}
 						custom={i}
 						variants={typingVariants}
 						initial="hidden"
 						animate="visible"
-						className="mr-1 md:mr-2"
-					>
-						{word}
-					</motion.span>
-				))}
-
-				<br />
-
-				{secondLine.map((word, i) => (
-					<motion.span
-						key={`second-line-word-${i}`}
-						custom={i + firstLine.length}
-						variants={typingVariants}
-						initial="hidden"
-						animate="visible"
+						style={word === "Seth" ? { color: "#7f2ffa" } : {}}
 						className="mr-1 md:mr-2"
 					>
 						{word}
@@ -120,15 +105,15 @@ const Hero = () => {
 					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
 					variants={itemVariants}
 				>
-					I&apos;m a Computer Science student based in the Philippines,
-					specializing in React for web development. I&apos;m also a proud cat
-					owner.
+					I&apos;m a full-stack dev, creating passion projects that combine my
+					interest in web development with whatever idea currently keeps me up
+					at night.
 				</motion.p>
 
 				<div className="mt-8 flex justify-center items-center">
 					<motion.a
-						whileTap={{ scale: 0.85 }}
-						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 0.95 }}
+						whileHover={{ scale: 1.05 }}
 						transformTemplate={(props, transform) =>
 							transform.replace(" translateZ(0)", "")
 						}
@@ -157,7 +142,7 @@ const Hero = () => {
 				role="img"
 				aria-label="Scroll down indicator"
 			>
-				<span className="material-symbols-rounded md:text-3xl text-2xl text-zinc-400">
+				<span className="material-symbols-rounded md:text-2xl text-xl text-zinc-400">
 					arrow_downward
 				</span>
 			</motion.div>

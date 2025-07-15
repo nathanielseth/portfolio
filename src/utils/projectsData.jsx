@@ -1,7 +1,7 @@
 import { SiGodotengine, SiSocketdotio, SiExpress } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { FaReact, FaNodeJs } from "react-icons/fa";
-import { RiTailwindCssFill, RiHtml5Fill, RiCss3Fill } from "react-icons/ri";
+import { RiHtml5Fill, RiCss3Fill } from "react-icons/ri";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -56,7 +56,7 @@ const projects = [
 				"Express.js"
 			),
 		],
-		projectLink: "",
+		projectLink: "https://nathanielseth.github.io/vibechess/",
 		codeLink: "https://github.com/nathanielseth/vibechess",
 		category: "WEB",
 	},

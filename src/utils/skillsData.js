@@ -1,15 +1,14 @@
 import { FaReact, FaGitAlt } from "react-icons/fa";
-import { BiLogoTypescript, BiLogoPostgresql } from "react-icons/bi";
+import { BiLogoJavascript, BiLogoPython } from "react-icons/bi";
 import {
 	SiSocketdotio,
 	SiTailwindcss,
-	SiNextdotjs,
+	SiGodotengine,
 	SiNodedotjs,
 	SiExpress,
 } from "react-icons/si";
 
 export const skills = [
-	// Frontend
 	{
 		name: "React",
 		icon: FaReact,
@@ -17,10 +16,10 @@ export const skills = [
 		description: "JavaScript frontend library",
 	},
 	{
-		name: "TypeScript",
-		icon: BiLogoTypescript,
-		color: "#037acc",
-		description: "Typed JavaScript superset",
+		name: "JavaScript",
+		icon: BiLogoJavascript,
+		color: "#f7df1e",
+		description: "Frontend scripting language",
 	},
 	{
 		name: "TailwindCSS",
@@ -29,12 +28,11 @@ export const skills = [
 		description: "CSS framework",
 	},
 	{
-		name: "Next.js",
-		icon: SiNextdotjs,
-		color: "#111111",
-		description: "React framework",
+		name: "Python",
+		icon: BiLogoPython,
+		color: "#3776ab",
+		description: "Backend scripting language",
 	},
-
 	{
 		name: "Node.js",
 		icon: SiNodedotjs,
@@ -48,22 +46,21 @@ export const skills = [
 		description: "Node.js web framework",
 	},
 	{
+		name: "Godot",
+		icon: SiGodotengine,
+		color: "#478cbf",
+		description: "Open-source game engine",
+	},
+	{
 		name: "Socket.IO",
 		icon: SiSocketdotio,
 		color: "#010101",
 		description: "Realtime application library",
 	},
-
 	{
 		name: "Git",
 		icon: FaGitAlt,
 		color: "#DD6E42",
 		description: "Version control",
-	},
-	{
-		name: "PostgreSQL",
-		icon: BiLogoPostgresql,
-		color: "#316192",
-		description: "Relational database",
 	},
 ];
