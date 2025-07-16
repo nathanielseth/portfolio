@@ -22,11 +22,14 @@ const Navbar = ({ navOpen, toggleNav }) => {
 	const initActiveBox = useCallback((target) => {
 		if (target && activeBox.current) {
 			const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = target;
+			const isMobile = window.innerWidth < 768;
+			const mobileMargin = isMobile ? 5 : 0;
+
 			activeBox.current.style.cssText = `
-        top: ${offsetTop}px; 
-        left: ${offsetLeft}px; 
-        width: ${offsetWidth}px; 
-        height: ${offsetHeight}px;
+        top: ${offsetTop - (isMobile ? mobileMargin : 0)}px;
+        left: ${offsetLeft}px;
+        width: ${offsetWidth}px;
+        height: ${offsetHeight + (isMobile ? mobileMargin * 2 : 0)}px;
       `;
 		}
 	}, []);
@@ -36,18 +39,14 @@ const Navbar = ({ navOpen, toggleNav }) => {
 			event.preventDefault();
 			setActiveTab(link);
 			const targetSection = document.querySelector(link);
-
 			if (targetSection) {
 				const isMobile = window.innerWidth < 768;
 				const yOffset = isMobile && link === "#projects" ? -80 : 0;
-
 				const yPosition =
 					targetSection.getBoundingClientRect().top +
 					window.pageYOffset +
 					yOffset;
-
 				lenis.scrollTo(yPosition, { duration: 0.75 });
-
 				const handleScroll = () => {
 					if (activeTab !== link) {
 						setActiveTab(link);
@@ -55,7 +54,6 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				};
 				window.addEventListener("scroll", handleScroll, { once: true });
 			}
-
 			toggleNav(false);
 		},
 		[activeTab, toggleNav, lenis]
@@ -93,7 +91,6 @@ const Navbar = ({ navOpen, toggleNav }) => {
 
 	const handleResize = useCallback(() => {
 		setThreshold(window.innerWidth >= 768 ? 0.5 : 0.2);
-
 		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
 		if (currentActiveLink) {
 			initActiveBox(currentActiveLink);
@@ -114,14 +111,14 @@ const Navbar = ({ navOpen, toggleNav }) => {
 	}, [activeTab, initActiveBox]);
 
 	return (
-		<nav className={`navbar ${navOpen ? "active" : ""}`}>
+		<nav className={`navbar ${navOpen ? "active" : ""} bg-zinc-900`}>
 			{navItems.map(({ label, link, className }, key) => (
 				<a
 					href={link}
 					key={key}
 					className={`${className} relative z-20 transition duration-200 ${
 						activeTab === link ? "text-zinc-950 active-tab" : "text-zinc-400"
-					}`}
+					} md:my-0 my-2`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}

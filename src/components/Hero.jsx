@@ -53,7 +53,6 @@ const arrowVariants = {
 
 const Hero = () => {
 	const [showArrow, setShowArrow] = useState(false);
-
 	const heading = "Hi, I'm Nathaniel Seth".split(" ");
 
 	useEffect(() => {
@@ -66,6 +65,7 @@ const Hero = () => {
 		};
 
 		window.addEventListener("scroll", handleScroll);
+
 		return () => {
 			clearTimeout(timer);
 			window.removeEventListener("scroll", handleScroll);
@@ -102,7 +102,7 @@ const Hero = () => {
 				aria-labelledby="hero-heading"
 			>
 				<motion.p
-					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 max-w-sm mx-auto md:max-w-lg"
+					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 md:max-w-lg mx-auto px-4 md:px-0"
 					variants={itemVariants}
 				>
 					I&apos;m a full-stack dev, creating passion projects that combine my
@@ -120,14 +120,15 @@ const Hero = () => {
 						variants={itemVariants}
 						layout="position"
 						href="/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf"
-						download
-						className="inline-flex items-center gap-1 bg-[#7f2ffa] text-zinc-50 px-6 h-12 rounded-full"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="inline-flex items-center gap-1 bg-[#7f2ffa] text-zinc-50 px-4 md:px-5 h-9 sm:h-10 md:h-12 rounded-full"
 						aria-label="Download resume"
 					>
-						<span className="font-semibold text-base leading-none">
+						<span className="font-semibold text-sm sm:text-base leading-none">
 							Get Resume
 						</span>
-						<span className="material-symbols-rounded text-lg leading-none align-middle">
+						<span className="material-symbols-rounded text-sm sm:text-base md:text-lg leading-none flex items-center">
 							download
 						</span>
 					</motion.a>
