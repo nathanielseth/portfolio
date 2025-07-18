@@ -1,7 +1,12 @@
-import { SiGodotengine, SiSocketdotio, SiExpress } from "react-icons/si";
+import {
+	SiGodotengine,
+	SiSocketdotio,
+	SiExpress,
+	SiTailwindcss,
+} from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { FaReact, FaNodeJs } from "react-icons/fa";
-import { RiHtml5Fill, RiCss3Fill } from "react-icons/ri";
+import { RiHtml5Fill } from "react-icons/ri";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -67,19 +72,19 @@ const projects = [
 			"A simple, user-friendly tool for calculating income tax in the Philippines.",
 		tags: [
 			createTag(
+				<FaReact className={iconClassName} />,
+				"bg-[#017fa5] text-zinc-50",
+				"React"
+			),
+			createTag(
 				<IoLogoJavascript className={iconClassName} />,
 				"bg-[#dfce3c] text-zinc-950",
 				"JavaScript"
 			),
 			createTag(
-				<RiHtml5Fill className={iconClassName} />,
-				"bg-[#e34f26] text-zinc-50",
-				"HTML"
-			),
-			createTag(
-				<RiCss3Fill className={iconClassName} />,
-				"bg-[#264de4] text-zinc-50",
-				"CSS"
+				<SiTailwindcss className={iconClassName} />,
+				"bg-[#38b2ac] text-zinc-50",
+				"TailwindCSS"
 			),
 		],
 		projectLink: "https://nathanielseth.github.io/neticents/",

@@ -72,6 +72,16 @@ const Hero = () => {
 		};
 	}, []);
 
+	const scrollToProjects = () => {
+		const projectsSection = document.getElementById("projects");
+		if (projectsSection) {
+			projectsSection.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
+		}
+	};
+
 	return (
 		<main className="flex flex-col items-center justify-center min-h-screen relative text-center">
 			<motion.h1
@@ -102,51 +112,51 @@ const Hero = () => {
 				aria-labelledby="hero-heading"
 			>
 				<motion.p
-					className="mt-4 text-xs text-zinc-400 md:text-base mb-12 md:max-w-lg mx-auto px-4 md:px-0"
+					className="mt-4 text-xs text-zinc-400 md:text-base mb-9 md:max-w-lg mx-auto px-4 md:px-0"
 					variants={itemVariants}
 				>
-					I&apos;m a full-stack dev, creating passion projects that combine my
-					interest in web development with whatever idea currently keeps me up
-					at night.
+					I build intuitive and responsive web applications. My passion lies in
+					crafting innovative ideas into seamless, user-focused digital
+					experiences.
 				</motion.p>
 
-				<div className="mt-8 flex justify-center items-center">
-					<motion.a
-						whileTap={{ scale: 0.95 }}
-						whileHover={{ scale: 1.05 }}
-						transformTemplate={(props, transform) =>
-							transform.replace(" translateZ(0)", "")
-						}
-						variants={itemVariants}
-						layout="position"
-						href="/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center gap-1 bg-[#7f2ffa] text-zinc-50 px-4 md:px-5 h-9 sm:h-10 md:h-12 rounded-full"
-						aria-label="Download resume"
-					>
-						<span className="font-semibold text-sm sm:text-base leading-none">
-							Get Resume
-						</span>
-						<span className="material-symbols-rounded text-sm sm:text-base md:text-lg leading-none flex items-center">
-							download
-						</span>
-					</motion.a>
-				</div>
+				<motion.a
+					whileTap={{ scale: 0.95 }}
+					whileHover={{ scale: 1.05 }}
+					transformTemplate={(props, transform) =>
+						transform.replace(" translateZ(0)", "")
+					}
+					variants={itemVariants}
+					layout="position"
+					href="/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="inline-flex items-center gap-1 bg-[#7f2ffa] text-zinc-50 px-4 md:px-5 h-9 sm:h-10 md:h-12 rounded-full"
+					aria-label="Download resume"
+				>
+					<span className="font-semibold text-sm sm:text-base leading-none">
+						Get Resume
+					</span>
+					<span className="material-symbols-rounded text-sm sm:text-base md:text-lg leading-none flex items-center">
+						download
+					</span>
+				</motion.a>
 			</motion.div>
 
-			<motion.div
-				className="absolute bottom-20"
+			<motion.button
+				className="absolute bottom-20 cursor-pointer group hover:scale-110 transition-transform duration-200"
 				variants={arrowVariants}
 				initial="hidden"
 				animate={showArrow ? "visible" : "hidden"}
-				role="img"
-				aria-label="Scroll down indicator"
+				onClick={scrollToProjects}
+				whileHover={{ scale: 1.1 }}
+				whileTap={{ scale: 0.9 }}
+				aria-label="Scroll to projects section"
 			>
-				<span className="material-symbols-rounded md:text-2xl text-xl text-zinc-400">
+				<span className="material-symbols-rounded md:text-2xl text-xl text-zinc-400 group-hover:text-zinc-300 transition-colors duration-200">
 					arrow_downward
 				</span>
-			</motion.div>
+			</motion.button>
 		</main>
 	);
 };

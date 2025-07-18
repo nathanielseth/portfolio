@@ -6,7 +6,9 @@ import { useLenis } from "lenis/react";
 const Navbar = ({ navOpen, toggleNav }) => {
 	const [activeTab, setActiveTab] = useState("#home");
 	const [threshold, setThreshold] = useState(0.1);
+
 	const activeBox = useRef();
+	const ignoreScrollRef = useRef(false);
 	const lenis = useLenis();
 
 	const navItems = useMemo(
@@ -30,6 +32,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
         left: ${offsetLeft}px;
         width: ${offsetWidth}px;
         height: ${offsetHeight + (isMobile ? mobileMargin * 2 : 0)}px;
+        opacity: 1; 
       `;
 		}
 	}, []);
@@ -37,38 +40,40 @@ const Navbar = ({ navOpen, toggleNav }) => {
 	const handleLinkClick = useCallback(
 		(event, link) => {
 			event.preventDefault();
+
+			ignoreScrollRef.current = true;
+			setTimeout(() => {
+				ignoreScrollRef.current = false;
+			}, 1000);
+
 			setActiveTab(link);
+
 			const targetSection = document.querySelector(link);
 			if (targetSection) {
-				const isMobile = window.innerWidth < 768;
-				const yOffset = isMobile && link === "#projects" ? -80 : 0;
-				const yPosition =
-					targetSection.getBoundingClientRect().top +
-					window.pageYOffset +
-					yOffset;
-				lenis.scrollTo(yPosition, { duration: 0.75 });
-				const handleScroll = () => {
-					if (activeTab !== link) {
-						setActiveTab(link);
-					}
-				};
-				window.addEventListener("scroll", handleScroll, { once: true });
+				lenis.scrollTo(targetSection, {
+					offset: link === "#projects" && window.innerWidth < 768 ? -80 : 0,
+					duration: 1,
+				});
 			}
+
 			toggleNav(false);
 		},
-		[activeTab, toggleNav, lenis]
+		[toggleNav, lenis]
 	);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
+				if (ignoreScrollRef.current) return;
+
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
-						const newActiveLink = navItems.find(
-							(item) => item.link === `#${entry.target.id}`
-						);
-						if (newActiveLink && activeTab !== newActiveLink.link) {
-							setActiveTab(newActiveLink.link);
+						const sectionId = entry.target.id;
+						// if we at contacts, keep projects as active
+						if (sectionId === "contact") {
+							setActiveTab("#projects");
+						} else {
+							setActiveTab(`#${sectionId}`);
 						}
 					}
 				});
@@ -87,26 +92,29 @@ const Navbar = ({ navOpen, toggleNav }) => {
 		});
 
 		return () => observer.disconnect();
-	}, [activeTab, navItems, threshold]);
+	}, [navItems, threshold]);
 
 	const handleResize = useCallback(() => {
 		setThreshold(window.innerWidth >= 768 ? 0.5 : 0.2);
-		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
-		if (currentActiveLink) {
-			initActiveBox(currentActiveLink);
-		}
-	}, [activeTab, initActiveBox]);
+	}, []);
 
 	useEffect(() => {
-		handleResize();
 		window.addEventListener("resize", handleResize);
+		handleResize();
 		return () => window.removeEventListener("resize", handleResize);
 	}, [handleResize]);
 
 	useEffect(() => {
 		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
-		if (currentActiveLink) {
-			initActiveBox(currentActiveLink);
+		if (currentActiveLink && activeBox.current) {
+			const isVisible =
+				currentActiveLink.offsetWidth > 0 && currentActiveLink.offsetHeight > 0;
+
+			if (isVisible) {
+				initActiveBox(currentActiveLink);
+			} else {
+				activeBox.current.style.opacity = 0;
+			}
 		}
 	}, [activeTab, initActiveBox]);
 
@@ -116,9 +124,11 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				<a
 					href={link}
 					key={key}
-					className={`${className} relative z-20 transition duration-200 ${
-						activeTab === link ? "text-zinc-950 active-tab" : "text-zinc-400"
-					} md:my-0 my-2`}
+					className={`${className} relative z-20 transition duration-200 md:my-0 my-2 ${
+						activeTab === link
+							? "text-black hover:text-black"
+							: "text-zinc-400 hover:text-zinc-300"
+					}`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}
@@ -129,7 +139,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				ref={activeBox}
 				layoutId="active-box"
 				initial={false}
-				transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+				transition={{ type: "spring", stiffness: 300, damping: 25 }}
 			/>
 		</nav>
 	);

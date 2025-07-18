@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const defaultTagColor = "bg-zinc-700 text-zinc-50";
 
-const getTagColor = (tag) => defaultTagColor;
+const getTagColor = () => defaultTagColor;
 
 const tooltipVariants = {
 	visible: { opacity: 1, y: 0 },

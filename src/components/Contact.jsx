@@ -84,7 +84,7 @@ const Contact = () => {
 						onMouseEnter={() => setShowTooltip(true)}
 						onMouseLeave={() => !copied && setShowTooltip(false)}
 					>
-						<span className="text-[#7f2ffa] font-bold text-xl md:text-2xl">
+						<span className="text-[#7f2ffa] font-semibold text-xl md:text-2xl">
 							nathanielseth.dev@gmail.com
 						</span>
 						<motion.div
