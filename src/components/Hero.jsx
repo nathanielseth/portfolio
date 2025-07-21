@@ -7,7 +7,7 @@ const typingVariants = {
 		opacity: 1,
 		transition: {
 			duration: 1,
-			delay: i * 0.16,
+			delay: i * 0.17,
 		},
 	}),
 };
@@ -18,7 +18,7 @@ const containerVariants = {
 		opacity: 1,
 		transition: {
 			staggerChildren: 0.4,
-			delayChildren: 0.7,
+			delayChildren: 0.9,
 		},
 	},
 };
@@ -29,64 +29,52 @@ const itemVariants = {
 };
 
 const arrowVariants = {
+	hidden: { opacity: 0, y: 10 },
 	visible: {
 		opacity: 1,
-		y: [0, 11, 0],
-		transition: {
-			y: {
-				duration: 1,
-				repeat: Infinity,
-				ease: "easeInOut",
-			},
-			opacity: { duration: 0.5 },
-		},
-	},
-	hidden: {
-		opacity: 0,
-		y: 20,
+		y: 0,
 		transition: {
 			opacity: { duration: 0.4 },
-			y: { duration: 0.5 },
+			y: {
+				duration: 1.0,
+				repeat: Infinity,
+				repeatType: "reverse",
+				ease: "easeInOut",
+			},
 		},
 	},
 };
 
 const Hero = () => {
 	const [showArrow, setShowArrow] = useState(false);
+	const [isInitialAnimationComplete, setInitialAnimationComplete] =
+		useState(false);
+
 	const heading = "Hi, I'm Nathaniel Seth".split(" ");
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			setShowArrow(true);
-		}, 4000);
-
 		const handleScroll = () => {
-			setShowArrow(window.scrollY <= 50);
+			const shouldBeVisible =
+				isInitialAnimationComplete && window.scrollY <= 50;
+			setShowArrow(shouldBeVisible);
 		};
 
 		window.addEventListener("scroll", handleScroll);
-
-		return () => {
-			clearTimeout(timer);
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, []);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [isInitialAnimationComplete]);
 
 	const scrollToProjects = () => {
-		const projectsSection = document.getElementById("projects");
-		if (projectsSection) {
-			projectsSection.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-			});
-		}
+		document.getElementById("projects")?.scrollIntoView({
+			behavior: "smooth",
+			block: "start",
+		});
 	};
 
 	return (
-		<main className="flex flex-col items-center justify-center min-h-screen relative text-center">
+		<main className="relative flex min-h-screen flex-col items-center justify-center text-center">
 			<motion.h1
 				id="hero-heading"
-				className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-3 text-zinc-50"
+				className="mb-3 text-3xl font-semibold text-zinc-50 sm:text-4xl md:text-5xl"
 			>
 				{heading.map((word, i) => (
 					<motion.span
@@ -104,15 +92,21 @@ const Hero = () => {
 			</motion.h1>
 
 			<motion.div
-				className="max-w-2xl mx-auto text-center"
+				className="mx-auto max-w-2xl text-center"
 				variants={containerVariants}
 				initial="hidden"
 				animate="show"
 				role="region"
 				aria-labelledby="hero-heading"
+				onAnimationComplete={() => {
+					setInitialAnimationComplete(true);
+					if (window.scrollY <= 50) {
+						setShowArrow(true);
+					}
+				}}
 			>
 				<motion.p
-					className="mt-4 text-xs text-zinc-400 md:text-base mb-9 md:max-w-lg mx-auto px-4 md:px-0"
+					className="mx-auto mb-9 mt-4 max-w-lg px-4 text-xs text-zinc-400 md:px-0 md:text-base"
 					variants={itemVariants}
 				>
 					I build intuitive and responsive web applications. My passion lies in
@@ -131,20 +125,20 @@ const Hero = () => {
 					href="/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="inline-flex items-center gap-1 bg-[#7f2ffa] text-zinc-50 px-4 md:px-5 h-9 sm:h-10 md:h-12 rounded-full"
+					className="inline-flex h-9 items-center gap-1 rounded-full bg-[#7f2ffa] px-4 text-zinc-50 sm:h-10 md:h-12 md:px-5"
 					aria-label="Download resume"
 				>
-					<span className="font-semibold text-sm sm:text-base leading-none">
+					<span className="text-sm font-semibold leading-none sm:text-base">
 						Get Resume
 					</span>
-					<span className="material-symbols-rounded text-sm sm:text-base md:text-lg leading-none flex items-center">
+					<span className="material-symbols-rounded flex items-center text-sm leading-none sm:text-base md:text-lg">
 						download
 					</span>
 				</motion.a>
 			</motion.div>
 
 			<motion.button
-				className="absolute bottom-20 cursor-pointer group hover:scale-110 transition-transform duration-200"
+				className="group absolute bottom-20 cursor-pointer"
 				variants={arrowVariants}
 				initial="hidden"
 				animate={showArrow ? "visible" : "hidden"}
@@ -153,7 +147,7 @@ const Hero = () => {
 				whileTap={{ scale: 0.9 }}
 				aria-label="Scroll to projects section"
 			>
-				<span className="material-symbols-rounded md:text-2xl text-xl text-zinc-400 group-hover:text-zinc-300 transition-colors duration-200">
+				<span className="material-symbols-rounded text-xl text-zinc-400 transition-colors duration-200 group-hover:text-zinc-300 md:text-2xl">
 					arrow_downward
 				</span>
 			</motion.button>
