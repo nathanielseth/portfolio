@@ -33,6 +33,9 @@ const projects = [
 		projectLink: "",
 		codeLink: "",
 		category: "GAME",
+		fullDescription:
+			"I'm building a satirical roguelike in a Filipino urban setting. You explore the kalyes, capturing creatures to upgrade your companion. How you play shifts the vibe of the run and changes what kind of wackiness the game throws back at you.",
+		videoUrl: null,
 	},
 	{
 		imgSrc: "/portfolio/images/vc.webp",
@@ -64,6 +67,9 @@ const projects = [
 		projectLink: "https://nathanielseth.github.io/vibechess/",
 		codeLink: "https://github.com/nathanielseth/vibechess",
 		category: "WEB",
+		fullDescription:
+			"I built a real-time chess platform where you can play quick matches with friends or random opponents. It includes Stockfish integration for practice games and live chat during games.",
+		videoUrl: null,
 	},
 	{
 		imgSrc: "/portfolio/images/nt.webp",
@@ -87,8 +93,11 @@ const projects = [
 				"TailwindCSS"
 			),
 		],
+		fullDescription:
+			"I created a calculator to help estimate take-home pay based on Philippine tax laws. It handles withholding tax, mandatory contributions like SSS and PhilHealth, and premium pay calculations for overtime and night shifts.",
 		projectLink: "https://nathanielseth.github.io/neticents/",
 		codeLink: "https://github.com/nathanielseth/neticents",
+		videoUrl: null,
 		category: "WEB",
 	},
 ];

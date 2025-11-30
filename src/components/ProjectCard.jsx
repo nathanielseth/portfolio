@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import { IoGlobeOutline, IoLogoGithub } from "react-icons/io5";
 import { useState } from "react";
 
-const defaultTagColor = "bg-zinc-700 text-zinc-50";
-
+const defaultTagColor = "bg-zinc-800 text-zinc-50";
 const getTagColor = () => defaultTagColor;
 
 const tooltipVariants = {
@@ -21,14 +20,15 @@ const ProjectCard = ({
 	codeLink,
 	index,
 	classes,
+	onCardClick,
 }) => {
 	const [hoveredTagIndex, setHoveredTagIndex] = useState(null);
 	const [hoveredLive, setHoveredLive] = useState(false);
 	const [hoveredCode, setHoveredCode] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 
-	const handleMouseEnter = (index) => {
-		setHoveredTagIndex(index);
+	const handleMouseEnter = (tagIndex) => {
+		setHoveredTagIndex(tagIndex);
 		setIsHovered(true);
 	};
 
@@ -50,8 +50,6 @@ const ProjectCard = ({
 		},
 	};
 
-	const imageLink = projectLink || codeLink;
-
 	return (
 		<motion.div
 			initial="hidden"
@@ -71,46 +69,42 @@ const ProjectCard = ({
 			onMouseLeave={handleMouseLeave}
 			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-900 hover:ring-1 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
 		>
-			<figure className="img-box aspect-square rounded-lg mb-3 flex-grow">
-				{imageLink ? (
-					<a
-						href={imageLink}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="block"
-						aria-label={`View project: ${title}`}
-					>
-						<img
-							src={imgSrc}
-							alt={title}
-							className="w-full h-full object-cover rounded-lg"
-						/>
-					</a>
-				) : (
-					<img
-						src={imgSrc}
-						alt={title}
-						className="w-full h-full object-cover rounded-lg"
-					/>
-				)}
+			<figure
+				className="img-box aspect-square rounded-lg mb-3 flex-grow cursor-pointer"
+				onClick={onCardClick}
+			>
+				<img
+					src={imgSrc}
+					alt={title}
+					loading="lazy"
+					decoding="async"
+					width="600"
+					height="400"
+					className="w-full h-full object-cover rounded-lg"
+				/>
 			</figure>
 
 			<div className="flex-grow flex flex-col justify-between">
 				<div>
-					<h3 className="title-1">{title}</h3>
+					<h3
+						className="title-1 cursor-pointer hover:text-accent transition-colors"
+						onClick={onCardClick}
+					>
+						{title}
+					</h3>
 					<p className="text-sm text-zinc-400 mb-4">{description}</p>
 					<div className="flex flex-wrap items-center gap-1">
 						{tags &&
 							tags.length > 0 &&
-							tags.map((tag, index) => (
+							tags.map((tag, tagIndex) => (
 								<div
-									key={index}
+									key={tagIndex}
 									className="relative group"
-									onMouseEnter={() => handleMouseEnter(index)}
+									onMouseEnter={() => handleMouseEnter(tagIndex)}
 									onMouseLeave={handleMouseLeave}
 								>
 									<span
-										className={`h-8 w-8 mr-1 text-xs md:text-sm flex items-center gap-1 px-1.5 rounded-lg ${getTagColor(
+										className={`h-8 w-8 text-xs md:text-sm flex items-center gap-1 px-1.5 rounded-lg border border-zinc-700 ${getTagColor(
 											tag
 										)}`}
 									>
@@ -118,7 +112,9 @@ const ProjectCard = ({
 									</span>
 									<motion.div
 										className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2"
-										animate={hoveredTagIndex === index ? "visible" : "hidden"}
+										animate={
+											hoveredTagIndex === tagIndex ? "visible" : "hidden"
+										}
 										initial={{ y: 0, x: "-50%" }}
 										variants={tooltipVariants}
 									>
@@ -139,7 +135,8 @@ const ProjectCard = ({
 								href={projectLink}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="accent-bg flex items-center justify-center w-11 h-11 rounded-lg text-zinc-50 transition-colors"
+								onClick={(e) => e.stopPropagation()}
+								className="flex items-center justify-center w-11 h-11 rounded-lg accent-bg text-zinc-50"
 								aria-label={`View live project: ${title}`}
 								whileHover={{ scale: 1.1 }}
 								onMouseEnter={() => setHoveredLive(true)}
@@ -166,7 +163,8 @@ const ProjectCard = ({
 								href={codeLink}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="flex items-center justify-center w-11 h-11 rounded-lg bg-zinc-50 text-zinc-950 transition-colors"
+								onClick={(e) => e.stopPropagation()}
+								className="flex items-center justify-center w-11 h-11 rounded-lg bg-zinc-50 text-zinc-950"
 								aria-label={`View code for project: ${title}`}
 								whileHover={{ scale: 1.05 }}
 								onMouseEnter={() => setHoveredCode(true)}
@@ -197,11 +195,17 @@ ProjectCard.propTypes = {
 	imgSrc: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	description: PropTypes.string.isRequired,
-	tags: PropTypes.array.isRequired,
+	tags: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+			tagName: PropTypes.string.isRequired,
+		})
+	).isRequired,
 	projectLink: PropTypes.string,
 	codeLink: PropTypes.string,
 	classes: PropTypes.string,
 	index: PropTypes.number.isRequired,
+	onCardClick: PropTypes.func.isRequired,
 };
 
 export default ProjectCard;

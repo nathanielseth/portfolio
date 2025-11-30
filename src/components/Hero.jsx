@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import PDFModal from "./ResumeViewer";
 
 const typingVariants = {
 	hidden: { opacity: 0 },
@@ -18,7 +19,7 @@ const containerVariants = {
 		opacity: 1,
 		transition: {
 			staggerChildren: 0.2,
-			delayChildren: 0.8,
+			delayChildren: 0.7,
 		},
 	},
 };
@@ -50,44 +51,9 @@ const arrowVariants = {
 	},
 };
 
-const modalVariants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: { duration: 0.2 },
-	},
-	exit: {
-		opacity: 0,
-		transition: { duration: 0.2 },
-	},
-};
-
-const modalContentVariants = {
-	hidden: { opacity: 0, scale: 0.95, y: 20 },
-	visible: {
-		opacity: 1,
-		scale: 1,
-		y: 0,
-		transition: {
-			type: "spring",
-			damping: 25,
-			stiffness: 300,
-		},
-	},
-	exit: {
-		opacity: 0,
-		scale: 0.95,
-		y: 20,
-		transition: { duration: 0.2 },
-	},
-};
-
 const Hero = () => {
 	const [showArrow, setShowArrow] = useState(false);
-	const [isInitialAnimationComplete, setInitialAnimationComplete] =
-		useState(false);
 	const [showModal, setShowModal] = useState(false);
-	const [lastModified, setLastModified] = useState("");
 
 	const headingLine1 = ["Hi,", "I'm", "Nathaniel", "Seth"];
 
@@ -106,56 +72,18 @@ const Hero = () => {
 		},
 	];
 
-	useEffect(() => {
-		const handleScroll = () => {
-			const shouldBeVisible =
-				isInitialAnimationComplete && window.scrollY <= 50;
-			setShowArrow(shouldBeVisible);
-		};
+	const handleAnimationComplete = () => {
+		setShowArrow(true);
+	};
 
-		window.addEventListener("scroll", handleScroll);
+	const handleScroll = () => {
+		setShowArrow(window.scrollY <= 50);
+	};
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll, { passive: true });
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [isInitialAnimationComplete]);
-
-	useEffect(() => {
-		if (showModal) {
-			document.body.style.overflow = "hidden";
-
-			fetch("/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf", {
-				method: "HEAD",
-			})
-				.then((response) => {
-					const lastMod = response.headers.get("Last-Modified");
-					if (lastMod) {
-						const date = new Date(lastMod);
-						const months = [
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						];
-						const formatted = `${
-							months[date.getMonth()]
-						} ${date.getFullYear()}`;
-						setLastModified(formatted);
-					}
-				})
-				.catch(() => setLastModified(""));
-		} else {
-			document.body.style.overflow = "unset";
-		}
-		return () => {
-			document.body.style.overflow = "unset";
-		};
-	}, [showModal]);
+	}, []);
 
 	const scrollToProjects = () => {
 		document.getElementById("projects")?.scrollIntoView({
@@ -169,7 +97,7 @@ const Hero = () => {
 			<main className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center">
 				<motion.h1
 					id="hero-heading"
-					className="mb-8 text-4xl font-bold tracking-tight text-zinc-50 sm:text-5xl md:text-6xl sm:mb-12"
+					className="mb-4 text-3xl font-bold tracking-tight text-zinc-50 sm:text-5xl md:text-6xl sm:mb-10"
 				>
 					{headingLine1.map((word, i) => (
 						<motion.span
@@ -202,24 +130,21 @@ const Hero = () => {
 					animate="show"
 					role="region"
 					aria-labelledby="hero-heading"
-					onAnimationComplete={() => {
-						setInitialAnimationComplete(true);
-						if (window.scrollY <= 50) {
-							setShowArrow(true);
-						}
-					}}
+					onAnimationComplete={handleAnimationComplete}
 				>
-					<div className="mb-10 grid grid-cols-1 justify-items-center gap-y-4 text-left sm:grid-cols-3 sm:justify-center sm:px-0 sm:mb-12">
+					<div className="mb-6 grid grid-cols-1 justify-items-center gap-y-4 text-left sm:grid-cols-3 sm:justify-center sm:px-0 sm:mb-10">
 						{taglineItems.map((item, index) => (
 							<motion.div
 								key={index}
 								variants={itemVariants}
-								className="flex flex-row gap-2"
+								className={`flex flex-row gap-2 ${
+									index > 0 ? "hidden sm:flex" : ""
+								}`}
 							>
-								<span className="material-symbols-rounded shrink-0 text-lg leading-none text-zinc-400">
+								<span className="material-symbols-rounded shrink-0 text-lg leading-none text-zinc-400 hidden sm:inline">
 									{item.icon}
 								</span>
-								<p className="text-xs leading-relaxed text-zinc-400 sm:text-sm">
+								<p className="text-xs leading-relaxed text-zinc-400 md:text-sm">
 									{item.text}
 								</p>
 							</motion.div>
@@ -263,63 +188,12 @@ const Hero = () => {
 				</motion.button>
 			</main>
 
-			{/* PDF Modal */}
-			<AnimatePresence>
-				{showModal && (
-					<motion.div
-						variants={modalVariants}
-						initial="hidden"
-						animate="visible"
-						exit="exit"
-						className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4"
-						onClick={() => setShowModal(false)}
-					>
-						<motion.div
-							variants={modalContentVariants}
-							initial="hidden"
-							animate="visible"
-							exit="exit"
-							onClick={(e) => e.stopPropagation()}
-							className="relative w-full max-w-6xl h-[85vh] sm:h-[90vh] bg-zinc-900 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col"
-						>
-							<div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4 bg-zinc-800/50 border-b border-zinc-700">
-								<div className="flex items-center gap-2 sm:gap-3">
-									<span className="material-symbols-rounded text-zinc-400 text-xl sm:text-2xl flex items-center">
-										description
-									</span>
-									<div className="flex flex-col items-start">
-										<h2 className="text-base sm:text-lg font-semibold text-zinc-50">
-											Resume
-										</h2>
-										{lastModified && (
-											<p className="text-xs text-zinc-500">
-												Updated {lastModified}
-											</p>
-										)}
-									</div>
-								</div>
-								<button
-									onClick={() => setShowModal(false)}
-									className="text-zinc-400 hover:text-zinc-50 transition-colors p-1.5 sm:p-2 hover:bg-zinc-700 rounded-lg"
-									aria-label="Close modal"
-								>
-									<span className="material-symbols-rounded text-xl sm:text-2xl">
-										close
-									</span>
-								</button>
-							</div>
-
-							<div className="flex-1 overflow-auto bg-zinc-800/50">
-								<iframe
-									src="/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf#view=FitH"
-									className="w-full h-full min-h-[500px] sm:min-h-[600px]"
-									title="Resume PDF"
-								/>
-							</div>
-						</motion.div>
-					</motion.div>
-				)}
-			</AnimatePresence>
+			<PDFModal
+				isOpen={showModal}
+				onClose={() => setShowModal(false)}
+				pdfUrl="/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf"
+				title="Resume"
+			/>
 		</>
 	);
 };
