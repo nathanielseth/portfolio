@@ -6,6 +6,7 @@ import { useLenis } from "lenis/react";
 const Navbar = ({ navOpen, toggleNav }) => {
 	const [activeTab, setActiveTab] = useState("#home");
 	const [threshold, setThreshold] = useState(0.1);
+	const [isInitialLoad, setIsInitialLoad] = useState(true);
 
 	const activeBox = useRef();
 	const ignoreScrollRef = useRef(false);
@@ -49,7 +50,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 			setActiveTab(link);
 
 			const targetSection = document.querySelector(link);
-			if (targetSection) {
+			if (targetSection && lenis) {
 				lenis.scrollTo(targetSection, {
 					offset: link === "#projects" && window.innerWidth < 768 ? -80 : 0,
 					duration: 1,
@@ -69,8 +70,11 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.id;
-						// if we at contacts, keep projects as active
-						if (sectionId === "contact") {
+						const isMobile = window.innerWidth < 768;
+
+						// if we at contacts on desktop, keep projects as active
+						// but on mobile, show contacts
+						if (sectionId === "contact" && !isMobile) {
 							setActiveTab("#projects");
 						} else {
 							setActiveTab(`#${sectionId}`);
@@ -96,7 +100,12 @@ const Navbar = ({ navOpen, toggleNav }) => {
 
 	const handleResize = useCallback(() => {
 		setThreshold(window.innerWidth >= 768 ? 0.5 : 0.2);
-	}, []);
+
+		const currentActiveLink = document.querySelector(`a[href='${activeTab}']`);
+		if (currentActiveLink && activeBox.current) {
+			initActiveBox(currentActiveLink);
+		}
+	}, [activeTab, initActiveBox]);
 
 	useEffect(() => {
 		window.addEventListener("resize", handleResize);
@@ -116,19 +125,19 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				activeBox.current.style.opacity = 0;
 			}
 		}
-	}, [activeTab, initActiveBox]);
+
+		if (isInitialLoad) {
+			setTimeout(() => setIsInitialLoad(false), 100);
+		}
+	}, [activeTab, initActiveBox, isInitialLoad]);
 
 	return (
-		<nav className={`navbar ${navOpen ? "active" : ""} bg-zinc-900`}>
+		<nav className={`navbar ${navOpen ? "active" : ""} bg-zinc-950`}>
 			{navItems.map(({ label, link, className }, key) => (
 				<a
 					href={link}
 					key={key}
-					className={`${className} relative z-20 transition duration-200 md:my-0 my-2 ${
-						activeTab === link
-							? "text-black hover:text-black"
-							: "text-zinc-400 hover:text-zinc-300"
-					}`}
+					className={`${className} relative z-20 transition duration-200 md:my-0 my-2 mix-blend-difference text-zinc-300`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}
@@ -138,8 +147,12 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				className="active-box"
 				ref={activeBox}
 				layoutId="active-box"
-				initial={false}
-				transition={{ type: "spring", stiffness: 300, damping: 25 }}
+				initial={{ opacity: 1 }}
+				transition={
+					isInitialLoad
+						? { duration: 0 }
+						: { type: "spring", stiffness: 500, damping: 35 }
+				}
 			/>
 		</nav>
 	);
