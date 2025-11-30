@@ -59,10 +59,10 @@ const Header = () => {
 
 	const handleLogoClick = (event) => {
 		event.preventDefault();
-		const homeSection = document.querySelector("#home");
+		const aboutSection = document.querySelector("#about");
 
-		if (homeSection) {
-			lenis.scrollTo(homeSection.offsetTop, { duration: 1.2 });
+		if (aboutSection) {
+			lenis.scrollTo(aboutSection.offsetTop, { duration: 1.2 });
 		}
 	};
 

@@ -139,7 +139,7 @@ const ProjectCard = ({
 								href={projectLink}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="flex items-center justify-center w-11 h-11 rounded-lg bg-[#7f2ffa] text-zinc-50 transition-colors"
+								className="accent-bg flex items-center justify-center w-11 h-11 rounded-lg text-zinc-50 transition-colors"
 								aria-label={`View live project: ${title}`}
 								whileHover={{ scale: 1.1 }}
 								onMouseEnter={() => setHoveredLive(true)}

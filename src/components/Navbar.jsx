@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useLenis } from "lenis/react";
 
 const Navbar = ({ navOpen, toggleNav }) => {
-	const [activeTab, setActiveTab] = useState("#home");
+	const [activeTab, setActiveTab] = useState("#about");
 	const [threshold, setThreshold] = useState(0.1);
 	const [isInitialLoad, setIsInitialLoad] = useState(true);
 
@@ -14,7 +14,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 
 	const navItems = useMemo(
 		() => [
-			{ label: "Home", link: "#home", className: "nav-link" },
+			{ label: "About", link: "#about", className: "nav-link" },
 			{ label: "Skills", link: "#skills", className: "nav-link" },
 			{ label: "Projects", link: "#projects", className: "nav-link" },
 			{ label: "Contact", link: "#contact", className: "nav-link md:hidden" },
@@ -132,7 +132,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 	}, [activeTab, initActiveBox, isInitialLoad]);
 
 	return (
-		<nav className={`navbar ${navOpen ? "active" : ""} bg-zinc-950`}>
+		<nav className={`navbar ${navOpen ? "active" : ""} bg-zinc-950/30`}>
 			{navItems.map(({ label, link, className }, key) => (
 				<a
 					href={link}

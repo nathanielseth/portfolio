@@ -12,7 +12,7 @@ const App = () => {
 		<ReactLenis root>
 			<Header />
 			<main className="scrollbar-thin">
-				<section id="home" className="min-h-screen">
+				<section id="about" className="min-h-screen">
 					<Hero />
 				</section>
 				<section id="skills" className="min-h-screen">
