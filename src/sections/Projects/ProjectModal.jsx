@@ -91,7 +91,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 						exit="exit"
 						onClick={(e) => e.stopPropagation()}
 						onWheel={(e) => e.stopPropagation()}
-						className="relative w-full max-w-5xl max-h-[90vh] bg-zinc-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-zinc-800"
+						className="relative w-full max-w-4xl max-h-[90vh] bg-zinc-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-zinc-800"
 					>
 						<button
 							onClick={onClose}

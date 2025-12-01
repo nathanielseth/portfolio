@@ -1,5 +1,5 @@
 import SkillBox from "./SkillBox";
-import { skills } from "../utils/skillsData";
+import { skills } from "../../utils/data/skillsData";
 
 const Skills = () => {
 	return (

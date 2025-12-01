@@ -64,3 +64,7 @@ export const skills = [
 		description: "Version control",
 	},
 ];
+
+export const resumeMetadata = {
+	lastModified: "Jul 2025",
+};

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ProjectCard from "./ProjectCard";
-import ProjectModal from "./ProjectModal";
-import projects from "../utils/projectsData.jsx";
+import ProjectCard from "./ProjectCard.jsx";
+import ProjectModal from "./ProjectModal.jsx";
+import projects from "../../utils/data/projectsData.jsx";
 
 const Projects = () => {
 	const [selectedProject, setSelectedProject] = useState(null);

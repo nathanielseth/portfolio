@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import PDFModal from "./ResumeViewer";
+import {
+	HiTerminal,
+	HiCube,
+	HiPuzzle,
+	HiDocumentText,
+	HiArrowDown,
+} from "react-icons/hi";
+import PDFModal from "../../components/ResumeViewer";
 
 const typingVariants = {
 	hidden: { opacity: 0 },
@@ -59,15 +66,15 @@ const Hero = () => {
 
 	const taglineItems = [
 		{
-			icon: "terminal",
-			text: "I create reliable, user-focused web apps with practical code.",
+			icon: HiTerminal,
+			text: "I create clean, user-focused web apps with practical code.",
 		},
 		{
-			icon: "architecture",
+			icon: HiCube,
 			text: "I'm always planning, building, and exploring new stacks.",
 		},
 		{
-			icon: "sports_esports",
+			icon: HiPuzzle,
 			text: "I enjoy experimenting with mechanics and game logic.",
 		},
 	];
@@ -133,22 +140,23 @@ const Hero = () => {
 					onAnimationComplete={handleAnimationComplete}
 				>
 					<div className="mb-6 grid grid-cols-1 justify-items-center gap-y-4 text-left sm:grid-cols-3 sm:justify-center sm:px-0 sm:mb-10">
-						{taglineItems.map((item, index) => (
-							<motion.div
-								key={index}
-								variants={itemVariants}
-								className={`flex flex-row gap-2 ${
-									index > 0 ? "hidden sm:flex" : ""
-								}`}
-							>
-								<span className="material-symbols-rounded shrink-0 text-lg leading-none text-zinc-400 hidden sm:inline">
-									{item.icon}
-								</span>
-								<p className="text-xs leading-relaxed text-zinc-400 md:text-sm">
-									{item.text}
-								</p>
-							</motion.div>
-						))}
+						{taglineItems.map((item, index) => {
+							const IconComponent = item.icon;
+							return (
+								<motion.div
+									key={index}
+									variants={itemVariants}
+									className={`flex flex-row gap-2 ${
+										index > 0 ? "hidden sm:flex" : ""
+									}`}
+								>
+									<IconComponent className="shrink-0 text-lg leading-none text-zinc-400 hidden sm:inline" />
+									<p className="text-xs leading-relaxed text-zinc-400 md:text-sm">
+										{item.text}
+									</p>
+								</motion.div>
+							);
+						})}
 					</div>
 
 					<motion.div variants={buttonVariants}>
@@ -165,9 +173,7 @@ const Hero = () => {
 							<span className="text-sm font-semibold sm:text-base">
 								View Resume
 							</span>
-							<span className="material-symbols-rounded flex items-center text-sm sm:text-base md:text-lg">
-								description
-							</span>
+							<HiDocumentText className="flex items-center text-sm sm:text-base md:text-lg" />
 						</motion.button>
 					</motion.div>
 				</motion.div>
@@ -182,9 +188,7 @@ const Hero = () => {
 					whileTap={{ scale: 0.9 }}
 					aria-label="Scroll to projects section"
 				>
-					<span className="material-symbols-rounded text-xl text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300 md:text-2xl">
-						arrow_downward
-					</span>
+					<HiArrowDown className="text-xl text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300 md:text-2xl" />
 				</motion.button>
 			</main>
 

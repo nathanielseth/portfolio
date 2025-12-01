@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 import { IoClose } from "react-icons/io5";
+import { resumeMetadata } from "../utils/data/skillsData";
 
 const modalVariants = {
 	hidden: { opacity: 0 },
@@ -36,58 +37,17 @@ const modalContentVariants = {
 };
 
 const PDFModal = ({ isOpen, onClose, pdfUrl, title = "Resume" }) => {
-	const [lastModified, setLastModified] = useState("");
-	const hasRequestedLastModified = useRef(false);
-
 	useEffect(() => {
 		if (isOpen) {
 			document.body.style.overflow = "hidden";
-
-			if (!hasRequestedLastModified.current) {
-				hasRequestedLastModified.current = true;
-
-				const fetchLastModified = () => {
-					fetch(pdfUrl, { method: "HEAD" })
-						.then((response) => {
-							const lastMod = response.headers.get("Last-Modified");
-							if (lastMod) {
-								const date = new Date(lastMod);
-								const months = [
-									"Jan",
-									"Feb",
-									"Mar",
-									"Apr",
-									"May",
-									"Jun",
-									"Jul",
-									"Aug",
-									"Sep",
-									"Oct",
-									"Nov",
-									"Dec",
-								];
-								const formatted = `${
-									months[date.getMonth()]
-								} ${date.getFullYear()}`;
-								setLastModified(formatted);
-							}
-						})
-						.catch(() => setLastModified(""));
-				};
-
-				if ("requestIdleCallback" in window) {
-					requestIdleCallback(fetchLastModified);
-				} else {
-					setTimeout(fetchLastModified, 0);
-				}
-			}
 		} else {
 			document.body.style.overflow = "unset";
 		}
+
 		return () => {
 			document.body.style.overflow = "unset";
 		};
-	}, [isOpen, pdfUrl]);
+	}, [isOpen]);
 
 	return (
 		<AnimatePresence>
@@ -108,7 +68,7 @@ const PDFModal = ({ isOpen, onClose, pdfUrl, title = "Resume" }) => {
 						exit="exit"
 						onClick={(e) => e.stopPropagation()}
 						onWheel={(e) => e.stopPropagation()}
-						className="relative w-full max-w-6xl h-[85vh] sm:h-[90vh] bg-zinc-900/95 rounded-2xl shadow-2xl overflow-hidden border border-zinc-800 flex flex-col"
+						className="relative w-full max-w-4xl h-[85vh] sm:h-[90vh] bg-zinc-900/95 rounded-2xl shadow-2xl overflow-hidden border border-zinc-800 flex flex-col"
 					>
 						{/* Close Button */}
 						<button
@@ -126,11 +86,9 @@ const PDFModal = ({ isOpen, onClose, pdfUrl, title = "Resume" }) => {
 							</span>
 							<div className="flex flex-col items-start">
 								<h2 className="text-lg font-semibold text-zinc-50">{title}</h2>
-								{lastModified && (
-									<p className="text-xs text-zinc-500">
-										Updated {lastModified}
-									</p>
-								)}
+								<p className="text-xs text-zinc-500">
+									Updated {resumeMetadata.lastModified}
+								</p>
 							</div>
 						</div>
 

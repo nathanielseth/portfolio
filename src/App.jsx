@@ -2,11 +2,11 @@ import { ReactLenis } from "lenis/react";
 import { LazyMotion, domAnimation } from "framer-motion";
 
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
-import ScrollToTop from "./components/ScrollToTop";
+import Hero from "./sections/About/Hero";
+import Skills from "./sections/Skills/Skills";
+import Projects from "./sections/Projects/Projects";
+import Contact from "./sections/Contact/Contact";
+import ChatButton from "./components/Chat/ChatButton";
 
 const App = () => {
 	return (
@@ -32,7 +32,7 @@ const App = () => {
 					</section>
 				</main>
 
-				<ScrollToTop />
+				<ChatButton />
 			</LazyMotion>
 		</ReactLenis>
 	);

@@ -137,7 +137,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				<a
 					href={link}
 					key={key}
-					className={`${className} relative z-20 transition duration-200 md:my-0 my-2 mix-blend-difference text-zinc-300`}
+					className={`${className} relative z-30 transition duration-200 md:my-0 my-2 mix-blend-difference text-zinc-300`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}
