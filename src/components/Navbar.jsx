@@ -15,9 +15,8 @@ const Navbar = ({ navOpen, toggleNav }) => {
 	const navItems = useMemo(
 		() => [
 			{ label: "About", link: "#about", className: "nav-link" },
-			{ label: "Skills", link: "#skills", className: "nav-link" },
 			{ label: "Projects", link: "#projects", className: "nav-link" },
-			{ label: "Contact", link: "#contact", className: "nav-link md:hidden" },
+			{ label: "Contact", link: "#contact", className: "nav-link" },
 		],
 		[]
 	);
@@ -42,18 +41,13 @@ const Navbar = ({ navOpen, toggleNav }) => {
 		(event, link) => {
 			event.preventDefault();
 
-			ignoreScrollRef.current = true;
-			setTimeout(() => {
-				ignoreScrollRef.current = false;
-			}, 1000);
-
 			setActiveTab(link);
 
 			const targetSection = document.querySelector(link);
 			if (targetSection && lenis) {
 				lenis.scrollTo(targetSection, {
 					offset: link === "#projects" && window.innerWidth < 768 ? -80 : 0,
-					duration: 1,
+					duration: 0.5,
 				});
 			}
 
@@ -70,15 +64,10 @@ const Navbar = ({ navOpen, toggleNav }) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.id;
-						const isMobile = window.innerWidth < 768;
 
-						// if we at contacts on desktop, keep projects as active
-						// but on mobile, show contacts
-						if (sectionId === "contact" && !isMobile) {
-							setActiveTab("#projects");
-						} else {
-							setActiveTab(`#${sectionId}`);
-						}
+						
+						setActiveTab(`#${sectionId}`);
+						
 					}
 				});
 			},

@@ -179,7 +179,7 @@ const Hero = () => {
 				</motion.div>
 
 				<motion.button
-					className="group absolute bottom-10 cursor-pointer"
+					className="group absolute bottom-20 cursor-pointer"
 					variants={arrowVariants}
 					initial="hidden"
 					animate={showArrow ? "visible" : "hidden"}

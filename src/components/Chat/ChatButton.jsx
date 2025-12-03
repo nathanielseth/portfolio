@@ -7,77 +7,48 @@ import * as pdfjsLib from "pdfjs-dist";
 import "pdfjs-dist/build/pdf.worker.mjs";
 import ChatMessage from "./ChatMessage";
 
+const INITIAL_MESSAGE = {
+	role: "assistant",
+	content: "Hey there! Here to answer questions about Seth's work.",
+};
+
+const API_ENDPOINT = "https://lucky-night-09d6.nathanielseth-dev.workers.dev";
+const RESUME_PATH = "/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf";
+
 const ChatButton = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [messages, setMessages] = useState([
-		{
-			role: "assistant",
-			content: "Hey there! Here to answer questions about Seth's work.",
-		},
-	]);
+	const [messages, setMessages] = useState([INITIAL_MESSAGE]);
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [resumeText, setResumeText] = useState("");
 
 	const endRef = useRef(null);
-	const inputRef = useRef(null);
 	const messagesRef = useRef(null);
+	const chatContainerRef = useRef(null);
 
 	useEffect(() => {
-		endRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [messages]);
-
-	useEffect(() => {
-		if (isOpen && !isLoading) {
-			inputRef.current?.focus();
+		if (messages.length > 1) {
+			endRef.current?.scrollIntoView({ behavior: "smooth" });
 		}
-	}, [isOpen, isLoading]);
-
-	useEffect(() => {
-		if (!isOpen) return;
-		const chatEl = document.querySelector("[data-chat-container]");
-		if (!chatEl) return;
-
-		const preventScroll = (e) => {
-			const container = messagesRef.current;
-			if (container) {
-				const isScrollable = container.scrollHeight > container.clientHeight;
-				if (isScrollable) {
-					e.stopPropagation();
-					const atTop = container.scrollTop === 0;
-					const atBottom =
-						container.scrollTop + container.clientHeight >=
-						container.scrollHeight - 1;
-
-					if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
-						e.preventDefault();
-					}
-				}
-			}
-		};
-
-		chatEl.addEventListener("wheel", preventScroll, { passive: false });
-		return () => chatEl.removeEventListener("wheel", preventScroll);
-	}, [isOpen]);
+	}, [messages.length]);
 
 	useEffect(() => {
 		const loadPDF = async () => {
 			try {
-				const res = await fetch(
-					"/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf"
-				);
-				const buf = await res.arrayBuffer();
-				const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+				const response = await fetch(RESUME_PATH);
+				const arrayBuffer = await response.arrayBuffer();
+				const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
-				let text = "";
+				let extractedText = "";
 				for (let i = 1; i <= pdf.numPages; i++) {
 					const page = await pdf.getPage(i);
 					const content = await page.getTextContent();
-					text += content.items.map((item) => item.str).join(" ") + "\n";
+					extractedText +=
+						content.items.map((item) => item.str).join(" ") + "\n";
 				}
-				setResumeText(text);
-			} catch (err) {
-				console.error("Resume Load Error:", err);
+				setResumeText(extractedText);
+			} catch (error) {
+				console.error("Resume load error:", error);
 				setResumeText("RESUME_LOAD_FAILED");
 			}
 		};
@@ -87,36 +58,33 @@ const ChatButton = () => {
 	const sendMessage = useCallback(async () => {
 		if (!input.trim() || isLoading) return;
 
-		const userMsg = { role: "user", content: input };
-		setMessages((prev) => [...prev, userMsg]);
+		const userMessage = { role: "user", content: input };
+		setMessages((prev) => [...prev, userMessage]);
 		setInput("");
 		setIsLoading(true);
 
 		try {
-			const res = await fetch(
-				"https://lucky-night-09d6.nathanielseth-dev.workers.dev",
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						messages: [...messages, userMsg],
-						resumeText: resumeText || "RESUME_LOAD_FAILED",
-					}),
-				}
-			);
+			const response = await fetch(API_ENDPOINT, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					messages: [...messages, userMessage],
+					resumeText: resumeText || "RESUME_LOAD_FAILED",
+				}),
+			});
 
-			if (!res.ok) throw new Error("API Error");
+			if (!response.ok) throw new Error("API request failed");
 
-			const data = await res.json();
-			const aiMsg = {
+			const data = await response.json();
+			const assistantMessage = {
 				role: "assistant",
 				content:
 					data.choices?.[0]?.message?.content ||
 					"Sorry, couldn't process that.",
 			};
-			setMessages((prev) => [...prev, aiMsg]);
-		} catch (err) {
-			console.error(err);
+			setMessages((prev) => [...prev, assistantMessage]);
+		} catch (error) {
+			console.error("Chat error:", error);
 			setMessages((prev) => [
 				...prev,
 				{ role: "assistant", content: "Connection issue. Try again?" },
@@ -136,14 +104,32 @@ const ChatButton = () => {
 		[sendMessage]
 	);
 
+	const toggleChat = useCallback(() => {
+		setIsOpen((prev) => !prev);
+	}, []);
+
+	useEffect(() => {
+		if (!isOpen || !chatContainerRef.current) return;
+
+		const handleWheel = (e) => {
+			e.stopPropagation();
+		};
+
+		const container = chatContainerRef.current;
+		container.addEventListener("wheel", handleWheel, { passive: false });
+
+		return () => {
+			container.removeEventListener("wheel", handleWheel);
+		};
+	}, [isOpen]);
+
 	return (
 		<>
 			<motion.button
-				onClick={() => setIsOpen(!isOpen)}
-				className="fixed bottom-7 right-5 z-20 accent-bg rounded-full text-zinc-50 shadow-lg flex items-center justify-center cursor-pointer"
-				style={{ width: "3rem", height: "3rem" }}
+				onClick={toggleChat}
+				className="fixed bottom-8 right-5 z-20 flex h-12 w-12 items-center justify-center rounded-full accent-bg text-zinc-50 shadow-lg cursor-pointer md:right-7"
 				initial={{ scale: 0, opacity: 0 }}
-				animate={{ scale: isOpen ? 1 : 1, opacity: 1 }}
+				animate={{ scale: 1, opacity: 1 }}
 				transition={{ type: "spring", stiffness: 400, damping: 17 }}
 				whileHover={{ scale: 1.05 }}
 				whileTap={{ scale: 0.95 }}
@@ -160,28 +146,25 @@ const ChatButton = () => {
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div
-						data-chat-container
+						ref={chatContainerRef}
 						layout
-						initial={{ opacity: 0, y: 30, scale: 0.9 }}
+						initial={{ opacity: 0, y: 20, scale: 0.95 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
-						exit={{ opacity: 0, y: 30, scale: 0.9 }}
-						transition={{ type: "spring", stiffness: 650, damping: 25 }}
-						className="fixed bottom-24 right-5 z-20 w-[24rem] sm:w-96 bg-zinc-900 rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-zinc-700/50"
-						style={{ height: "32rem" }}
+						exit={{ opacity: 0, y: 20, scale: 0.95 }}
+						transition={{ type: "spring", stiffness: 500, damping: 30 }}
+						className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-5 z-20 flex flex-col overflow-hidden rounded-2xl border border-zinc-700/50 bg-zinc-900 shadow-2xl w-[calc(100vw-2rem)] sm:w-96 h-[75vh] sm:h-[32rem]"
 					>
-						<div className="bg-zinc-800 px-5 py-2 border-b border-zinc-700/50 flex items-center gap-1">
-							<HiSparkles className="text-zinc-300 text-lg" />
-							<h3 className="font-semibold text-base text-zinc-50">deleb.ai</h3>
+						<div className="flex items-center gap-1 border-b border-zinc-700/50 bg-zinc-800 px-5 py-2">
+							<HiSparkles className="text-base text-zinc-300" />
+							<h3 className="text-base font-semibold text-zinc-50">deleb.ai</h3>
 						</div>
 
 						<div
 							ref={messagesRef}
-							className="flex-1 px-4 py-4 space-y-3 overflow-y-auto"
+							className="flex-1 space-y-3 overflow-y-scroll px-4 py-4 scroll-smooth"
 							style={{
 								scrollbarColor: "rgb(63 63 70) transparent",
 								scrollbarWidth: "thin",
-								overscrollBehavior: "contain",
-								WebkitOverflowScrolling: "touch",
 							}}
 						>
 							{messages.map((msg, i) => (
@@ -190,11 +173,11 @@ const ChatButton = () => {
 
 							{isLoading && (
 								<div className="flex justify-start">
-									<div className="bg-zinc-800 rounded-2xl px-4 py-3 flex space-x-1.5">
+									<div className="flex space-x-1.5 rounded-2xl bg-zinc-800 px-4 py-3">
 										{[0, 0.1, 0.2].map((delay) => (
 											<motion.div
 												key={delay}
-												className="w-1.5 h-1.5 bg-zinc-500 rounded-full"
+												className="h-1.5 w-1.5 rounded-full bg-zinc-500"
 												animate={{ y: [0, -4, 0] }}
 												transition={{ duration: 0.6, repeat: Infinity, delay }}
 											/>
@@ -205,22 +188,21 @@ const ChatButton = () => {
 							<div ref={endRef} />
 						</div>
 
-						<div className="p-4 border-t border-zinc-700/50">
+						<div className="border-t border-zinc-700/50 p-4">
 							<div className="relative">
 								<input
-									ref={inputRef}
 									type="text"
 									value={input}
 									onChange={(e) => setInput(e.target.value)}
-									onKeyPress={handleKeyPress}
+									onKeyDown={handleKeyPress}
 									placeholder="Ask something..."
-									className="w-full pl-4 pr-11 py-2.5 rounded-xl bg-zinc-800 text-zinc-100 text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-700"
 									disabled={isLoading}
+									className="w-full rounded-xl bg-zinc-800 py-2.5 pl-4 pr-11 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-700"
 								/>
 								<button
 									onClick={sendMessage}
 									disabled={isLoading || !input.trim()}
-									className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-100 disabled:opacity-30 transition-all hover:scale-110 active:scale-90 p-1"
+									className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-zinc-400 transition-all hover:scale-110 hover:text-zinc-100 active:scale-90 disabled:opacity-30"
 									aria-label="Send message"
 								>
 									<MdSend size={20} />

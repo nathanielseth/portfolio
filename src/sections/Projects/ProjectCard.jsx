@@ -21,20 +21,24 @@ const ProjectCard = ({
 	index,
 	classes,
 	onCardClick,
+	disableInitialAnimation = false,
+	onAnimationComplete,
 }) => {
 	const [hoveredTagIndex, setHoveredTagIndex] = useState(null);
 	const [hoveredLive, setHoveredLive] = useState(false);
 	const [hoveredCode, setHoveredCode] = useState(false);
-	const [isHovered, setIsHovered] = useState(false);
+	const [animationDelay, setAnimationDelay] = useState(
+		disableInitialAnimation ? 0 : index * 0.15
+	);
 
 	const handleMouseEnter = (tagIndex) => {
 		setHoveredTagIndex(tagIndex);
-		setIsHovered(true);
 	};
 
 	const handleMouseLeave = () => {
 		setHoveredTagIndex(null);
-		setIsHovered(false);
+		setHoveredLive(false);
+		setHoveredCode(false);
 	};
 
 	const variants = {
@@ -44,30 +48,34 @@ const ProjectCard = ({
 			y: 0,
 			transition: {
 				duration: 0.3,
-				ease: "easeIn",
-				delay: isHovered ? 0 : index * 0.3,
+				ease: "easeOut",
+				delay: animationDelay,
 			},
 		},
 	};
 
+	const handleAnimationComplete = () => {
+		setAnimationDelay(0);
+		onAnimationComplete?.();
+	};
+
 	return (
 		<motion.div
-			initial="hidden"
+			initial={disableInitialAnimation ? "visible" : "hidden"}
 			whileInView="visible"
 			viewport={{ once: true }}
 			variants={variants}
+			onAnimationComplete={handleAnimationComplete}
 			whileHover={{
 				y: -7,
 				transition: {
 					type: "spring",
 					stiffness: 600,
+					damping: 15,
 					mass: 0.5,
-					duration: 0.1,
 				},
 			}}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-900 hover:ring-1 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px]`}
+			className={`relative flex flex-col p-4 rounded-2xl bg-zinc-900 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-900 hover:ring-1 hover:ring-zinc-700 transition-colors ${classes} max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mx-auto min-h-[450px] z-10`}
 		>
 			<figure
 				className="img-box aspect-square rounded-lg mb-3 flex-grow cursor-pointer"
@@ -111,17 +119,18 @@ const ProjectCard = ({
 										{tag.label}
 									</span>
 									<motion.div
-										className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2"
+										className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-[100] pointer-events-none"
 										animate={
 											hoveredTagIndex === tagIndex ? "visible" : "hidden"
 										}
-										initial={{ y: 0, x: "-50%" }}
+										initial="hidden"
 										variants={tooltipVariants}
+										style={{ translateX: "-50%" }}
 									>
-										<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
+										<div className="relative p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
 											{tag.tagName}
 										</div>
-										<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
+										<div className="absolute left-1/2 transform -translate-x-1/2 -bottom-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
 									</motion.div>
 								</div>
 							))}
@@ -129,34 +138,6 @@ const ProjectCard = ({
 				</div>
 
 				<div className="absolute bottom-4 right-4 flex space-x-2 z-10">
-					{projectLink && (
-						<div className="relative group">
-							<motion.a
-								href={projectLink}
-								target="_blank"
-								rel="noopener noreferrer"
-								onClick={(e) => e.stopPropagation()}
-								className="flex items-center justify-center w-11 h-11 rounded-lg accent-bg text-zinc-50"
-								aria-label={`View live project: ${title}`}
-								whileHover={{ scale: 1.1 }}
-								onMouseEnter={() => setHoveredLive(true)}
-								onMouseLeave={() => setHoveredLive(false)}
-							>
-								<IoGlobeOutline className="w-8 h-8" aria-hidden="true" />
-							</motion.a>
-							<motion.div
-								className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3"
-								animate={hoveredLive ? "visible" : "hidden"}
-								initial={{ y: 0, x: "-50%" }}
-								variants={tooltipVariants}
-							>
-								<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
-									<span className="whitespace-nowrap">Live Demo</span>
-								</div>
-								<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
-							</motion.div>
-						</div>
-					)}
 					{codeLink && (
 						<div className="relative group">
 							<motion.a
@@ -173,13 +154,43 @@ const ProjectCard = ({
 								<IoLogoGithub className="w-8 h-8" aria-hidden="true" />
 							</motion.a>
 							<motion.div
-								className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3"
+								className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 z-[100] pointer-events-none"
 								animate={hoveredCode ? "visible" : "hidden"}
-								initial={{ y: 0, x: "-50%" }}
+								initial="hidden"
 								variants={tooltipVariants}
+								style={{ translateX: "-50%" }}
 							>
-								<div className="relative z-10 p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
+								<div className="relative p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
 									<span className="whitespace-nowrap">View Code</span>
+								</div>
+								<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
+							</motion.div>
+						</div>
+					)}
+					{projectLink && (
+						<div className="relative group">
+							<motion.a
+								href={projectLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								onClick={(e) => e.stopPropagation()}
+								className="flex items-center justify-center w-11 h-11 rounded-lg accent-bg text-zinc-50"
+								aria-label={`View live project: ${title}`}
+								whileHover={{ scale: 1.1 }}
+								onMouseEnter={() => setHoveredLive(true)}
+								onMouseLeave={() => setHoveredLive(false)}
+							>
+								<IoGlobeOutline className="w-8 h-8" aria-hidden="true" />
+							</motion.a>
+							<motion.div
+								className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 z-[100] pointer-events-none"
+								animate={hoveredLive ? "visible" : "hidden"}
+								initial="hidden"
+								variants={tooltipVariants}
+								style={{ translateX: "-50%" }}
+							>
+								<div className="relative p-2 text-sm leading-none text-zinc-50 whitespace-no-wrap bg-zinc-900 rounded-md shadow-lg">
+									<span className="whitespace-nowrap">Live Demo</span>
 								</div>
 								<div className="absolute left-1/2 transform -translate-x-1/2 -top-1 w-3 h-3 bg-zinc-900 rotate-45"></div>
 							</motion.div>
@@ -206,6 +217,8 @@ ProjectCard.propTypes = {
 	classes: PropTypes.string,
 	index: PropTypes.number.isRequired,
 	onCardClick: PropTypes.func.isRequired,
+	disableInitialAnimation: PropTypes.bool,
+	onAnimationComplete: PropTypes.func,
 };
 
 export default ProjectCard;

@@ -187,6 +187,17 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 										</div>
 
 										<div className="flex flex-wrap gap-3">
+											{project.codeLink && (
+												<a
+													href={project.codeLink}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 font-semibold hover:scale-105 transition-transform duration-150"
+												>
+													<IoLogoGithub className="w-5 h-5" />
+													<span>Source Code</span>
+												</a>
+											)}
 											{project.projectLink ? (
 												<a
 													href={project.projectLink}
@@ -201,17 +212,6 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 												<div className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 font-semibold">
 													<span>In Development</span>
 												</div>
-											)}
-											{project.codeLink && (
-												<a
-													href={project.codeLink}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 font-semibold hover:scale-105 transition-transform duration-150"
-												>
-													<IoLogoGithub className="w-5 h-5" />
-													<span>Source Code</span>
-												</a>
 											)}
 										</div>
 									</div>
