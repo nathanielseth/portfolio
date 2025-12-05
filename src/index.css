@@ -2,67 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @layer base {
   :root {
     --accent: #f9364d;
     --accent-hover: #f9364d;
   }
+  
   body {
     @apply bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50;
   }
 }
+
 @layer components {
   * {
     @apply transition-none;
   }
-  .material-symbols-rounded {
-    @apply w-[1em] h-[1em] overflow-hidden;
-    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-  }
+  
   .menu-btn {
-    @apply w-10 h-10 grid place-items-center rounded-full ring-inset ring-1 
-           ring-zinc-900/5 dark:ring-zinc-50/[0.02] 
-           backdrop-blur-2xl hover:bg-zinc-900/5 dark:hover:bg-zinc-50/15 
+    @apply w-9 h-9 grid place-items-center rounded-full
+           backdrop-blur-2xl 
+           hover:bg-zinc-300/60 dark:hover:bg-zinc-50/15 
            transition-[transform,background-color];
   }
+  
   .navbar {
     @apply absolute top-full mt-2 right-0 min-w-40 p-1 rounded-lg md:rounded-full 
-           ring-inset ring-1 ring-zinc-900/10 dark:ring-zinc-50/5 
+           ring-inset ring-1 ring-zinc-300/50 dark:ring-zinc-200/10 
            scale-90 isolate blur-sm opacity-0 invisible 
            transition-[opacity,transform,filter] 
            md:static md:flex md:items-center md:mt-0 md:opacity-100 
            md:blur-0 md:visible md:scale-100 backdrop-blur-2xl 
-           bg-white/80 dark:bg-zinc-900/80;
+           bg-zinc-50/80 dark:bg-zinc-900/80;
   }
+  
   .navbar.active {
     @apply opacity-100 scale-100 blur-0 visible;
   }
+  
   .nav-link {
-    @apply grid items-center h-8 px-4 text-base font-bold tracking-wide 
-           text-zinc-900 dark:text-zinc-400 
-           hover:text-zinc-950 dark:hover:text-zinc-50;
+    @apply grid items-center h-8 px-4 text-base font-semibold tracking-wide 
+           text-zinc-100 dark:text-zinc-400 
+           hover:text-zinc-100 dark:hover:text-zinc-50;
   }
+  
   .nav-link.active {
-    @apply text-zinc-900 dark:text-zinc-900 font-bold duration-500;
+    @apply text-zinc-50 dark:text-zinc-900 font-bold;
   }
+  
   .active-tab:hover {
-    @apply hover:text-zinc-900;
+    @apply hover:text-zinc-50 dark:hover:text-zinc-50;
   }
+  
   .navbar .active-box {
-    @apply absolute bg-zinc-50 rounded-lg md:rounded-full -z-10 
-           transition-[top,left] duration-300;
+    @apply absolute bg-zinc-900 dark:bg-zinc-50 rounded-lg md:rounded-full -z-10;
   }
+  
   .title-1 {
     @apply text-[22px] font-normal;
   }
+  
   .accent-bg {
     background-color: var(--accent);
   }
+  
   .accent-bg:hover {
     background-color: var(--accent-hover);
   }
+  
   .accent-text {
     color: var(--accent);
   }

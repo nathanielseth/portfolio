@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import { LinkedinIcon } from "../../components/Icons/SvgIcons";
+import { GithubIcon } from "../../components/Icons/SvgIcons";
+import { Mail } from "lucide-react";
 import { useState } from "react";
 
 const containerVariants = {
@@ -15,12 +16,12 @@ const containerVariants = {
 
 const itemVariants = {
 	hidden: { opacity: 0, y: 30 },
-	show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+	show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 const iconVariants = {
 	hidden: { opacity: 0, y: 30 },
-	show: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.4 } },
+	show: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 } },
 };
 
 const tooltipVariants = {
@@ -84,7 +85,7 @@ const Contact = () => {
 						onMouseEnter={() => setShowTooltip(true)}
 						onMouseLeave={() => !copied && setShowTooltip(false)}
 					>
-						<span className="text-[var(--accent)] font-semibold text-xl md:text-2xl">
+						<span className="text-[var(--accent)] font-medium text-xl md:text-2xl">
 							nathanielseth.dev@gmail.com
 						</span>
 						<motion.div
@@ -111,30 +112,33 @@ const Contact = () => {
 						href="https://github.com/nathanielseth"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-2xl md:text-3xl text-zinc-500 hover:text-zinc-50"
+						className="text-2xl md:text-3xl text-zinc-600 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-zinc-50"
 						whileHover={{ y: -2 }}
+						aria-label="Visit my GitHub profile"
 					>
-						<FaGithub />
+						<GithubIcon />
 					</motion.a>
 
 					<motion.a
 						href="https://www.linkedin.com/in/nathanielseth"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-2xl md:text-3xl text-zinc-500 hover:text-zinc-50"
+						className="text-2xl md:text-3xl text-zinc-600 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-zinc-50"
 						whileHover={{ y: -2 }}
+						aria-label="Visit my LinkedIn profile"
 					>
-						<FaLinkedin />
+						<LinkedinIcon />
 					</motion.a>
 
 					<motion.a
 						href="mailto:nathanielseth.dev@gmail.com"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-2xl md:text-3xl text-zinc-500 hover:text-zinc-50"
+						className="text-2xl md:text-3xl text-zinc-600 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-zinc-50"
 						whileHover={{ y: -2 }}
+						aria-label="Send me an email"
 					>
-						<MdEmail />
+						<Mail />
 					</motion.a>
 				</motion.div>
 			</div>
@@ -143,7 +147,7 @@ const Contact = () => {
 				variants={itemVariants}
 				initial="hidden"
 				whileInView="show"
-				className="text-sm font-light md:text-base mb-5 text-center text-zinc-500"
+				className="text-sm font-light md:text-base mb-5 text-center text-zinc-600 dark:text-zinc-500"
 			>
 				© nathanielseth.dev
 			</motion.div>

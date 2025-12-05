@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
-import { IoGlobeOutline, IoLogoGithub, IoClose, IoPlay } from "react-icons/io5";
+import { GithubIcon } from "../../components/Icons/SvgIcons";
+import { Globe, X, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const modalVariants = {
@@ -80,7 +81,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 					initial="hidden"
 					animate="visible"
 					exit="exit"
-					className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+					className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 dark:bg-black/90 backdrop-blur-md p-4"
 					onClick={onClose}
 					onWheel={(e) => e.stopPropagation()}
 				>
@@ -91,14 +92,14 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 						exit="exit"
 						onClick={(e) => e.stopPropagation()}
 						onWheel={(e) => e.stopPropagation()}
-						className="relative w-full max-w-4xl max-h-[90vh] bg-zinc-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-zinc-800"
+						className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden dark:border dark:border-zinc-800"
 					>
 						<button
 							onClick={onClose}
-							className="absolute top-4 right-4 z-50 bg-zinc-900/90 backdrop-blur-md hover:bg-zinc-800 transition-colors p-2 rounded-full border border-zinc-700"
+							className="absolute top-4 right-4 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors p-2 rounded-full border border-zinc-300 dark:border-zinc-700"
 							aria-label="Close modal"
 						>
-							<IoClose className="w-6 h-6 text-zinc-50" />
+							<X className="w-6 h-6 text-zinc-900 dark:text-zinc-50" />
 						</button>
 
 						<div className="overflow-y-auto max-h-[90vh] scrollbar-thin">
@@ -152,7 +153,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 										{hasVideo && (
 											<div className="absolute inset-0 flex items-center justify-center z-20">
 												<div className="accent-bg rounded-full p-4 group-hover:scale-110 transition-all duration-300">
-													<IoPlay className="w-10 h-10 text-white pl-1" />
+													<Play className="w-10 h-10 text-white pl-1" />
 												</div>
 											</div>
 										)}
@@ -162,10 +163,10 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 
 							<div className="p-6 sm:p-8 space-y-6">
 								<div>
-									<h2 className="text-2xl sm:text-3xl font-bold text-zinc-50 mb-3">
+									<h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-3">
 										{project.title}
 									</h2>
-									<p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
+									<p className="text-zinc-700 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
 										{project.fullDescription || project.description}
 									</p>
 								</div>
@@ -179,7 +180,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 											{project.tags.map((tag, index) => (
 												<span
 													key={index}
-													className="px-3 py-1.5 bg-zinc-800/60 border border-zinc-700/50 text-zinc-300 rounded-lg text-sm font-medium"
+													className="px-3 py-1.5 bg-zinc-200/60 dark:bg-zinc-800/60 border border-zinc-300/50 dark:border-zinc-700/50 text-zinc-800 dark:text-zinc-300 rounded-lg text-sm font-medium"
 												>
 													{tag.tagName}
 												</span>
@@ -192,9 +193,9 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 													href={project.codeLink}
 													target="_blank"
 													rel="noopener noreferrer"
-													className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 font-semibold hover:scale-105 transition-transform duration-150"
+													className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-950 font-semibold hover:scale-105 transition-transform duration-150"
 												>
-													<IoLogoGithub className="w-5 h-5" />
+													<GithubIcon className="w-5 h-5" />
 													<span>Source Code</span>
 												</a>
 											)}
@@ -205,11 +206,11 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 													rel="noopener noreferrer"
 													className="accent-bg flex items-center gap-2 px-5 py-2.5 rounded-xl text-zinc-50 font-semibold hover:scale-105 transition-transform duration-150"
 												>
-													<IoGlobeOutline className="w-5 h-5" />
+													<Globe className="w-5 h-5" />
 													<span>Live Demo</span>
 												</a>
 											) : (
-												<div className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 font-semibold">
+												<div className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-200/50 dark:bg-zinc-800/50 border border-zinc-300/50 dark:border-zinc-700/50 text-zinc-600 dark:text-zinc-400 font-semibold">
 													<span>In Development</span>
 												</div>
 											)}

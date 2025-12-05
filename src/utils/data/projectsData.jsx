@@ -1,12 +1,4 @@
-import {
-	SiGodotengine,
-	SiSocketdotio,
-	SiExpress,
-	SiTailwindcss,
-} from "react-icons/si";
-import { IoLogoJavascript } from "react-icons/io";
-import { FaReact, FaNodeJs } from "react-icons/fa";
-import { RiHtml5Fill } from "react-icons/ri";
+import { GodotIcon, SocketIoIcon, ExpressIcon, TailwindIcon, JavascriptIcon, ReactIcon, NodeJsIcon, HtmlIcon, SupabaseIcon } from "../../components/Icons/SvgIcons";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -15,27 +7,42 @@ const iconClassName = "inline-block w-11 h-11";
 const projects = [
 	// PROJECT 1
 	{
-		imgSrc: "/portfolio/images/pk.webp",
-		title: "ETIBARK",
+		imgSrc: "/portfolio/images/vc.webp",
+		title: "Classly",
 		description:
-			"A fun multi-platform roguelike currently in progress using Godot and GDScript.",
+			"An AI-Powered LMS and virtual classroom platform built for Computer Science thesis.",
 		tags: [
 			createTag(
-				<SiGodotengine className={iconClassName} />,
-				"bg-[#458dc0] text-zinc-50",
-				"Godot"
+				<ReactIcon className={iconClassName} />,
+				"bg-[#009FB7] text-zinc-50",
+				"React"
 			),
 			createTag(
-				<RiHtml5Fill className={iconClassName} />,
-				"bg-[#017fa5] text-zinc-50",
-				"HTML5"
+				<TailwindIcon className={iconClassName} />,
+				"bg-[#6457A6] text-zinc-50",
+				"TailwindCSS"
+			),
+			createTag(
+				<NodeJsIcon className={iconClassName} />,
+				"bg-[#52AA5E] text-zinc-50",
+				"Node.js"
+			),
+			createTag(
+				<SupabaseIcon className={iconClassName} />,
+				"bg-[#3fcf8e] text-zinc-50",
+				"Supabase"
+			),
+			createTag(
+				<ExpressIcon className={iconClassName} />,
+				"bg-[#353535] text-zinc-50",
+				"Express.js"
 			),
 		],
 		projectLink: "",
 		codeLink: "",
-		category: "GAME",
+		category: "WEB",
 		fullDescription:
-			"I'm building a satirical roguelike in a Filipino urban setting. You explore the kalyes, capturing creatures to upgrade your companion. How you play shifts the vibe of the run and changes what kind of wackiness the game throws back at you.",
+			"I'm making an AI-Powered virtual classroom platform for lessons, assignments, interactive sessions, and real-time class activity. The system keeps students and instructors in sync with live updates, announcements, etc.",
 		videoUrl: null,
 	},
 	// PROJECT 2
@@ -43,25 +50,25 @@ const projects = [
 		imgSrc: "/portfolio/images/vc.webp",
 		title: "VibeChess",
 		description:
-			"A real-time multiplayer chess web app with Stockfish integration.",
+			"A real-time multiplayer chess web application with Stockfish integration.",
 		tags: [
 			createTag(
-				<FaReact className={iconClassName} />,
-				"bg-[#017fa5] text-zinc-50",
+				<ReactIcon className={iconClassName} />,
+				"bg-[#009FB7] text-zinc-50",
 				"React"
 			),
 			createTag(
-				<FaNodeJs className={iconClassName} />,
-				"bg-[#23b45d] text-zinc-50",
+				<NodeJsIcon className={iconClassName} />,
+				"bg-[#52AA5E] text-zinc-50",
 				"Node.js"
 			),
 			createTag(
-				<SiSocketdotio className={iconClassName} />,
+				<SocketIoIcon className={iconClassName} />,
 				"bg-zinc-50 text-zinc-950",
 				"Socket.io"
 			),
 			createTag(
-				<SiExpress className={iconClassName} />,
+				<ExpressIcon className={iconClassName} />,
 				"bg-[#353535] text-zinc-50",
 				"Express.js"
 			),
@@ -81,18 +88,18 @@ const projects = [
 			"A simple, user-friendly tool for calculating income tax in the Philippines.",
 		tags: [
 			createTag(
-				<FaReact className={iconClassName} />,
-				"bg-[#017fa5] text-zinc-50",
+				<ReactIcon className={iconClassName} />,
+				"bg-[#009FB7] text-zinc-50",
 				"React"
 			),
 			createTag(
-				<IoLogoJavascript className={iconClassName} />,
-				"bg-[#dfce3c] text-zinc-950",
+				<JavascriptIcon className={iconClassName} />,
+				"bg-[#F4D35E] text-zinc-50",
 				"JavaScript"
 			),
 			createTag(
-				<SiTailwindcss className={iconClassName} />,
-				"bg-[#38b2ac] text-zinc-50",
+				<TailwindIcon className={iconClassName} />,
+				"bg-[#6457A6] text-zinc-50",
 				"TailwindCSS"
 			),
 		],
@@ -103,52 +110,29 @@ const projects = [
 		videoUrl: null,
 		category: "WEB",
 	},
-	// PROJECT 4 CLASSLY
+	// PROJECT 4
 	{
-		imgSrc: "/portfolio/images/vc.webp",
-		title: "Classly",
+		imgSrc: "/portfolio/images/pk.webp",
+		title: "ETIBARK",
 		description:
-			"A modern LMS and virtual classroom platform built for our Computer Science thesis.",
+			"A fun multi-platform roguelike currently in progress using Godot and GDScript.",
 		tags: [
 			createTag(
-				<FaReact className={iconClassName} />,
+				<GodotIcon className={iconClassName} />,
+				"bg-[#458dc0] text-zinc-50",
+				"Godot"
+			),
+			createTag(
+				<HtmlIcon className={iconClassName} />,
 				"bg-[#017fa5] text-zinc-50",
-				"React"
-			),
-			createTag(
-				<SiTailwindcss className={iconClassName} />,
-				"bg-[#38b2ac] text-zinc-50",
-				"TailwindCSS"
-			),
-			createTag(
-				<FaNodeJs className={iconClassName} />,
-				"bg-[#23b45d] text-zinc-50",
-				"Node.js"
-			),
-			createTag(
-				<SiExpress className={iconClassName} />,
-				"bg-[#353535] text-zinc-50",
-				"Express.js"
-			),
-			// Supabase icon isn't in your imports, so no icon here — tag only
-			createTag(
-				<span
-					className={
-						iconClassName +
-						" flex items-center justify-center font-bold text-xl"
-					}
-				>
-					S
-				</span>,
-				"bg-[#3fcf8e] text-zinc-950",
-				"Supabase"
+				"HTML5"
 			),
 		],
-		projectLink: "", // if you will deploy it later, add here
-		codeLink: "", // private? leave empty
-		category: "WEB",
+		projectLink: "",
+		codeLink: "",
+		category: "GAME",
 		fullDescription:
-			"Classly is our thesis project — a full-featured LMS and virtual classroom platform for managing lessons, assignments, interactive sessions, and real-time class activities. Built with React for the UI, Tailwind for layouts, and Supabase for authentication, storage, and database. The system streamlines communication between students and instructors with live updates, announcements, submissions, and grading tools.",
+			"I'm building a satirical roguelike in a Filipino urban setting. You explore the kalyes, capturing creatures to upgrade your companion. How you play shifts the vibe of the run and changes what kind of wackiness the game throws back at you.",
 		videoUrl: null,
 	},
 ];

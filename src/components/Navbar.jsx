@@ -65,15 +65,13 @@ const Navbar = ({ navOpen, toggleNav }) => {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.id;
 
-						
 						setActiveTab(`#${sectionId}`);
-						
 					}
 				});
 			},
 			{
 				threshold: threshold,
-				rootMargin: "0px 0px -30% 0px",
+				rootMargin: "0px 0px -10% 0px",
 			}
 		);
 
@@ -121,12 +119,20 @@ const Navbar = ({ navOpen, toggleNav }) => {
 	}, [activeTab, initActiveBox, isInitialLoad]);
 
 	return (
-		<nav className={`navbar ${navOpen ? "active" : ""} bg-zinc-950/30`}>
+		<nav
+			className={`navbar ${
+				navOpen ? "active" : ""
+			} bg-zinc-50/90 dark:bg-zinc-950/30`}
+		>
 			{navItems.map(({ label, link, className }, key) => (
 				<a
 					href={link}
 					key={key}
-					className={`${className} relative z-30 transition duration-200 md:my-0 my-2 mix-blend-difference text-zinc-300`}
+					className={`${className} relative z-30 md:my-0 my-2 ${
+						activeTab === link
+							? "text-zinc-50 dark:text-zinc-50"
+							: "text-zinc-700 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50"
+					} dark:mix-blend-difference`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}

@@ -2,27 +2,28 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useLenis } from "lenis/react";
+import ThemeToggle from "./ThemeToggle";
+import { LogoIcon } from "./Icons/SvgIcons";
+
 import Navbar from "./Navbar";
-import { useTheme } from "../hooks/useTheme";
 
 const Path = (props) => (
 	<motion.path
 		fill="transparent"
 		strokeWidth="3"
-		stroke="currentColor"
+		stroke="#fafafa"
 		strokeLinecap="round"
 		{...props}
 	/>
 );
 
 const MenuToggle = ({ toggle, isOpen }) => (
-	<button onClick={toggle} className="menu-btn md:hidden">
-		<svg
-			width="24"
-			height="24"
-			viewBox="0 0 19 19"
-			className="text-zinc-900 dark:text-zinc-50"
-		>
+	<button
+		onClick={toggle}
+		className="menu-btn md:hidden"
+		aria-label={isOpen ? "Close menu" : "Open menu"}
+	>
+		<svg width="24" height="24" viewBox="0 0 19 19">
 			<Path
 				variants={{
 					closed: { d: "M 2 2.5 L 20 2.5" },
@@ -60,12 +61,12 @@ MenuToggle.propTypes = {
 
 const Header = () => {
 	const [navOpen, setNavOpen] = useState(false);
-	const { theme, toggleTheme } = useTheme(); // Use the hook
 	const lenis = useLenis();
 
 	const handleLogoClick = (event) => {
 		event.preventDefault();
 		const aboutSection = document.querySelector("#about");
+
 		if (aboutSection) {
 			lenis.scrollTo(aboutSection.offsetTop, { duration: 1.2 });
 		}
@@ -75,14 +76,13 @@ const Header = () => {
 		<header className="fixed top-0 left-0 w-full h-20 flex items-center z-40">
 			<div className="max-w-screen-lg w-full mx-auto px-5 flex justify-between items-center md:px-14 md:grid md:grid-cols-[1fr,3fr,1fr]">
 				<h1>
-					<a href="/" className="logo menu-btn" onClick={handleLogoClick}>
-						<img
-							src="/portfolio/images/logo.svg"
-							width={35}
-							height={35}
-							alt="Nathaniel-Seth"
-							loading="eager"
-						/>
+					<a
+						href="/"
+						className="logo menu-btn text-zinc-900 dark:text-zinc-100"
+						onClick={handleLogoClick}
+						aria-label="nathanielseth icon"
+					>
+						<LogoIcon />
 					</a>
 				</h1>
 
@@ -91,52 +91,13 @@ const Header = () => {
 					<Navbar navOpen={navOpen} toggleNav={setNavOpen} />
 				</div>
 
-				<div className="flex items-center gap-3 md:justify-self-end">
-					{/* Theme toggle - visible on mobile */}
-					<motion.button
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.9 }}
-						onClick={toggleTheme}
-						className="menu-btn"
-						aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-					>
-						{theme === "dark" ? (
-							// Sun icon for light mode
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								className="text-zinc-900 dark:text-zinc-50"
-							>
-								<circle cx="12" cy="12" r="5" />
-								<line x1="12" y1="1" x2="12" y2="3" />
-								<line x1="12" y1="21" x2="12" y2="23" />
-								<line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-								<line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-								<line x1="1" y1="12" x2="3" y2="12" />
-								<line x1="21" y1="12" x2="23" y2="12" />
-								<line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-								<line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-							</svg>
-						) : (
-							// Moon icon for dark mode
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								className="text-zinc-900 dark:text-zinc-50"
-							>
-								<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-							</svg>
-						)}
-					</motion.button>
-				</div>
+				<motion.div
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.9 }}
+					className="max-md:hidden md:justify-self-end"
+				>
+					<ThemeToggle className="btn btn-secondary font-semibold" />
+				</motion.div>
 			</div>
 		</header>
 	);

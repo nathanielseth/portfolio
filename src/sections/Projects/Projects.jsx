@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProjectCard from "./ProjectCard.jsx";
 import ProjectModal from "./ProjectModal.jsx";
 import projects from "../../utils/data/projectsData.jsx";
@@ -53,7 +53,7 @@ const Projects = () => {
 				{/* Header Section */}
 				<div className={`flex items-center ${headerMargin}`}>
 					<div className="hidden lg:block w-[88px]" />
-					<h2 className="text-center font-medium text-2xl md:text-3xl flex-1 text-zinc-200">
+					<h2 className="text-center font-medium text-2xl md:text-3xl flex-1 text-zinc-900 dark:text-zinc-200">
 						Personal Projects
 					</h2>
 
@@ -62,22 +62,22 @@ const Projects = () => {
 						<motion.button
 							onClick={handlePrev}
 							disabled={!canGoPrev}
-							className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-50 transition-colors border border-zinc-800 disabled:opacity-30 disabled:hover:bg-zinc-900"
+							className="p-2 rounded-lg bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:text-zinc-50 border border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700 disabled:opacity-30 disabled:hover:bg-zinc-200 dark:disabled:hover:bg-zinc-900"
 							whileHover={canGoPrev ? { scale: 1.05 } : {}}
 							whileTap={canGoPrev ? { scale: 0.95 } : {}}
 							aria-label="Previous Project"
 						>
-							<HiChevronLeft className="text-xl" />
+							<ChevronLeft className="w-5 h-5" />
 						</motion.button>
 						<motion.button
 							onClick={handleNext}
 							disabled={!canGoNext}
-							className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-50 transition-colors border border-zinc-800 disabled:opacity-30 disabled:hover:bg-zinc-900"
+							className="p-2 rounded-lg bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:text-zinc-50 border border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700  disabled:opacity-30 disabled:hover:bg-zinc-200 dark:disabled:hover:bg-zinc-900"
 							whileHover={canGoNext ? { scale: 1.05 } : {}}
 							whileTap={canGoNext ? { scale: 0.95 } : {}}
 							aria-label="Next Project"
 						>
-							<HiChevronRight className="text-xl" />
+							<ChevronRight className="w-5 h-5" />
 						</motion.button>
 					</div>
 				</div>
@@ -138,7 +138,7 @@ const Projects = () => {
 							<motion.button
 								key={idx}
 								onClick={() => setCurrentIndex(idx)}
-								className="relative h-1.5 rounded-full bg-zinc-800 cursor-pointer"
+								className="relative h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700 cursor-pointer"
 								style={{ width: currentIndex === idx ? "32px" : "8px" }}
 								animate={{ width: currentIndex === idx ? "32px" : "8px" }}
 								transition={{
@@ -154,7 +154,7 @@ const Projects = () => {
 								{currentIndex === idx && (
 									<motion.div
 										layoutId="activeIndicator"
-										className="absolute inset-0 rounded-full bg-zinc-50"
+										className="absolute inset-0 rounded-full bg-zinc-950 dark:bg-zinc-50"
 										transition={{
 											type: "spring",
 											stiffness: 500,

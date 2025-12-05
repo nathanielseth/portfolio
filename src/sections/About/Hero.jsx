@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-	HiTerminal,
-	HiCube,
-	HiPuzzle,
-	HiDocumentText,
-	HiArrowDown,
-} from "react-icons/hi";
+import { ArrowDown, Box, Dices, CodeXml, FileText } from "lucide-react";
 import PDFModal from "../../components/ResumeViewer";
 
 const typingVariants = {
@@ -66,15 +60,15 @@ const Hero = () => {
 
 	const taglineItems = [
 		{
-			icon: HiTerminal,
-			text: "I create clean, user-focused web apps with practical code.",
+			icon: CodeXml,
+			text: "I build websites that make me want to keep building.",
 		},
 		{
-			icon: HiCube,
+			icon: Box,
 			text: "I'm always planning, building, and exploring new stacks.",
 		},
 		{
-			icon: HiPuzzle,
+			icon: Dices,
 			text: "I enjoy experimenting with mechanics and game logic.",
 		},
 	];
@@ -104,7 +98,7 @@ const Hero = () => {
 			<main className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center">
 				<motion.h1
 					id="hero-heading"
-					className="mb-4 text-3xl font-bold tracking-tight text-zinc-50 sm:text-5xl md:text-6xl sm:mb-10"
+					className="mb-4 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl md:text-6xl sm:mb-8"
 				>
 					{headingLine1.map((word, i) => (
 						<motion.span
@@ -119,15 +113,6 @@ const Hero = () => {
 							{word}
 						</motion.span>
 					))}
-					<motion.span
-						custom={headingLine1.length}
-						variants={typingVariants}
-						initial="hidden"
-						animate="visible"
-						className="text-zinc-50"
-					>
-						.
-					</motion.span>
 				</motion.h1>
 
 				<motion.div
@@ -150,8 +135,8 @@ const Hero = () => {
 										index > 0 ? "hidden sm:flex" : ""
 									}`}
 								>
-									<IconComponent className="shrink-0 text-lg leading-none text-zinc-400 hidden sm:inline" />
-									<p className="text-xs leading-relaxed text-zinc-400 md:text-sm">
+									<IconComponent className="shrink-0 w-4 h-4 text-zinc-500 dark:text-zinc-400 hidden sm:inline" />
+									<p className="text-xs leading-relaxed text-zinc-700 dark:text-zinc-400 md:text-sm">
 										{item.text}
 									</p>
 								</motion.div>
@@ -167,13 +152,11 @@ const Hero = () => {
 							transition={{ type: "spring", stiffness: 400, damping: 17 }}
 							transformTemplate={(_, generated) => `translateZ(0) ${generated}`}
 							style={{ willChange: "transform" }}
-							className="accent-bg inline-flex w-auto items-center justify-center gap-1 rounded-full px-6 py-2.5 text-zinc-50 sm:px-7 sm:py-2.5 md:px-7 md:py-3"
+							className="accent-bg inline-flex w-auto items-center font-medium justify-center gap-1 rounded-full px-6 py-2.5 text-zinc-50 sm:px-7 sm:py-2.5 md:px-7 md:py-3"
 							aria-label="View resume"
 						>
-							<span className="text-sm font-semibold sm:text-base">
-								View Resume
-							</span>
-							<HiDocumentText className="flex items-center text-sm sm:text-base md:text-lg" />
+							<span className="text-sm sm:text-base">View Resume</span>
+							<FileText className="flex items-center w-3 sm:w-4" />
 						</motion.button>
 					</motion.div>
 				</motion.div>
@@ -188,7 +171,7 @@ const Hero = () => {
 					whileTap={{ scale: 0.9 }}
 					aria-label="Scroll to projects section"
 				>
-					<HiArrowDown className="text-xl text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300 md:text-2xl" />
+					<ArrowDown className="text-xl text-zinc-500 dark:text-zinc-500 transition-colors duration-200 group-hover:text-zinc-700 dark:group-hover:text-zinc-300 md:text-2xl" />
 				</motion.button>
 			</main>
 

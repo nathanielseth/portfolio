@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 const ChatMessage = ({ message }) => {
 	const formatContent = (text) => {
 		const emailRegex = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b/g;
-
 		const targetUrlRegex =
 			/\b(?:https?:\/\/|www\.)?(?:github\.com|linkedin\.com)(?:\/[^\s,.)!?;]*)?/gi;
-
 		const matches = [];
 		let match;
 
@@ -19,6 +17,7 @@ const ChatMessage = ({ message }) => {
 				type: "email",
 			});
 		}
+
 		emailRegex.lastIndex = 0;
 
 		while ((match = targetUrlRegex.exec(text)) !== null) {
@@ -65,12 +64,13 @@ const ChatMessage = ({ message }) => {
 						href={href}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="accent-text hover:underline transition-all"
+						className="accent-text font-semibold hover:underline transition-all"
 					>
 						{match.text}
 					</a>
 				);
 			}
+
 			lastIndex = match.end;
 		});
 
@@ -94,7 +94,7 @@ const ChatMessage = ({ message }) => {
 				className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
 					message.role === "user"
 						? "accent-bg text-zinc-50"
-						: "bg-zinc-800 text-zinc-100"
+						: "bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
 				}`}
 			>
 				{formatContent(message.content)}
