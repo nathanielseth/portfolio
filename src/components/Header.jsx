@@ -11,8 +11,9 @@ const Path = (props) => (
 	<motion.path
 		fill="transparent"
 		strokeWidth="3"
-		stroke="#fafafa"
+		stroke="currentColor"
 		strokeLinecap="round"
+		className="stroke-zinc-900 dark:stroke-zinc-100"
 		{...props}
 	/>
 );

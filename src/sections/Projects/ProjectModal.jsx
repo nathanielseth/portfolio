@@ -47,11 +47,16 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 		}
 		if (isOpen) {
 			document.body.style.overflow = "hidden";
+			document.body.style.paddingRight = `${
+				window.innerWidth - document.documentElement.clientWidth
+			}px`;
 		} else {
 			document.body.style.overflow = "unset";
+			document.body.style.paddingRight = "0px";
 		}
 		return () => {
 			document.body.style.overflow = "unset";
+			document.body.style.paddingRight = "0px";
 		};
 	}, [isOpen]);
 
@@ -103,7 +108,10 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 						</button>
 
 						<div className="overflow-y-auto max-h-[90vh] scrollbar-thin">
-							<div className="relative w-full aspect-video bg-black overflow-hidden">
+							<div
+								className="relative w-full aspect-video bg-black overflow-hidden block"
+								style={{ lineHeight: 0, fontSize: 0 }}
+							>
 								{hasVideo && isVideoLoaded ? (
 									<>
 										<iframe
@@ -141,6 +149,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 											hasVideo ? "cursor-pointer group" : ""
 										}`}
 										onClick={handlePlayClick}
+										style={{ display: "block", lineHeight: 0, fontSize: 0 }}
 									>
 										<div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/20 to-zinc-900 z-10 pointer-events-none" />
 
@@ -148,6 +157,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 											src={project.imgSrc}
 											alt={project.title}
 											className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-200"
+											style={{ display: "block", verticalAlign: "bottom" }}
 										/>
 
 										{hasVideo && (

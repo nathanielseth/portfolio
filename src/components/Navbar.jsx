@@ -131,13 +131,14 @@ const Navbar = ({ navOpen, toggleNav }) => {
 					className={`${className} relative z-30 md:my-0 my-2 ${
 						activeTab === link
 							? "text-zinc-50 dark:text-zinc-50"
-							: "text-zinc-700 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50"
+							: "text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-zinc-50"
 					} dark:mix-blend-difference`}
 					onClick={(event) => handleLinkClick(event, link)}
 				>
 					{label}
 				</a>
 			))}
+
 			<motion.div
 				className="active-box"
 				ref={activeBox}
@@ -149,6 +150,7 @@ const Navbar = ({ navOpen, toggleNav }) => {
 						: { type: "spring", stiffness: 500, damping: 35 }
 				}
 			/>
+
 		</nav>
 	);
 };

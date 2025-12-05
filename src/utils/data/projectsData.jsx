@@ -1,4 +1,4 @@
-import { GodotIcon, SocketIoIcon, ExpressIcon, TailwindIcon, JavascriptIcon, ReactIcon, NodeJsIcon, HtmlIcon, SupabaseIcon } from "../../components/Icons/SvgIcons";
+import { GodotIcon, SocketIoIcon, ExpressIcon, TailwindIcon, JavascriptIcon, ReactIcon, NodeJsIcon, HtmlIcon } from "../../components/Icons/SvgIcons";
 
 const createTag = (icon, color, tagName) => ({ label: icon, color, tagName });
 
@@ -6,45 +6,45 @@ const iconClassName = "inline-block w-11 h-11";
 
 const projects = [
 	// PROJECT 1
-	{
-		imgSrc: "/portfolio/images/vc.webp",
-		title: "Classly",
-		description:
-			"An AI-Powered LMS and virtual classroom platform built for Computer Science thesis.",
-		tags: [
-			createTag(
-				<ReactIcon className={iconClassName} />,
-				"bg-[#009FB7] text-zinc-50",
-				"React"
-			),
-			createTag(
-				<TailwindIcon className={iconClassName} />,
-				"bg-[#6457A6] text-zinc-50",
-				"TailwindCSS"
-			),
-			createTag(
-				<NodeJsIcon className={iconClassName} />,
-				"bg-[#52AA5E] text-zinc-50",
-				"Node.js"
-			),
-			createTag(
-				<SupabaseIcon className={iconClassName} />,
-				"bg-[#3fcf8e] text-zinc-50",
-				"Supabase"
-			),
-			createTag(
-				<ExpressIcon className={iconClassName} />,
-				"bg-[#353535] text-zinc-50",
-				"Express.js"
-			),
-		],
-		projectLink: "",
-		codeLink: "",
-		category: "WEB",
-		fullDescription:
-			"I'm making an AI-Powered virtual classroom platform for lessons, assignments, interactive sessions, and real-time class activity. The system keeps students and instructors in sync with live updates, announcements, etc.",
-		videoUrl: null,
-	},
+	// {
+	// 	imgSrc: "/portfolio/images/vc.webp",
+	// 	title: "Classly",
+	// 	description:
+	// 		"An AI-Powered LMS and virtual classroom platform built for Computer Science thesis.",
+	// 	tags: [
+	// 		createTag(
+	// 			<ReactIcon className={iconClassName} />,
+	// 			"bg-[#009FB7] text-zinc-50",
+	// 			"React"
+	// 		),
+	// 		createTag(
+	// 			<TailwindIcon className={iconClassName} />,
+	// 			"bg-[#6457A6] text-zinc-50",
+	// 			"TailwindCSS"
+	// 		),
+	// 		createTag(
+	// 			<NodeJsIcon className={iconClassName} />,
+	// 			"bg-[#52AA5E] text-zinc-50",
+	// 			"Node.js"
+	// 		),
+	// 		createTag(
+	// 			<SupabaseIcon className={iconClassName} />,
+	// 			"bg-[#3fcf8e] text-zinc-50",
+	// 			"Supabase"
+	// 		),
+	// 		createTag(
+	// 			<ExpressIcon className={iconClassName} />,
+	// 			"bg-[#353535] text-zinc-50",
+	// 			"Express.js"
+	// 		),
+	// 	],
+	// 	projectLink: "",
+	// 	codeLink: "",
+	// 	category: "WEB",
+	// 	fullDescription:
+	// 		"I'm making an AI-Powered virtual classroom platform for lessons, assignments, interactive sessions, and real-time class activity. The system keeps students and instructors in sync with live updates, announcements, etc.",
+	// 	videoUrl: null,
+	// },
 	// PROJECT 2
 	{
 		imgSrc: "/portfolio/images/vc.webp",

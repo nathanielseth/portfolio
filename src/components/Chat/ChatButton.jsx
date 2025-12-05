@@ -8,6 +8,12 @@ const INITIAL_MESSAGE = {
 	content: "Hey there! Here to answer questions about Seth's work.",
 };
 
+const QUICK_ACTIONS = [
+	"Tell me about Seth's experience",
+	"What technologies does he use?",
+	"Is he currently accepting work?",
+];
+
 const API_ENDPOINT = "https://lucky-night-09d6.nathanielseth-dev.workers.dev";
 const RESUME_PATH = "/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf";
 
@@ -63,6 +69,8 @@ const ChatButton = () => {
 	const endRef = useRef(null);
 	const messagesContainerRef = useRef(null);
 
+	const showQuickActions = messages.length === 1;
+
 	useEffect(() => {
 		if (messages.length > 1) {
 			endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -79,45 +87,55 @@ const ChatButton = () => {
 		}
 	}, [isOpen, resumeText, isLoadingResume]);
 
-	const sendMessage = useCallback(async () => {
-		const trimmedInput = input.trim();
-		if (!trimmedInput || isLoading) return;
+	const sendMessage = useCallback(
+		async (messageContent = input) => {
+			const trimmedInput = messageContent.trim();
+			if (!trimmedInput || isLoading) return;
 
-		const userMessage = { role: "user", content: trimmedInput };
-		setMessages((prev) => [...prev, userMessage]);
-		setInput("");
-		setIsLoading(true);
+			const userMessage = { role: "user", content: trimmedInput };
+			setMessages((prev) => [...prev, userMessage]);
+			setInput("");
+			setIsLoading(true);
 
-		try {
-			const response = await fetch(API_ENDPOINT, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					messages: [...messages, userMessage],
-					resumeText: resumeText || "RESUME_LOAD_FAILED",
-				}),
-			});
+			try {
+				const response = await fetch(API_ENDPOINT, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						messages: [...messages, userMessage],
+						resumeText: resumeText || "RESUME_LOAD_FAILED",
+					}),
+				});
 
-			if (!response.ok) throw new Error("API request failed");
+				if (!response.ok) throw new Error("API request failed");
 
-			const data = await response.json();
-			const assistantMessage = {
-				role: "assistant",
-				content:
-					data.choices?.[0]?.message?.content ||
-					"Sorry, couldn't process that.",
-			};
-			setMessages((prev) => [...prev, assistantMessage]);
-		} catch (error) {
-			console.error("Chat error:", error);
-			setMessages((prev) => [
-				...prev,
-				{ role: "assistant", content: "Connection issue. Try again?" },
-			]);
-		} finally {
-			setIsLoading(false);
-		}
-	}, [input, isLoading, messages, resumeText]);
+				const data = await response.json();
+				const assistantMessage = {
+					role: "assistant",
+					content:
+						data.choices?.[0]?.message?.content ||
+						"Sorry, couldn't process that.",
+				};
+				setMessages((prev) => [...prev, assistantMessage]);
+			} catch (error) {
+				console.error("Chat error:", error);
+				setMessages((prev) => [
+					...prev,
+					{ role: "assistant", content: "Connection issue. Try again?" },
+				]);
+			} finally {
+				setIsLoading(false);
+			}
+		},
+		[input, isLoading, messages, resumeText]
+	);
+
+	const handleQuickAction = useCallback(
+		(action) => {
+			sendMessage(action);
+		},
+		[sendMessage]
+	);
 
 	const handleKeyPress = useCallback(
 		(e) => {
@@ -209,7 +227,9 @@ const ChatButton = () => {
 						className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-5 z-20 flex flex-col overflow-hidden rounded-2xl border border-zinc-300 dark:border-zinc-700/50 bg-white dark:bg-zinc-900 shadow-2xl w-[calc(100vw-2rem)] sm:w-96 h-[75vh] sm:h-[32rem]"
 					>
 						<div className="flex items-center gap-1 border-b border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800 px-5 py-2">
-							<Bot className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
+							<div className="flex h-4 w-4 items-center justify-center rounded-full bg-zinc-700 dark:bg-zinc-300">
+								<Bot className="h-3 w-3 text-zinc-100 dark:text-zinc-800" />
+							</div>
 							<h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
 								deleb.ai
 							</h3>
@@ -217,7 +237,7 @@ const ChatButton = () => {
 
 						<div
 							ref={messagesContainerRef}
-							className="flex-1 space-y-3 overflow-y-scroll px-4 py-4 scroll-smooth"
+							className="flex-1 space-y-3 overflow-y-scroll px-4 py-4 scroll-smooth overflow-x-hidden"
 							style={{
 								scrollbarColor: "rgb(161 161 170) transparent",
 								scrollbarWidth: "thin",
@@ -234,6 +254,31 @@ const ChatButton = () => {
 									</div>
 								</div>
 							)}
+
+							{showQuickActions && !isLoading && (
+								<motion.div
+									className="flex flex-col gap-2 pt-2 items-end"
+									initial={{ opacity: 0, y: -10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ duration: 0.3 }}
+								>
+									{QUICK_ACTIONS.map((action, i) => (
+										<motion.button
+											key={i}
+											onClick={() => handleQuickAction(action)}
+											className="px-3 py-2 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+											initial={{ opacity: 0, x: 20 }}
+											animate={{ opacity: 1, x: 0 }}
+											transition={{ delay: i * 0.08 }}
+											whileHover={{ scale: 1.02 }}
+											whileTap={{ scale: 0.98 }}
+										>
+											{action}
+										</motion.button>
+									))}
+								</motion.div>
+							)}
+
 							<div ref={endRef} />
 						</div>
 
@@ -249,9 +294,9 @@ const ChatButton = () => {
 									className="w-full rounded-xl bg-zinc-100 dark:bg-zinc-800 py-2.5 pl-4 pr-11 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-600 focus:outline-none focus:ring-2 dark:placeholder-zinc-500 dark:focus:outline-none focus:ring-zinc-300 dark:focus:ring-zinc-700"
 								/>
 								<button
-									onClick={sendMessage}
+									onClick={() => sendMessage()}
 									disabled={isLoading || !input.trim()}
-									className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-zinc-500 dark:text-zinc-400 transition-all hover:scale-110 hover:text-zinc-900 dark:hover:text-zinc-100 active:scale-90 disabled:opacity-30"
+									className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-zinc-500 dark:text-zinc-400 hover:scale-110 hover:text-zinc-900 dark:hover:text-zinc-100 active:scale-90 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:text-zinc-500 dark:disabled:hover:text-zinc-400"
 									aria-label="Send message"
 								>
 									<SendHorizonal size={20} />
