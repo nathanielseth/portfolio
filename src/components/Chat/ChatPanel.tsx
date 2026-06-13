@@ -78,7 +78,7 @@ export default function ChatPanel({
 					aria-label="Chat with Seth's AI assistant"
 					{...panelVariants}
 					transition={{ type: "spring", stiffness: 500, damping: 30 }}
-					className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-5 z-20 flex flex-col overflow-hidden rounded-2xl border border-zinc-300 dark:border-zinc-700/50 bg-white dark:bg-zinc-900 shadow-2xl w-[calc(100vw-2rem)] sm:w-96 h-[75vh] sm:h-128"
+					className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-5 z-50 flex flex-col overflow-hidden rounded-2xl border border-zinc-300 dark:border-zinc-700/50 bg-white dark:bg-zinc-900 shadow-2xl w-[calc(100vw-2rem)] sm:w-96 h-[75vh] sm:h-128"
 				>
 					<div className="flex items-center justify-between gap-2 border-b border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800 px-4 py-3">
 						<div className="flex items-center gap-2.5">

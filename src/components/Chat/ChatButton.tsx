@@ -15,7 +15,7 @@ export default function ChatButton() {
 			<m.button
 				type="button"
 				onClick={() => dispatch({ type: "TOGGLE" })}
-				className="fixed bottom-8 right-5 z-20 flex h-12 w-12 items-center justify-center rounded-full accent-bg text-zinc-50 shadow-lg cursor-pointer md:right-7"
+				className="fixed bottom-8 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full accent-bg text-zinc-50 shadow-lg cursor-pointer md:right-7"
 				initial={{ scale: prefersReduced ? 1 : 0, opacity: 0 }}
 				animate={{ scale: 1, opacity: 1 }}
 				transition={{ type: "spring", stiffness: 400, damping: 17 }}
