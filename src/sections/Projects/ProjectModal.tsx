@@ -1,64 +1,68 @@
-import { motion, AnimatePresence } from "framer-motion";
-import PropTypes from "prop-types";
-import { GithubIcon } from "../../components/Icons/SvgIcons";
-import { Globe, X, Play } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, memo, useState, useEffect, useEffectEvent } from "react";
+import { m, AnimatePresence } from "motion/react";
+import { X, Globe, Play } from "lucide-react";
+import { GithubIcon } from "../../components/Icons";
+import { useScrollLock } from "../../hooks/useScrollLock";
+import { getYouTubeId, buildYouTubeEmbedUrl } from "../../utils/youtube";
+import type { Project } from "../../types";
 
-const modalVariants = {
+const BACKDROP_VARIANTS = {
 	hidden: { opacity: 0 },
 	visible: { opacity: 1, transition: { duration: 0.2 } },
 	exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
-const modalContentVariants = {
+const PANEL_VARIANTS = {
 	hidden: { opacity: 0, scale: 0.95, y: 20 },
 	visible: {
 		opacity: 1,
 		scale: 1,
 		y: 0,
-		transition: { type: "spring", damping: 25, stiffness: 300 },
+		transition: { type: "spring" as const, damping: 25, stiffness: 300 },
 	},
 	exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.2 } },
 };
 
-const spinnerVariants = {
+const SPINNER_VARIANTS = {
 	hidden: { opacity: 0, scale: 0.8 },
 	visible: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
 	exit: { opacity: 0, scale: 0.8, transition: { duration: 0.15 } },
 };
 
-const getYouTubeId = (url) => {
-	if (!url) return null;
-	const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-	const match = url.match(regExp);
-	return match && match[2].length === 11 ? match[2] : null;
-};
+interface ProjectModalProps {
+	isOpen: boolean;
+	onClose: () => void;
+	project: Project | null;
+}
 
-const ProjectModal = ({ isOpen, onClose, project }) => {
+function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 	const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 	const [isLoadingVideo, setIsLoadingVideo] = useState(false);
 	const [iframeReady, setIframeReady] = useState(false);
 
+	useScrollLock(isOpen);
+
+	// stable escape handler
+	const handleKeyDown = useEffectEvent((e: KeyboardEvent) => {
+		if (e.key === "Escape") onClose();
+	});
+
 	useEffect(() => {
-		if (!isOpen) {
-			setIsVideoLoaded(false);
-			setIsLoadingVideo(false);
-			setIframeReady(false);
-		}
-		if (isOpen) {
-			document.body.style.overflow = "hidden";
-			document.body.style.paddingRight = `${
-				window.innerWidth - document.documentElement.clientWidth
-			}px`;
-		} else {
-			document.body.style.overflow = "unset";
-			document.body.style.paddingRight = "0px";
-		}
-		return () => {
-			document.body.style.overflow = "unset";
-			document.body.style.paddingRight = "0px";
-		};
+		if (!isOpen) return;
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [isOpen]);
+
+	const stopPropagation = useCallback(
+		(e: React.SyntheticEvent) => e.stopPropagation(),
+		[],
+	);
+
+	if (!project) return null;
+
+	const videoId = getYouTubeId(project.videoUrl);
+	const hasVideo = !!videoId;
+	const showSpinner = isLoadingVideo && !iframeReady;
 
 	const handlePlayClick = () => {
 		if (hasVideo) {
@@ -67,41 +71,31 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 		}
 	};
 
-	const handleIframeLoad = () => {
-		setIframeReady(true);
-		setIsLoadingVideo(false);
-	};
-
-	if (!project) return null;
-
-	const videoId = getYouTubeId(project.videoUrl);
-	const hasVideo = !!videoId;
-	const showSpinner = isLoadingVideo && !iframeReady;
-
 	return (
 		<AnimatePresence>
 			{isOpen && (
-				<motion.div
-					variants={modalVariants}
+				<m.div
+					variants={BACKDROP_VARIANTS}
 					initial="hidden"
 					animate="visible"
 					exit="exit"
 					className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 dark:bg-black/90 backdrop-blur-md p-4"
 					onClick={onClose}
-					onWheel={(e) => e.stopPropagation()}
+					onWheel={stopPropagation}
 				>
-					<motion.div
-						variants={modalContentVariants}
+					<m.div
+						variants={PANEL_VARIANTS}
 						initial="hidden"
 						animate="visible"
 						exit="exit"
-						onClick={(e) => e.stopPropagation()}
-						onWheel={(e) => e.stopPropagation()}
+						onClick={stopPropagation}
+						onWheel={stopPropagation}
 						className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden dark:border dark:border-zinc-800"
 					>
 						<button
+							type="button"
 							onClick={onClose}
-							className="absolute top-4 right-4 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors p-2 rounded-full border border-zinc-300 dark:border-zinc-700"
+							className="absolute top-4 right-4 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors p-2 rounded-full border border-zinc-300 dark:border-zinc-700 cursor-pointer"
 							aria-label="Close modal"
 						>
 							<X className="w-6 h-6 text-zinc-900 dark:text-zinc-50" />
@@ -115,18 +109,22 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 								{hasVideo && isVideoLoaded ? (
 									<>
 										<iframe
-											src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+											src={buildYouTubeEmbedUrl(videoId)}
 											title={`${project.title} demo video`}
 											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 											allowFullScreen
-											onLoad={handleIframeLoad}
+											sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
+											onLoad={() => {
+												setIframeReady(true);
+												setIsLoadingVideo(false);
+											}}
 											className="absolute inset-0 w-full h-full"
 											style={{ opacity: iframeReady ? 1 : 0 }}
 										/>
 										<AnimatePresence>
 											{showSpinner && (
-												<motion.div
-													variants={spinnerVariants}
+												<m.div
+													variants={SPINNER_VARIANTS}
 													initial="hidden"
 													animate="visible"
 													exit="exit"
@@ -139,27 +137,38 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 															borderRightColor: "#dddddd",
 														}}
 													/>
-												</motion.div>
+												</m.div>
 											)}
 										</AnimatePresence>
 									</>
 								) : (
 									<div
-										className={`relative w-full h-full ${
-											hasVideo ? "cursor-pointer group" : ""
-										}`}
+										className={`relative w-full h-full ${hasVideo ? "cursor-pointer group" : ""}`}
 										onClick={handlePlayClick}
+										onKeyDown={
+											hasVideo
+												? (e) => {
+														if (e.key === "Enter" || e.key === " ") {
+															e.preventDefault();
+															handlePlayClick();
+														}
+													}
+												: undefined
+										}
+										role={hasVideo ? "button" : undefined}
+										tabIndex={hasVideo ? 0 : undefined}
+										aria-label={
+											hasVideo ? `Play ${project.title} demo video` : undefined
+										}
 										style={{ display: "block", lineHeight: 0, fontSize: 0 }}
 									>
-										<div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/20 to-zinc-900 z-10 pointer-events-none" />
-
+										<div className="absolute inset-0 bg-linear-to-b from-transparent via-zinc-900/20 to-zinc-900 z-10 pointer-events-none" />
 										<img
 											src={project.imgSrc}
 											alt={project.title}
 											className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-200"
 											style={{ display: "block", verticalAlign: "bottom" }}
 										/>
-
 										{hasVideo && (
 											<div className="absolute inset-0 flex items-center justify-center z-20">
 												<div className="accent-bg rounded-full p-4 group-hover:scale-110 transition-all duration-300">
@@ -187,12 +196,12 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 									</h3>
 									<div className="flex flex-wrap items-center justify-between gap-4">
 										<div className="flex flex-wrap gap-2">
-											{project.tags.map((tag, index) => (
+											{project.tags.map((tag) => (
 												<span
-													key={index}
+													key={tag.id}
 													className="px-3 py-1.5 bg-zinc-200/60 dark:bg-zinc-800/60 border border-zinc-300/50 dark:border-zinc-700/50 text-zinc-800 dark:text-zinc-300 rounded-lg text-sm font-medium"
 												>
-													{tag.tagName}
+													{tag.label}
 												</span>
 											))}
 										</div>
@@ -229,35 +238,11 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
 								</div>
 							</div>
 						</div>
-					</motion.div>
-				</motion.div>
+					</m.div>
+				</m.div>
 			)}
 		</AnimatePresence>
 	);
-};
+}
 
-ProjectModal.propTypes = {
-	isOpen: PropTypes.bool.isRequired,
-	onClose: PropTypes.func.isRequired,
-	project: PropTypes.shape({
-		imgSrc: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired,
-		description: PropTypes.string.isRequired,
-		fullDescription: PropTypes.string,
-		tags: PropTypes.arrayOf(
-			PropTypes.shape({
-				label: PropTypes.oneOfType([
-					PropTypes.string,
-					PropTypes.object,
-					PropTypes.element,
-				]),
-				tagName: PropTypes.string,
-			})
-		).isRequired,
-		projectLink: PropTypes.string,
-		codeLink: PropTypes.string,
-		videoUrl: PropTypes.string,
-	}),
-};
-
-export default ProjectModal;
+export default memo(ProjectModal);
