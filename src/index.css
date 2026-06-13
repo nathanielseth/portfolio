@@ -73,7 +73,7 @@ body {
 
 @media (min-width: 768px) {
   .navbar {
-    position: static;
+    position: relative;
     display: flex;
     align-items: center;
     margin-top: 0;
@@ -91,7 +91,7 @@ body {
 .nav-link {
   display: grid;
   align-items: center;
-  height: 2rem;
+  height: 2.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1rem;
@@ -99,11 +99,18 @@ body {
   letter-spacing: 0.025em;
 }
 
+@media (min-width: 768px) {
+  .nav-link {
+    height: 2rem;
+  }
+}
+
 .navbar .active-box {
-  position: absolute;
-  background-color: rgb(24 24 27);
-  border-radius: 0.5rem;
-  z-index: -10;
+	position: absolute;
+	inset: 0;
+	background-color: rgb(24 24 27);
+	border-radius: 0.5rem;
+	z-index: -1;
 }
 
 [data-theme="dark"] .navbar .active-box {

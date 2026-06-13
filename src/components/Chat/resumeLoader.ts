@@ -20,29 +20,10 @@ interface PdfjsLib {
 		promise: Promise<PdfjsDocument>;
 	};
 }
-declare global {
-	interface Window {
-		pdfjsLib: PdfjsLib | undefined;
-	}
-}
 
 // cache to avoid re-fetching pdf text
 let resumeTextCache: string | null = null;
 let resumeLoadPromise: Promise<string> | null = null;
-
-function loadScript(src: string): Promise<void> {
-	return new Promise((resolve, reject) => {
-		if (document.querySelector(`script[src="${src}"]`)) {
-			resolve();
-			return;
-		}
-		const script = document.createElement("script");
-		script.src = src;
-		script.onload = () => resolve();
-		script.onerror = () => reject(new Error(`Failed to load ${src}`));
-		document.head.appendChild(script);
-	});
-}
 
 export async function loadResumeText(): Promise<string> {
 	if (resumeTextCache) return resumeTextCache;
@@ -50,16 +31,14 @@ export async function loadResumeText(): Promise<string> {
 
 	resumeLoadPromise = (async () => {
 		try {
-			// avoid bundling pdf.js, load from cdn and wire worker same way
-			await loadScript(`${PDFJS_CDN_BASE}/pdf.min.mjs`);
-
-			const pdfjsLib = window.pdfjsLib;
-			if (!pdfjsLib)
-				throw new Error("pdfjsLib not available after script load");
+			const pdfjsLib: PdfjsLib = await import(
+				/* @vite-ignore */ `${PDFJS_CDN_BASE}/pdf.min.mjs`
+			);
 
 			pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS_CDN_BASE}/pdf.worker.min.mjs`;
 
 			const res = await fetch(RESUME_PATH);
+			if (!res.ok) throw new Error(`Resume fetch failed: ${res.status}`);
 			const buf = await res.arrayBuffer();
 			const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
 
@@ -67,10 +46,10 @@ export async function loadResumeText(): Promise<string> {
 				Array.from({ length: pdf.numPages }, (_, i) =>
 					pdf
 						.getPage(i + 1)
-						.then((page: PdfjsPage) =>
+						.then((page) =>
 							page
 								.getTextContent()
-								.then((content: PdfjsTextContent) =>
+								.then((content) =>
 									content.items.map((item) => item.str).join(" "),
 								),
 						),

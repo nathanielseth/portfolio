@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { ReactLenis } from "lenis/react";
-import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
+import { LazyMotion, domMax, MotionConfig } from "motion/react";
 import { ThemeProvider } from "./context/ThemeProvider";
 import Header from "./components/Header/Header";
 import Hero from "./sections/Hero/Hero";
@@ -14,7 +14,7 @@ export default function App() {
 	return (
 		<ThemeProvider>
 			<ReactLenis root options={{ smoothWheel: true, syncTouch: false }}>
-				<LazyMotion features={domAnimation}>
+				<LazyMotion features={domMax}>
 					<MotionConfig reducedMotion="user">
 						<Header />
 						<main>

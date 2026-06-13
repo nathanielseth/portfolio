@@ -1,10 +1,4 @@
-import {
-	useRef,
-	useEffect,
-	useState,
-	useCallback,
-	useLayoutEffect,
-} from "react";
+import { useEffect, useState, useCallback } from "react";
 import { m } from "motion/react";
 import { useLenis } from "lenis/react";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
@@ -22,54 +16,13 @@ interface NavbarProps {
 	onClose: () => void;
 }
 
-interface PillStyle {
-	top: number;
-	left: number;
-	width: number;
-	height: number;
-}
-
-function getPillStyle(
-	href: string,
-	navEl: HTMLElement | null,
-): PillStyle | null {
-	const anchor = navEl?.querySelector<HTMLAnchorElement>(`a[href='${href}']`);
-	if (!anchor) return null;
-	const isMobile = window.innerWidth < 768;
-	const pad = isMobile ? 5 : 0;
-	return {
-		top: anchor.offsetTop - pad,
-		left: anchor.offsetLeft,
-		width: anchor.offsetWidth,
-		height: anchor.offsetHeight + pad * 2,
-	};
-}
-
 export default function Navbar({ navOpen, onClose }: NavbarProps) {
 	const [activeHref, setActiveHref] = useState<NavHref>("#about");
-	const [pillStyle, setPillStyle] = useState<PillStyle | null>(null);
-	const [isInitial, setIsInitial] = useState(true);
-	const navRef = useRef<HTMLElement>(null);
 	const lenis = useLenis();
 
 	const isDesktop = useMediaQuery("(min-width: 768px)");
 	const threshold = isDesktop ? 0.5 : 0.2;
 
-	// prevent flash on initial render
-	useLayoutEffect(() => {
-		const style = getPillStyle(activeHref, navRef.current);
-		if (style) setPillStyle(style);
-	}, [activeHref, navOpen]);
-
-	// enable spring transitions after initial placement
-	useEffect(() => {
-		if (pillStyle && isInitial) {
-			const id = setTimeout(() => setIsInitial(false), 50);
-			return () => clearTimeout(id);
-		}
-	}, [pillStyle, isInitial]);
-
-	// sync active state with visible section
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -82,23 +35,32 @@ export default function Navbar({ navOpen, onClose }: NavbarProps) {
 			{ threshold, rootMargin: "0px 0px -10% 0px" },
 		);
 
-		NAV_ITEMS.forEach(({ href }) => {
-			const el = document.querySelector(href);
-			if (el) observer.observe(el);
-		});
-
-		return () => observer.disconnect();
-	}, [threshold]);
-
-	// re-measure pill position on resize
-	useEffect(() => {
-		const onResize = () => {
-			const style = getPillStyle(activeHref, navRef.current);
-			if (style) setPillStyle(style);
+		const observedEls = new Set<Element>();
+		const tryObserve = () => {
+			NAV_ITEMS.forEach(({ href }) => {
+				const el = document.querySelector(href);
+				if (el && !observedEls.has(el)) {
+					observer.observe(el);
+					observedEls.add(el);
+				}
+			});
+			if (observedEls.size === NAV_ITEMS.length) {
+				mutationObserver.disconnect();
+			}
 		};
-		window.addEventListener("resize", onResize);
-		return () => window.removeEventListener("resize", onResize);
-	}, [activeHref]);
+
+		const mutationObserver = new MutationObserver(tryObserve);
+		mutationObserver.observe(document.body, {
+			childList: true,
+			subtree: true,
+		});
+		tryObserve();
+
+		return () => {
+			observer.disconnect();
+			mutationObserver.disconnect();
+		};
+	}, [threshold]);
 
 	const handleLinkClick = useCallback(
 		(e: React.MouseEvent<HTMLAnchorElement>, href: NavHref) => {
@@ -117,7 +79,7 @@ export default function Navbar({ navOpen, onClose }: NavbarProps) {
 	);
 
 	return (
-		<nav ref={navRef} className={`navbar${navOpen ? " active" : ""}`}>
+		<nav className={`navbar${navOpen ? " active" : ""}`}>
 			{NAV_ITEMS.map(({ label, href }) => (
 				<a
 					key={href}
@@ -130,25 +92,16 @@ export default function Navbar({ navOpen, onClose }: NavbarProps) {
 							: "text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-zinc-50",
 					].join(" ")}
 				>
+					{activeHref === href && (
+						<m.div
+							layoutId="active-box"
+							className="active-box"
+							transition={{ type: "spring", stiffness: 500, damping: 35 }}
+						/>
+					)}
 					{label}
 				</a>
 			))}
-			{pillStyle && (
-				<m.div
-					className="active-box"
-					animate={{
-						top: pillStyle.top,
-						left: pillStyle.left,
-						width: pillStyle.width,
-						height: pillStyle.height,
-					}}
-					transition={
-						isInitial
-							? { duration: 0 }
-							: { type: "spring", stiffness: 500, damping: 35 }
-					}
-				/>
-			)}
 		</nav>
 	);
 }

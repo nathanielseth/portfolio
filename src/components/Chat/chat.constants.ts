@@ -4,8 +4,8 @@ export const API_ENDPOINT =
 	"https://lucky-night-09d6.nathanielseth-dev.workers.dev";
 export const RESUME_PATH = "/portfolio/assets/NathanielSeth_DeLeon_Resume.pdf";
 
-const PDFJS_CDN_VERSION = "6.0.227";
-export const PDFJS_CDN_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_CDN_VERSION}`;
+export const PDFJS_CDN_BASE =
+	"https://cdn.jsdelivr.net/npm/pdfjs-dist@6.0.227/build";
 export const HEALTH_CHECK_INTERVAL = 60_000;
 
 const INITIAL_MESSAGE: ChatMessage = {
