@@ -8,19 +8,23 @@ import type { Project } from "../../types";
 
 const BACKDROP_VARIANTS = {
 	hidden: { opacity: 0 },
-	visible: { opacity: 1, transition: { duration: 0.2 } },
-	exit: { opacity: 0, transition: { duration: 0.2 } },
+	visible: { opacity: 1, transition: { duration: 0.15 } },
+	exit: { opacity: 0, transition: { duration: 0.15 } },
 };
 
 const PANEL_VARIANTS = {
-	hidden: { opacity: 0, scale: 0.95, y: 20 },
+	hidden: { opacity: 0, y: 16 },
 	visible: {
 		opacity: 1,
-		scale: 1,
 		y: 0,
-		transition: { type: "spring" as const, damping: 25, stiffness: 300 },
+		transition: {
+			type: "spring" as const,
+			damping: 30,
+			stiffness: 400,
+			mass: 0.8,
+		},
 	},
-	exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.2 } },
+	exit: { opacity: 0, y: 16, transition: { duration: 0.15 } },
 };
 
 const SPINNER_VARIANTS = {
@@ -79,7 +83,7 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 					initial="hidden"
 					animate="visible"
 					exit="exit"
-					className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 dark:bg-black/90 backdrop-blur-md p-4"
+					className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 dark:bg-black/90 p-4"
 					onClick={onClose}
 					onWheel={stopPropagation}
 				>
@@ -90,7 +94,8 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 						exit="exit"
 						onClick={stopPropagation}
 						onWheel={stopPropagation}
-						className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden dark:border dark:border-zinc-800"
+						style={{ willChange: "transform" }}
+						className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-zinc-900/95 rounded-3xl shadow-2xl overflow-hidden dark:border dark:border-zinc-800"
 					>
 						<button
 							type="button"
