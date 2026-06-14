@@ -169,9 +169,9 @@ export default function Hero() {
 							type="button"
 							onClick={() => setShowModal(true)}
 							whileTap={prefersReduced ? {} : { scale: 0.95 }}
-							whileHover={prefersReduced ? {} : { scale: 1.05 }}
+							whileHover={prefersReduced ? {} : { scale: 1.07 }}
 							transition={{ type: "spring", stiffness: 400, damping: 17 }}
-							className="accent-bg inline-flex w-auto cursor-pointer items-center justify-center gap-1 rounded-full px-6 py-2.5 font-medium text-zinc-50 sm:px-7 md:py-3"
+							className="accent-bg inline-flex w-auto cursor-pointer items-center justify-center gap-1 rounded-full px-6 py-2.5 font-medium text-zinc-50 sm:px-7 md:py-3 hover:animate-[pulse-ring_0.65s_ease-out_infinite]"
 							aria-label="View resume"
 						>
 							<span className="text-sm sm:text-base">View Resume</span>
