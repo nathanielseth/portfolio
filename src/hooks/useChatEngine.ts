@@ -8,6 +8,18 @@ import {
 } from "../components/Chat/chat.constants";
 import { loadResumeText } from "../components/Chat/resumeLoader";
 
+async function fetchHealthStatus(
+	signal: AbortSignal,
+): Promise<"online" | "offline"> {
+	try {
+		const res = await fetch(`${API_ENDPOINT}/health`, { signal });
+		const data = (await res.json()) as { status?: string };
+		return res.ok && data.status === "online" ? "online" : "offline";
+	} catch {
+		return "offline";
+	}
+}
+
 export function useChatEngine() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const { isOpen, input, isLoading } = state;
@@ -61,48 +73,30 @@ export function useChatEngine() {
 		if (!container) return;
 
 		const handler = (e: WheelEvent) => {
-			const scrollable = container.scrollHeight > container.clientHeight;
-			if (!scrollable) return;
-
-			const atTop = container.scrollTop === 0;
-			const atBottom =
-				container.scrollTop + container.clientHeight >=
-				container.scrollHeight - 1;
-
-			if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
-				e.preventDefault();
-			}
 			e.stopPropagation();
 		};
 
-		container.addEventListener("wheel", handler, { passive: false });
+		container.addEventListener("wheel", handler, { passive: true });
 		return () => container.removeEventListener("wheel", handler);
 	}, [isOpen]);
 
 	useEffect(() => {
 		if (!isOpen) return;
 
-		let cancelled = false;
+		const controller = new AbortController();
 
-		const checkHealth = async () => {
-			try {
-				const res = await fetch(`${API_ENDPOINT}/health`);
-				if (cancelled) return;
-				const data = (await res.json()) as { status?: string };
-				dispatch({
-					type: "SET_STATUS",
-					payload: res.ok && data.status === "online" ? "online" : "offline",
-				});
-			} catch {
-				if (!cancelled) dispatch({ type: "SET_STATUS", payload: "offline" });
+		const poll = async () => {
+			const status = await fetchHealthStatus(controller.signal);
+			if (!controller.signal.aborted) {
+				dispatch({ type: "SET_STATUS", payload: status });
 			}
 		};
 
-		checkHealth();
-		const interval = setInterval(checkHealth, HEALTH_CHECK_INTERVAL);
+		poll();
+		const interval = setInterval(poll, HEALTH_CHECK_INTERVAL);
 
 		return () => {
-			cancelled = true;
+			controller.abort();
 			clearInterval(interval);
 		};
 	}, [isOpen]);

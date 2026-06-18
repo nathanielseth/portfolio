@@ -1,4 +1,11 @@
-import { useCallback, memo, useState, useEffect, useEffectEvent } from "react";
+import {
+	useCallback,
+	memo,
+	useState,
+	useEffect,
+	useRef,
+	useEffectEvent,
+} from "react";
 import { m, AnimatePresence } from "motion/react";
 import { X, Globe, Play } from "lucide-react";
 import { GithubIcon } from "../../components/Icons";
@@ -43,10 +50,10 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 	const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 	const [isLoadingVideo, setIsLoadingVideo] = useState(false);
 	const [iframeReady, setIframeReady] = useState(false);
+	const panelRef = useRef<HTMLDivElement>(null);
 
 	useScrollLock(isOpen);
 
-	// stable escape handler
 	const handleKeyDown = useEffectEvent((e: KeyboardEvent) => {
 		if (e.key === "Escape") onClose();
 	});
@@ -61,6 +68,14 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 		(e: React.SyntheticEvent) => e.stopPropagation(),
 		[],
 	);
+
+	const handleAnimationStart = useCallback(() => {
+		if (panelRef.current) panelRef.current.style.willChange = "transform";
+	}, []);
+
+	const handleAnimationComplete = useCallback(() => {
+		if (panelRef.current) panelRef.current.style.willChange = "auto";
+	}, []);
 
 	if (!project) return null;
 
@@ -88,13 +103,15 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 					onWheel={stopPropagation}
 				>
 					<m.div
+						ref={panelRef}
 						variants={PANEL_VARIANTS}
 						initial="hidden"
 						animate="visible"
 						exit="exit"
 						onClick={stopPropagation}
 						onWheel={stopPropagation}
-						style={{ willChange: "transform" }}
+						onAnimationStart={handleAnimationStart}
+						onAnimationComplete={handleAnimationComplete}
 						className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-zinc-900/95 rounded-3xl shadow-2xl overflow-hidden dark:border dark:border-zinc-800"
 					>
 						<button
@@ -118,7 +135,7 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 											title={`${project.title} demo video`}
 											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 											allowFullScreen
-											sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
+											sandbox="allow-scripts allow-presentation allow-popups"
 											onLoad={() => {
 												setIframeReady(true);
 												setIsLoadingVideo(false);
@@ -147,25 +164,23 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 										</AnimatePresence>
 									</>
 								) : (
-									<div
-										className={`relative w-full h-full ${hasVideo ? "cursor-pointer group" : ""}`}
-										onClick={handlePlayClick}
-										onKeyDown={
-											hasVideo
-												? (e) => {
-														if (e.key === "Enter" || e.key === " ") {
-															e.preventDefault();
-															handlePlayClick();
-														}
-													}
-												: undefined
-										}
-										role={hasVideo ? "button" : undefined}
-										tabIndex={hasVideo ? 0 : undefined}
+									<button
+										type="button"
+										className={`relative w-full h-full ${hasVideo ? "cursor-pointer group" : "cursor-default"}`}
+										onClick={hasVideo ? handlePlayClick : undefined}
 										aria-label={
-											hasVideo ? `Play ${project.title} demo video` : undefined
+											hasVideo
+												? `Play ${project.title} demo video`
+												: project.title
 										}
-										style={{ display: "block", lineHeight: 0, fontSize: 0 }}
+										style={{
+											display: "block",
+											lineHeight: 0,
+											fontSize: 0,
+											background: "none",
+											border: "none",
+											padding: 0,
+										}}
 									>
 										<div className="absolute inset-0 bg-linear-to-b from-transparent via-zinc-900/20 to-zinc-900 z-10 pointer-events-none" />
 										<img
@@ -181,7 +196,7 @@ function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 												</div>
 											</div>
 										)}
-									</div>
+									</button>
 								)}
 							</div>
 
