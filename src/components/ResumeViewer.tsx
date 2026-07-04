@@ -112,7 +112,6 @@ function ResumeViewer({
 							<iframe
 								src={`${pdfUrl}#view=FitH`}
 								title={`${title} PDF viewer`}
-								sandbox="allow-scripts allow-forms allow-popups"
 								className="w-full h-full min-h-125"
 							/>
 						</div>

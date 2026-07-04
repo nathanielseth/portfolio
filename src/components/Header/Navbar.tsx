@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { m } from "motion/react";
 import { useLenis } from "lenis/react";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_ITEMS = [
 	{ label: "About", href: "#about" },
@@ -102,6 +103,15 @@ export default function Navbar({ navOpen, onClose }: NavbarProps) {
 					{label}
 				</a>
 			))}
+
+			<div className="md:hidden mt-1 pt-2 px-3 pb-1 border-t border-zinc-900/10 dark:border-zinc-50/10">
+				<div className="flex items-center justify-between h-8 px-1">
+					<span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+						Dark mode
+					</span>
+					<ThemeToggle variant="switch" />
+				</div>
+			</div>
 		</nav>
 	);
 }
